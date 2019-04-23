@@ -12,11 +12,12 @@ namespace DataStructures
 
             var listOfIntegers = new List<int>() { 43, 2, 1, 56, 7, 99, 100 };
             listOfIntegers = new List<int>() { 43 };
-            //listOfIntegers = new List<int>() { 1, 9, 3, 5, 4, 7 };
+            listOfIntegers = new List<int>() { 1, 9, 3, 5, 4, 7 };
             Console.WriteLine("List to be sorted" + listOfIntegers);
+            var arrayOfIntegers = listOfIntegers.ToArray();
 
-            var result = MergeSort.Sort(listOfIntegers);
-            Console.WriteLine("After sorting" + result);
+            MergeSort.Implementation2.Sort(arrayOfIntegers);
+           // Console.WriteLine("After sorting" + result);
         }
     }
 }
