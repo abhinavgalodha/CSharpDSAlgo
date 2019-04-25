@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Algorithms.Sorting
@@ -8,18 +9,23 @@ namespace Algorithms.Sorting
     {
         public class Implementation1
         {
+            public static void Sort<T>(List<T> listToBeSorted) where T : IComparable<T>
+            {
+                listToBeSorted = DivideAndSort(listToBeSorted);
+            }
+
             // Divide into SubArrays and Merge
-            public static List<T> Sort<T>(List<T> listToBeSorted) where T : IComparable<T>
+            private static List<T> DivideAndSort<T>(List<T> listToBeSorted) where T : IComparable<T>
             {
                 int lengthOfList = listToBeSorted.Count;
 
-                if (lengthOfList == 1)
+                if (lengthOfList <= 1)
                 {
                     return listToBeSorted;
                 }
 
                 var (leftList, rightList) = Divide(listToBeSorted);
-                return Merge(Sort(leftList), Sort(rightList));
+                return Merge(DivideAndSort(leftList), DivideAndSort(rightList));
 
             }
 
@@ -33,7 +39,6 @@ namespace Algorithms.Sorting
                 }
 
                 int lowIndex = 0;
-                int highIndex = lengthOfList - 1;
                 int midIndex = lengthOfList / 2;
                 if (lengthOfList % 2 != 0)
                 {
@@ -90,7 +95,6 @@ namespace Algorithms.Sorting
             }
         }
 
-
         public class Implementation2
         {
             public static void Sort<T>(T[] arrayToSort) where T : IComparable<T>
@@ -116,15 +120,27 @@ namespace Algorithms.Sorting
             public static void Merge<T>(T[] originalArray, T[] auxArray, int lowerBound, int mid, int high) where T : IComparable<T>
             {
                 // firstly copy data from original to auxArray
-                originalArray.CopyTo(auxArray, 0);
-
-                for (int index = 0; index < high; index++)
+                for (int copyIndex = lowerBound; copyIndex <= high; copyIndex++)
                 {
-                    var leftArrayIndex = lowerBound;
-                    var rightArrayIndex = mid + 1;
+                    auxArray[copyIndex] = originalArray[copyIndex];
+                }
 
+                var leftArrayIndex = lowerBound;
+                var rightArrayIndex = mid + 1;
 
-                    if (auxArray[leftArrayIndex].CompareTo(auxArray[rightArrayIndex]) <= 0)
+                for (int index = lowerBound; index <= high; index++)
+                {
+                    if (leftArrayIndex > mid)
+                    {
+                        originalArray[index] = auxArray[rightArrayIndex];
+                        rightArrayIndex++;
+                    }
+                    else if (rightArrayIndex > high)
+                    {
+                        originalArray[index] = auxArray[leftArrayIndex];
+                        leftArrayIndex++;
+                    }
+                    else if (auxArray[leftArrayIndex].CompareTo(auxArray[rightArrayIndex]) <= 0)
                     {
                         originalArray[index] = auxArray[leftArrayIndex];
                         leftArrayIndex++;

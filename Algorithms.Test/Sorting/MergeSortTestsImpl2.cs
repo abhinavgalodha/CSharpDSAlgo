@@ -6,16 +6,16 @@ using Xunit;
 
 namespace Algorithms.Test.Sorting
 {
-    public class MergeSortTests
+    public class MergeSortTestsImpl2
     {
         [Fact]
         public void SortingForEmptyArray()
         {
             // Arrange
-            List<int> listEmpty = new List<int>();
+            int[] listEmpty = new int[0];
 
             // Act
-            Algorithms.Sorting.MergeSort.Implementation1.Sort(listEmpty);
+            Algorithms.Sorting.MergeSort.Implementation2.Sort(listEmpty);
 
             // Assert
             listEmpty.Should().BeEmpty();
@@ -29,7 +29,7 @@ namespace Algorithms.Test.Sorting
             List<int> listOneElement = new List<int>(){5};
 
             // Act
-            Algorithms.Sorting.MergeSort.Implementation1.Sort(listOneElement);
+            Algorithms.Sorting.MergeSort.Implementation2.Sort(listOneElement.ToArray());
 
             // Assert
             listOneElement.Should().HaveCount(1);
@@ -40,13 +40,13 @@ namespace Algorithms.Test.Sorting
         public void SortingForOddCountArray()
         {
             // Arrange
-            List<int> listOddCount = new List<int>(){4,12,1,3,9,7,2};
+            var listOddCount = new int[]{4,12,1,3,9,7,2};
 
             // Act
-            Algorithms.Sorting.MergeSort.Implementation1.Sort(listOddCount);
+            Algorithms.Sorting.MergeSort.Implementation2.Sort(listOddCount);
 
             // Assert
-            var expectedList = new List<int>() { 1,2,3,4,7,9,12};
+            var expectedList = new int[]{ 1,2,3,4,7,9,12};
             listOddCount.Should().BeEquivalentTo(expectedList);
 
         }
@@ -55,13 +55,13 @@ namespace Algorithms.Test.Sorting
         public void SortingForEvenCountArray()
         {
             // Arrange
-            List<int> listEvenCount = new List<int>(){4,12,1,3,9,7};
+            var listEvenCount = new int[]{4,12,1,3,9,7,2};
 
             // Act
-            Algorithms.Sorting.MergeSort.Implementation1.Sort(listEvenCount);
+            Algorithms.Sorting.MergeSort.Implementation2.Sort(listEvenCount);
 
             // Assert
-            var expectedList = new List<int>() { 1,3,4,7,9,12};
+            var expectedList = new int[]{ 1,2,3,4,7,9,12};
             listEvenCount.Should().BeEquivalentTo(expectedList);
 
         }
@@ -70,13 +70,13 @@ namespace Algorithms.Test.Sorting
         public void SortingForDuplicateElementsInArray()
         {
             // Arrange
-            List<int> listWithDuplicateElements = new List<int>(){4,12,4,4,9,7};
+            var listWithDuplicateElements = new int[]{4,12,4,4,9,7};
 
             // Act
-            Algorithms.Sorting.MergeSort.Implementation1.Sort(listWithDuplicateElements);
+            Algorithms.Sorting.MergeSort.Implementation2.Sort(listWithDuplicateElements);
 
             // Assert
-            var expectedList = new List<int>() { 4,4,4,7,9,12};
+            var expectedList = new int[] { 4,4,4,7,9,12};
             listWithDuplicateElements.Should().BeEquivalentTo(expectedList);
 
         }
@@ -85,13 +85,13 @@ namespace Algorithms.Test.Sorting
         public void SortingForAlreadySortedArray()
         {
             // Arrange
-            List<int> listAlreadySorted = new List<int>(){4, 6, 10, 12, 15, 23, 28, 35};
+            var listAlreadySorted = new int[]{4, 6, 10, 12, 15, 23, 28, 35};
 
             // Act
-            Algorithms.Sorting.MergeSort.Implementation1.Sort(listAlreadySorted);
+            Algorithms.Sorting.MergeSort.Implementation2.Sort(listAlreadySorted);
 
             // Assert
-            var expectedList = new List<int>() { 4, 6, 10, 12, 15, 23, 28, 35};
+            var expectedList = new int[] { 4, 6, 10, 12, 15, 23, 28, 35};
             listAlreadySorted.Should().BeEquivalentTo(expectedList);
 
         }
@@ -100,13 +100,13 @@ namespace Algorithms.Test.Sorting
         public void SortingForReverseSortedArray()
         {
             // Arrange
-            List<int> listReverseArray = new List<int>(){35, 28, 23, 15, 12, 10, 6, 4};
+            var listReverseArray = new int[]{35, 28, 23, 15, 12, 10, 6, 4};
 
             // Act
-            Algorithms.Sorting.MergeSort.Implementation1.Sort(listReverseArray);
+            Algorithms.Sorting.MergeSort.Implementation2.Sort(listReverseArray);
 
             // Assert
-            var expectedList = new List<int>() { 4, 6, 10, 12, 15, 23, 28, 35};
+            var expectedList = new int[] { 4, 6, 10, 12, 15, 23, 28, 35};
             listReverseArray.Should().BeEquivalentTo(expectedList);
 
         }
@@ -115,13 +115,13 @@ namespace Algorithms.Test.Sorting
         public void SortingForNumbersIncludingNegativesInArray()
         {
             // Arrange
-            List<int> listIncludingNegativeNumbers = new List<int>(){12, 15, -23, -4 , 6, 10, -35, 28};
+            var listIncludingNegativeNumbers = new int[] {12, 15, -23, -4 , 6, 10, -35, 28};
 
             // Act
-            Algorithms.Sorting.MergeSort.Implementation1.Sort(listIncludingNegativeNumbers);
+            Algorithms.Sorting.MergeSort.Implementation2.Sort(listIncludingNegativeNumbers);
 
             // Assert
-            var expectedList = new List<int>() { -4, -23, -35, 6, 10, 12, 15 ,28};
+            var expectedList = new int[] { -4, -23, -35, 6, 10, 12, 15 ,28};
             listIncludingNegativeNumbers.Should().BeEquivalentTo(expectedList);
 
         }
@@ -130,13 +130,13 @@ namespace Algorithms.Test.Sorting
         public void SortingForSameElementRepeatedMultipleTimesInArray()
         {
             // Arrange
-            List<int> listWithRepeatingNumbers = new List<int>() {12, 12, 12, 12, 12};
+            var listWithRepeatingNumbers = new int[] {12, 12, 12, 12, 12};
 
             // Act
-            Algorithms.Sorting.MergeSort.Implementation1.Sort(listWithRepeatingNumbers);
+            Algorithms.Sorting.MergeSort.Implementation2.Sort(listWithRepeatingNumbers);
 
             // Assert
-            var expectedList = new List<int>() {12, 12, 12, 12, 12};
+            var expectedList = new int[] {12, 12, 12, 12, 12};
             listWithRepeatingNumbers.Should().BeEquivalentTo(expectedList);
 
         }
