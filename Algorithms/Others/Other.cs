@@ -25,17 +25,11 @@ namespace Algorithms.Others
             return smallestPositiveInteger;
         }
 
-        public static int GetSmallestPositiveInteger(int[] arrayOfIntegers)
+        public static int GetSmallestPositiveInteger2(int[] arrayOfIntegers)
         {
             var arrayLength = arrayOfIntegers.Length;
 
-            // Array is empty
-            if (arrayLength == 0)
-            {
-                throw new ArgumentException("Input Array doesn't contain any positive integers.");
-            }
-            
-            int smallestPositiveInteger=0;
+            int smallestPositiveInteger = 0;
             bool isPositiveNumberOnceSeen = false;
 
             
@@ -63,6 +57,33 @@ namespace Algorithms.Others
             }
 
             return smallestPositiveInteger;
+        }
+
+        public static int GetSmallestPositiveInteger(int[] arrayOfIntegers)
+        {
+            var arrayLength = arrayOfIntegers.Length;
+
+            int? smallestPositiveInteger = null;
+            
+            for (int currentIndex = 0; currentIndex < arrayLength; currentIndex++)
+            {
+                if(arrayOfIntegers[currentIndex] > 0)
+                { 
+                    if(smallestPositiveInteger.GetValueOrDefault() > arrayOfIntegers[currentIndex] ||
+                        !smallestPositiveInteger.HasValue)
+                    {
+                        smallestPositiveInteger = arrayOfIntegers[currentIndex];
+                    }
+                }
+            }
+
+            // After iteration no +ve integer
+            if (!smallestPositiveInteger.HasValue)
+            {
+                throw new ArgumentException("Input Array doesn't contain any positive integers.");
+            }
+
+            return smallestPositiveInteger.Value;
         }
 
     }
