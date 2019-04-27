@@ -13,7 +13,7 @@ namespace Algorithms.Test.Sorting
     {
         //private ISort _sortingAlgorithm;
 
-        protected abstract ISort SortingAlgorithm {get;}
+        protected abstract ISort SortingAlgorithm { get; }
 
         private void IsAbleToSort<T>(CollectionVerification<T> collectionVerification) where T : IComparable<T>
         {

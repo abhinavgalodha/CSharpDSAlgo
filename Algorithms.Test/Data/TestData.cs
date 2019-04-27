@@ -19,7 +19,7 @@ namespace Algorithms.Test.Data
 
         public static CollectionVerification<int> ArrayOddCount = new CollectionVerification<int>(
             new int[] { 4, 12, 1, 3, 9, 7, 2 },
-            new int[] { 1, 2, 3, 7, 9, 12 }
+            new int[] { 1, 2, 3, 4, 7, 9, 12 }
         );
 
         public static CollectionVerification<int> ArrayEvenCount = new CollectionVerification<int>(
@@ -44,7 +44,7 @@ namespace Algorithms.Test.Data
 
         public static CollectionVerification<int> ArrayIncludingNegativeNumbers = new CollectionVerification<int>(
             new int[] { 12, 15, -23, -4, 6, 10, -35, 28 },
-            new int[] { -35, -23, -4, 6, 12, 15, 28 }
+            new int[] { -35, -23, -4, 6, 10, 12, 15, 28 }
         );
 
         public static CollectionVerification<int> ArrayWithSameNumberRepeating = new CollectionVerification<int>(
