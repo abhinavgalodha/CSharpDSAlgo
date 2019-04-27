@@ -15,9 +15,10 @@ namespace Algorithms.Test.Sorting
 
         protected abstract ISort SortingAlgorithm {get;}
 
-        private bool IsAbleToSort<T>(CollectionVerification<T> collectionVerification) where T : IComparable<T>
+        private void IsAbleToSort<T>(CollectionVerification<T> collectionVerification) where T : IComparable<T>
         {
-            return new SortableCollectionVerification<T>(SortingAlgorithm, collectionVerification).IsAbleToSort();
+            new SortableCollectionVerification<T>(SortingAlgorithm, collectionVerification)
+                .IsAbleToSort();
         }
 
         [Fact]
