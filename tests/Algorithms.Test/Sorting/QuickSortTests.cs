@@ -6,8 +6,8 @@ using Algorithms.Sorting.Interfaces;
 
 namespace Algorithms.Test.Sorting
 {
-    public class QuickSortTests : BaseSortTest
-    {
-        protected override ISort SortingAlgorithm => SortingFactory.Create(SortingAlgorithms.QuickSort);
-    }
+    //public class QuickSortTests : BaseSortTest
+    //{
+    //    protected override ISort SortingAlgorithm => SortingFactory.Create(SortingAlgorithms.QuickSort);
+    //}
 }
