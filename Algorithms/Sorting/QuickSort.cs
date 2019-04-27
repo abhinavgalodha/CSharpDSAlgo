@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using Algorithms.Sorting.Interfaces;
 using Core;
 
 namespace Algorithms.Sorting
 {
-    public class QuickSort
+    public class QuickSort : ISort
     {
-        public static void Sort<T>(T[] arrayToSort, Comparer<T> comparer = null)
+        public void Sort<T>(ICollection<T> collection) where T : IComparable<T>
         {
-            comparer = comparer ?? Comparer<T>.Default;
+            var comparer = Comparer<T>.Default;
+            var array = collection.ToArray();
 
             // Shuffle 
             int startIndex = 0;
-            int endIndex = arrayToSort.Length - 1;
+            int endIndex =  array.Length - 1;
 
-            InternalSort(arrayToSort, startIndex, endIndex, comparer);
-
+            InternalSort(array, startIndex, endIndex, comparer);
         }
 
         private static void InternalSort<T>(T[] arrayToSort, int leftIndex, int rightIndex, Comparer<T> comparer)
@@ -68,5 +70,7 @@ namespace Algorithms.Sorting
             return pivotIndex;
 
         }
+
+        
     }
 }
