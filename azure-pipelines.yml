@@ -14,10 +14,19 @@ variables:
 
 steps:
 
-# do this before all your .NET Core tasks
+# 1. Install the dotnet core version
 - task: DotNetCoreInstaller@0
   inputs:
     version: '3.0.100-preview4-011223' # replace this value with the version that you need for your project
 
+# 2. run the build
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
+
+# 3. run the tests
+# do this after other tasks such as building
+- task: DotNetCoreCLI@2
+  inputs:
+    command: test
+    projects: '**/*Tests/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
