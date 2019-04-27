@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Core;
 
 namespace Algorithms.Sorting
 {
@@ -16,20 +17,23 @@ namespace Algorithms.Sorting
 
             InternalSort(arrayToSort, startIndex, endIndex, comparer);
 
-            // Choose the Pivot
-
-            
-            // Keep Choosing Pivot and continue sorting
         }
 
         private static void InternalSort<T>(T[] arrayToSort, int leftIndex, int rightIndex, Comparer<T> comparer)
         {
-            
+            if(leftIndex >= rightIndex)
+            {
+                return;
+            }
+
+            int partitionIndex = Partition(arrayToSort, leftIndex, rightIndex, comparer);
+            InternalSort(arrayToSort, leftIndex, partitionIndex - 1, comparer);
+            InternalSort(arrayToSort, partitionIndex + 1, rightIndex, comparer);
         }
 
-        private static void Partition<T>(T[] arrayToSort, int leftIndex, int rightIndex, Comparer<T> comparer)
+        private static int Partition<T>(T[] arrayToSort, int leftIndex, int rightIndex, Comparer<T> comparer)
         {
-            int pivotIndex = rightIndex;
+            int pivotIndex = leftIndex;
             T pivotElement = arrayToSort[pivotIndex];
 
             // Sort the elements w.r.t Pivot
@@ -37,11 +41,32 @@ namespace Algorithms.Sorting
             // Elements to the right are greater than the Pivot
 
             // compare the left element with Pivot and swap if necessary
-            T[] lessThanPivot;
-            T[] rightThanPivot;
+
+            while (leftIndex <= rightIndex)
+            {
+                // Elements to the left are less than the Pivot
+                // Find the element which is bigger than the pivot, It is out of place and needs to be swapped.
+                while (comparer.Compare(arrayToSort[leftIndex], pivotElement) <= 0)
+                {
+                    leftIndex++;
+                }
+
+                // Find the element which is smaller than the pivot, It is out of place and needs to be swapped.
+                while (comparer.Compare(pivotElement, arrayToSort[rightIndex]) > 0)
+                {
+                    rightIndex--;
+                }
+
+                // TODO : Need to compare again   if (leftIndex <= rightIndex)
+                arrayToSort.Swap(leftIndex, rightIndex);
+                leftIndex++;
+                rightIndex--;
+            }
+
+            // Swap with Pivot index
+            arrayToSort.Swap(pivotIndex, rightIndex);
+            return pivotIndex;
+
         }
-
-
-
     }
 }
