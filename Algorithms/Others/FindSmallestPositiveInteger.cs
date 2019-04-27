@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Algorithms.Others
 {
-    public class Other
+    public class FindSmallestPositiveInteger
     {
         public static int GetSmallestPositiveInteger1(int[] arrayOfIntegers)
         {

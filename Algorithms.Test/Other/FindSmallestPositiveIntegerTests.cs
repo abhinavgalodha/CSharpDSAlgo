@@ -6,7 +6,7 @@ using FluentAssertions;
 
 namespace Algorithms.Test.Other
 {
-    public class OtherTests
+    public class FindSmallestPositiveIntegerTests
     {
         [Fact]
         public void ReturnSmallestPositiveInteger()
@@ -14,7 +14,7 @@ namespace Algorithms.Test.Other
             var inputArray = new int[]{ 4, 6, 5, -2, -7, 8, 3, 2, -9 };
             var expectedSmallestPositiveInteger = 2;
 
-            var actualSmallestPositiveInteger = Others.Other.GetSmallestPositiveInteger(inputArray);
+            var actualSmallestPositiveInteger = Others.FindSmallestPositiveInteger.GetSmallestPositiveInteger(inputArray);
             actualSmallestPositiveInteger.Should().Be(expectedSmallestPositiveInteger);
         }
     }
