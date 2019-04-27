@@ -1,17 +1,23 @@
-﻿using System;
+﻿using Algorithms.Sorting.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace Algorithms.Sorting
 {
-    public class MergeSort
+    public class MergeSort : ISort
     {
+        public void Sort<T>(ICollection<T> collection) where T : IComparable<T>
+        {
+            new Implementation1().Sort<T>(collection);
+        }
+
         public class Implementation1
         {
-            public static void Sort<T>(List<T> listToBeSorted) where T : IComparable<T>
+            public void Sort<T>(ICollection<T> listToBeSorted) where T : IComparable<T>
             {
-                listToBeSorted = DivideAndSort(listToBeSorted);
+                listToBeSorted = DivideAndSort(listToBeSorted.ToList());
             }
 
             // Divide into SubArrays and Merge
@@ -24,7 +30,7 @@ namespace Algorithms.Sorting
                     return listToBeSorted;
                 }
 
-                var (leftList, rightList) = Divide(listToBeSorted);
+                var (leftList, rightList) = Divide(listToBeSorted.ToList());
                 return Merge(DivideAndSort(leftList), DivideAndSort(rightList));
 
             }
