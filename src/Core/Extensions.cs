@@ -5,23 +5,17 @@ namespace Core
 {
     public static class Extensions
     {
-        public static void Swap<T>(this T[] array, uint leftIndex, uint rightIndex)
+        public static void Swap<T>(this IList<T> collection, int leftIndex, int rightIndex)
         {
-            array.ThrowIfNull(nameof(array));
+            collection.ThrowIfNull(nameof(collection));
 
-            if (leftIndex > array.Length ||
-                rightIndex > array.Length)
+            if (leftIndex < collection.Count ||
+                rightIndex < collection.Count)
             {
-                T temp = array[leftIndex];
-                array[leftIndex] = array[rightIndex];
-                array[rightIndex] = temp;
+                T temp = collection[leftIndex];
+                collection[leftIndex] = collection[rightIndex];
+                collection[rightIndex] = temp;
             }
-
-        }
-
-        public static void Swap<T>(this IEnumerable<T> collection, int leftIndex, int rightIndex)
-        {
-            collection.Swap(leftIndex, rightIndex);
         }
 
         internal static void ThrowIfNull<T>(this T obj, string paramName) where T : class
