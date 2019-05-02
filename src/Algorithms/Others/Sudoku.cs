@@ -23,13 +23,15 @@ namespace Algorithms.Others
             }
 
             var expectedSum = (rowLength * (rowLength  + 1))/2;
-
+            
+            Dictionary<int, int> dictSumofColumn = new Dictionary<int, int>();
             for (int rowIndex = 0; rowIndex < rowLength; rowIndex++)
             {
+               
                 var rowSum = 0;
                 for (int columnIndex = 0; columnIndex < columnLength; columnIndex++)
                 {
-                     rowSum = rowSum + sudoku[rowIndex,columnIndex];
+                     rowSum += sudoku[rowIndex,columnIndex];
                 }
                 if(rowSum != expectedSum)
                 {

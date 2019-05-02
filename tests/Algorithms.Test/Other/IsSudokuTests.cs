@@ -25,13 +25,30 @@ namespace Algorithms.Test.Other
         }
 
         [Fact]
+        public void NotASudokuWithSameSum()
+        {
+            var notASudoku = new int[,]
+            {   
+                { 1, 2, 3 },
+                { 1, 2, 3 },
+                { 1, 2, 3 }
+            };
+
+            var expectedIsSudoku = false;
+
+            var actualsSudoku = Others.Sudoku.IsSudoku(notASudoku);
+            actualsSudoku.Should().Be(expectedIsSudoku);
+        }
+
+        [Fact]
         public void IsASudoku()
         {
             var aSudoku = new int[,]
             {   
-                { 1, 2, 3 },
-                { 2, 3, 1},
-                { 3, 1, 2 }
+                { 1, 2, 3, 4 },
+                { 2, 3, 4 ,1 },
+                { 3, 4, 1 ,2 },
+                { 4, 1, 2 ,3 }
             };
 
             var expectedIsSudoku = true;
