@@ -24,7 +24,9 @@ namespace Algorithms.Others
 
             var expectedSum = (rowLength * (rowLength  + 1))/2;
             
-            Dictionary<int, int> dictSumofColumn = new Dictionary<int, int>();
+            Dictionary<int, int> dictSumofColumn = new Dictionary<int, int>(columnLength);
+            Enumerable.Range(0, columnLength).ToList().ForEach(x => dictSumofColumn.Add(x,0));
+
             for (int rowIndex = 0; rowIndex < rowLength; rowIndex++)
             {
                
@@ -32,6 +34,7 @@ namespace Algorithms.Others
                 for (int columnIndex = 0; columnIndex < columnLength; columnIndex++)
                 {
                      rowSum += sudoku[rowIndex,columnIndex];
+                     dictSumofColumn[columnIndex] = dictSumofColumn[columnIndex] + sudoku[rowIndex,columnIndex];
                 }
                 if(rowSum != expectedSum)
                 {
@@ -39,6 +42,10 @@ namespace Algorithms.Others
                     break;
                 }
             }
+
+            var isNotSudoku = dictSumofColumn.Any(x=>x.Value != expectedSum);
+            isSudoku = ! isNotSudoku;
+
             
             return isSudoku;
         }
