@@ -13,12 +13,18 @@ namespace Algorithms.Test.Sorting
         public void Find3rdLargestInArray()
         {
             var inputArray = new int[] {32, 89, 1, 4, 10 };
+            var inputArray1 = new int[] {3, 89, 1, 4, 10 };
 
-            var expectedValue = 10;
+            // Assert.Equal(inputArray, inputArray1);
 
-            var actualValue = QuickSelect.Find(inputArray, 3);
+            inputArray.Should().BeEquivalentTo(inputArray1);
 
-            actualValue.Should().Be(expectedValue);
+
+            //var expectedValue = 10;
+
+            //var actualValue = QuickSelect.Find(inputArray, 3);
+
+            //actualValue.Should().Be(expectedValue);
         }
 
         [Fact]

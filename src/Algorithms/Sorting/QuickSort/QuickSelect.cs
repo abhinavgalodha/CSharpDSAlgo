@@ -32,7 +32,19 @@ namespace Algorithms.Sorting
 
             while (leftIndex <  rightIndex)
             {
+                while (array[leftIndex] < array[pivotIndex] &&
+                       leftIndex < rightIndex )
+                {
+                    leftIndex++;
+                }
 
+                while (array[rightIndex] > array[pivotIndex] &&
+                       leftIndex < rightIndex )
+                {
+                    rightIndex--;
+                }
+
+                
             }
 
 

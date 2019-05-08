@@ -18,8 +18,10 @@ namespace Algorithms.Test.Data
         );
 
         public static CollectionVerification<int> ArrayOddCount = new CollectionVerification<int>(
-            new int[] { 4, 12, 1, 3, 9, 7, 2 },
-            new int[] { 1, 2, 3, 4, 7, 9, 12 }
+            //new int[] { 4, 12, 1, 3, 9, 7, 2 },
+            //new int[] { 1, 2, 3, 4, 7, 9, 12 }
+            new int[] { 7,3,1,2,10,4,5 },
+            new int[] { 1,2,3,4,5,7,10 }
         );
 
         public static CollectionVerification<int> ArrayEvenCount = new CollectionVerification<int>(

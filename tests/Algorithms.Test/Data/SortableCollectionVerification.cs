@@ -2,6 +2,7 @@
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
+using Xunit;
 
 namespace Algorithms.Test.Data
 {
@@ -27,7 +28,7 @@ namespace Algorithms.Test.Data
         public void IsAbleToSort()
         {
             _sortingAlgorithm.Sort(this.Actual);
-            this.Actual.Should().BeEquivalentTo(this.Expected);
+            this.Actual.Should().BeEquivalentTo(this.Expected, options => options.WithStrictOrdering());
         }
     }
 
