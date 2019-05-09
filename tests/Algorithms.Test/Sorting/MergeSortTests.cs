@@ -11,6 +11,6 @@ namespace Algorithms.Test.Sorting
     public class MergeSortTests : BaseSortTest
     {
 
-        protected override ISort SortingAlgorithm => SortingFactory.Create(SortingAlgorithms.MergeSort);
+        protected override ISortingAlgorithm SortingAlgorithm => SortingFactory.Create(SortingAlgorithms.MergeSort);
     }
 }

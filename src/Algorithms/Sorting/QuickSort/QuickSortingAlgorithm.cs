@@ -7,9 +7,9 @@ using Core;
 
 namespace Algorithms.Sorting
 {
-    public class QuickSort : ISort
+    public class QuickSortingAlgorithm : ISortingAlgorithm
     {
-        public void Sort<T>(ICollection<T> collection) where T : IComparable<T>
+        public void Sort<T>(IList<T> collection) where T : IComparable<T>
         {
             var comparer = Comparer<T>.Default;
             var array = collection.ToArray();

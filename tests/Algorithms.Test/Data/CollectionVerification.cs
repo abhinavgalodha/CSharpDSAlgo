@@ -10,18 +10,18 @@ namespace Algorithms.Test.Data
     /// <typeparam name="T"></typeparam>
     public class CollectionVerification<T> where T :  IComparable<T>
     {
-        public CollectionVerification(ICollection<T> actual, ICollection<T> expected)
+        public CollectionVerification(IList<T> actual, IList<T> expected)
         {
             this.Actual = actual;
             this.Expected = expected;
         }
 
-        public ICollection<T> Actual { get; set; }
+        public IList<T> Actual { get; set; }
 
         /// <summary>
         /// It should be immutable as expected shouldn't be changed
         /// </summary>
-        public ICollection<T> Expected { get; }
+        public IList<T> Expected { get; }
 
         public bool IsEqual() => Actual.SequenceEqual(Expected);
 

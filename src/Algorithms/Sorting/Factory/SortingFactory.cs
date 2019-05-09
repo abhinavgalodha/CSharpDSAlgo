@@ -8,31 +8,31 @@ namespace Algorithms.Sorting.Factory
 {
     public class SortingFactory
     {
-        public static IEnumerable<ISort> CreateAllSorters()
+        public static IEnumerable<ISortingAlgorithm> CreateAllSorters()
         {
-            return new Collection<ISort>()
+            return new Collection<ISortingAlgorithm>()
             {
-                new MergeSort(),
+                new MergeSortingAlgorithm(),
                 new MergeSort1(),
-                new QuickSort()
+                new QuickSortingAlgorithm()
             };
         }
 
-        public static ISort Create(SortingAlgorithms sortingAlgorithm)
+        public static ISortingAlgorithm Create(SortingAlgorithms sortingAlgorithm)
         {
             switch (sortingAlgorithm)
             {
                 case SortingAlgorithms.MergeSort:
-                    return new MergeSort();
+                    return new MergeSortingAlgorithm();
 
                 case SortingAlgorithms.MergeSort1:
                     return new MergeSort1();
 
                 case SortingAlgorithms.QuickSort:
-                    return new QuickSort();
+                    return new QuickSortingAlgorithm();
 
                 default:
-                    return new MergeSort();
+                    return new MergeSortingAlgorithm();
             }
         }
 

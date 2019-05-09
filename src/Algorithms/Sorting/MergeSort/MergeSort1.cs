@@ -6,9 +6,9 @@ using System.Text;
 
 namespace Algorithms.Sorting
 {
-    public class MergeSort1 : ISort
+    public class MergeSort1 : ISortingAlgorithm
     {
-        public void Sort<T>(ICollection<T> collection) where T : IComparable<T>
+        public void Sort<T>(IList<T> collection) where T : IComparable<T>
         {
             new Implementation2().Sort<T>(collection.ToArray());
         }

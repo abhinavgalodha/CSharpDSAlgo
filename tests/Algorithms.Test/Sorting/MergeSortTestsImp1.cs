@@ -10,7 +10,7 @@ namespace Algorithms.Test.Sorting
 {
     public class MergeSortTestsImpl1 : BaseSortTest
     {
-        protected override ISort SortingAlgorithm => SortingFactory.Create(SortingAlgorithms.MergeSort1);
+        protected override ISortingAlgorithm SortingAlgorithm => SortingFactory.Create(SortingAlgorithms.MergeSort1);
     }
 
     //public class MergeSortTestsImpl2

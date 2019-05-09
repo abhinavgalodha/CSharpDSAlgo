@@ -3,25 +3,27 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Core;
 
 namespace Algorithms.Sorting
 {
-    public class MergeSort : ISort
+    public class MergeSortingAlgorithm : ISortingAlgorithm
     {
-        public void Sort<T>(ICollection<T> collection) where T : IComparable<T>
+        public void Sort<T>(IList<T> collection) where T : IComparable<T>
         {
-            new Implementation1().Sort<T>(collection);
+            new Implementation1().Sort<T>(collection.ToArray());
         }
 
         public class Implementation1
         {
-            public void Sort<T>(ICollection<T> listToBeSorted) where T : IComparable<T>
+            // Only using the ref to ensure the collection is modified in the arguments directly...
+            public void Sort<T>(IList<T>  listToBeSorted) where T : IComparable<T>
             {
-                listToBeSorted = DivideAndSort(listToBeSorted.ToList());
+                DivideAndSort(listToBeSorted);
             }
 
             // Divide into SubArrays and Merge
-            private static List<T> DivideAndSort<T>(List<T> listToBeSorted) where T : IComparable<T>
+            private static IList<T> DivideAndSort<T>(IList<T>  listToBeSorted) where T : IComparable<T>
             {
                 int lengthOfList = listToBeSorted.Count;
 
@@ -30,12 +32,12 @@ namespace Algorithms.Sorting
                     return listToBeSorted;
                 }
 
-                var (leftList, rightList) = Divide(listToBeSorted.ToList());
+                var (leftList, rightList) = Divide(listToBeSorted);
                 return Merge(DivideAndSort(leftList), DivideAndSort(rightList));
 
             }
 
-            private static (List<T>, List<T>) Divide<T>(List<T> listToBeDivided)
+            private static (IList<T> , IList<T>) Divide<T>(IList<T>  listToBeDivided)
             {
                 int lengthOfList = listToBeDivided.Count;
 
@@ -56,23 +58,30 @@ namespace Algorithms.Sorting
                 var leftList = listToBeDivided.GetRange(lowIndex, midIndex);
 
                 // right list
-                var rightList = listToBeDivided.GetRange(midIndex, lengthOfList - (midIndex));
+                var rightList = listToBeDivided.GetRange(midIndex,(lengthOfList - (midIndex)));
 
                 return (leftList, rightList);
             }
 
-            private static List<T> Merge<T>(List<T> firstListToBeMerged, List<T> secondListToBeMerged) where T : IComparable<T>
+            private static IList<T> Merge<T>(IList<T> firstListToBeMerged, IList<T>  secondListToBeMerged) where T : IComparable<T>
             {
                 List<T> mergedList = new List<T>();
 
                 var indexFirstList = 0;
                 var indexSecondList = 0;
 
-                while (indexFirstList != firstListToBeMerged.Count &&
-                       indexSecondList != secondListToBeMerged.Count)
+                // Local Function C# 7
+                bool AllElementsNotTraversedInList(IList<T>  list, int index) => list.Count != index;
+
+                while (AllElementsNotTraversedInList(firstListToBeMerged, indexFirstList) &&
+                       AllElementsNotTraversedInList(secondListToBeMerged, indexSecondList))
+                    
+                // Above code using local function is equivalent to below statements.
+                //while (indexFirstList != firstListToBeMerged.Count &&
+                //       indexSecondList != secondListToBeMerged.Count)
                 {
-                    var firstListItem = firstListToBeMerged[indexFirstList];
-                    var secondListItem = secondListToBeMerged[indexSecondList];
+                    T firstListItem = firstListToBeMerged[indexFirstList];
+                    T secondListItem = secondListToBeMerged[indexSecondList];
 
                     if (firstListItem.CompareTo(secondListItem) <= 0)
                     {
@@ -86,7 +95,7 @@ namespace Algorithms.Sorting
                     }
                 }
 
-                // Merge the remaning as one list is exhausted
+                // Merge the renaming as one list is exhausted
                 if (indexFirstList == firstListToBeMerged.Count)
                 {
                     mergedList.AddRange(secondListToBeMerged.GetRange(indexSecondList, secondListToBeMerged.Count - indexSecondList));

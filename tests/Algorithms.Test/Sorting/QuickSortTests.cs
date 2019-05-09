@@ -8,6 +8,6 @@ namespace Algorithms.Test.Sorting
 {
     public class QuickSortTests : BaseSortTest
     {
-        protected override ISort SortingAlgorithm => SortingFactory.Create(SortingAlgorithms.QuickSort);
+        protected override ISortingAlgorithm SortingAlgorithm => SortingFactory.Create(SortingAlgorithms.QuickSort);
     }
 }

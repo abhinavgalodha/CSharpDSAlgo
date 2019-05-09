@@ -8,17 +8,17 @@ namespace Algorithms.Test.Data
 {
     internal class SortableCollectionVerification<T> : CollectionVerification<T> where T : IComparable<T>
     {
-        private readonly ISort _sortingAlgorithm;
+        private readonly ISortingAlgorithm _sortingAlgorithm;
 
-        public SortableCollectionVerification(ISort sortingAlgorithm, 
-            ICollection<T> actual,
-            ICollection<T> expected):
+        public SortableCollectionVerification(ISortingAlgorithm sortingAlgorithm, 
+            IList<T> actual,
+            IList<T> expected):
             base(actual, expected)
         {
             this._sortingAlgorithm = sortingAlgorithm;
         }
 
-        public SortableCollectionVerification(ISort sortingAlgorithm, 
+        public SortableCollectionVerification(ISortingAlgorithm sortingAlgorithm, 
             CollectionVerification<T> collectionVerification):
             base(collectionVerification.Actual, collectionVerification.Expected)
         {
