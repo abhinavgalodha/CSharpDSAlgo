@@ -11,7 +11,7 @@ namespace Algorithms.Sorting
     {
         public void Sort<T>(IList<T> collection) where T : IComparable<T>
         {
-            new Implementation1().Sort<T>(collection.ToArray());
+            new Implementation1().Sort<T>(collection);
         }
 
         public class Implementation1
@@ -19,7 +19,13 @@ namespace Algorithms.Sorting
             // Only using the ref to ensure the collection is modified in the arguments directly...
             public void Sort<T>(IList<T>  listToBeSorted) where T : IComparable<T>
             {
-                DivideAndSort(listToBeSorted);
+                var sortedListed = DivideAndSort(listToBeSorted);
+
+                // Update the element of the reference;
+                for (var index = 0; index < listToBeSorted.Count; index++)
+                {
+                    listToBeSorted[index] = sortedListed[index];
+                }
             }
 
             // Divide into SubArrays and Merge
