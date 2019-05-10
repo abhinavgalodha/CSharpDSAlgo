@@ -12,8 +12,8 @@ namespace Algorithms.Sorting.Factory
         {
             return new Collection<ISortingAlgorithm>()
             {
-                new MergeSortingAlgorithm(),
-                new MergeSort1(),
+                new MergeSortingAlgorithm1(),
+                new MergeSortingAlgorithm1(),
                 new QuickSortingAlgorithm()
             };
         }
@@ -26,13 +26,13 @@ namespace Algorithms.Sorting.Factory
                     return new MergeSortingAlgorithm();
 
                 case SortingAlgorithms.MergeSort1:
-                    return new MergeSort1();
+                    return new MergeSortingAlgorithm1();
 
                 case SortingAlgorithms.QuickSort:
                     return new QuickSortingAlgorithm();
 
                 default:
-                    return new MergeSortingAlgorithm();
+                    return new MergeSortingAlgorithm1();
             }
         }
 

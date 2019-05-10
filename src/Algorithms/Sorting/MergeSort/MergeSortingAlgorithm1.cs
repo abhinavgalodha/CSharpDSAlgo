@@ -6,10 +6,16 @@ using System.Text;
 
 namespace Algorithms.Sorting
 {
-    public class MergeSort1 : ISortingAlgorithm
+    public class MergeSortingAlgorithm1 : ISortingAlgorithm
     {
         public void Sort<T>(IList<T> collection) where T : IComparable<T>
         {
+            //var collectionToBeSorted = collection.ToArray();
+            //new Implementation2().Sort<T>(collectionToBeSorted);
+            //for (var index = 0; index < collectionToBeSorted.Count(); index++)
+            //{
+            //    collection[index] = collectionToBeSorted[index];
+            //}
             new Implementation2().Sort<T>(collection.ToArray());
         }
 
