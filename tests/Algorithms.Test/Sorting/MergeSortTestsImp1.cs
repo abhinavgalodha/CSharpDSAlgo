@@ -8,6 +8,7 @@ using Xunit;
 
 namespace Algorithms.Test.Sorting
 {
+    [Trait("Sorting", "MergeSort Implementation 1")]
     public class MergeSortTestsImpl1 : BaseSortTest
     {
         protected override ISortingAlgorithm SortingAlgorithm => SortingFactory.Create(SortingAlgorithms.MergeSort1);

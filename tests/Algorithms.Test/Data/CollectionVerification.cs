@@ -16,7 +16,7 @@ namespace Algorithms.Test.Data
             this.Expected = expected;
         }
 
-        public IList<T> Actual { get; set; }
+        public IList<T> Actual { get; }
 
         /// <summary>
         /// It should be immutable as expected shouldn't be changed

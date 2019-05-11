@@ -11,8 +11,6 @@ namespace Algorithms.Test.Sorting
 {
     public abstract class BaseSortTest
     {
-        //private ISort _sortingAlgorithm;
-
         protected abstract ISortingAlgorithm SortingAlgorithm { get; }
 
         private void IsAbleToSort<T>(CollectionVerification<T> collectionVerification) where T : IComparable<T>
@@ -24,56 +22,56 @@ namespace Algorithms.Test.Sorting
         [Fact]
         public void SortingForEmptyArray()
         {
-            IsAbleToSort(TestData.ArrayEmpty);
+            IsAbleToSort(TestDataFactory.CreateData(SortingData.ArrayEmpty));
         }
 
         [Fact]
         public void SortingForOneElementArray()
         {
-            IsAbleToSort(TestData.ArrayOneElement);
+            IsAbleToSort(TestDataFactory.CreateData(SortingData.ArrayOneElement));
 
         }
 
         [Fact]
         public void SortingForOddCountArray()
         {
-            IsAbleToSort(TestData.ArrayOddCount);
+            IsAbleToSort(TestDataFactory.CreateData(SortingData.ArrayOddCount));
         }
 
         [Fact]
         public void SortingForEvenCountArray()
         {
-            IsAbleToSort(TestData.ArrayEvenCount);
+            IsAbleToSort(TestDataFactory.CreateData(SortingData.ArrayEvenCount));
         }
 
         [Fact]
         public void SortingForDuplicateElementsInArray()
         {
-            IsAbleToSort(TestData.ArrayWithDuplicateElements);
+            IsAbleToSort(TestDataFactory.CreateData(SortingData.ArrayWithDuplicateElements));
         }
 
         [Fact]
         public void SortingForAlreadySortedArray()
         {
-            IsAbleToSort(TestData.ArrayAlreadySorted);
+            IsAbleToSort(TestDataFactory.CreateData(SortingData.ArrayAlreadySorted));
         }
 
         [Fact]
         public void SortingForReverseSortedArray()
         {
-            IsAbleToSort(TestData.ArrayReverseArray);
+            IsAbleToSort(TestDataFactory.CreateData(SortingData.ArrayReverseArray));
         }
 
         [Fact]
         public void SortingForNumbersIncludingNegativesInArray()
         {
-            IsAbleToSort(TestData.ArrayIncludingNegativeNumbers);
+            IsAbleToSort(TestDataFactory.CreateData(SortingData.ArrayIncludingNegativeNumbers));
         }
 
         [Fact]
         public void SortingForSameElementRepeatedMultipleTimesInArray()
         {
-            IsAbleToSort(TestData.ArrayWithSameNumberRepeating);
+            IsAbleToSort(TestDataFactory.CreateData(SortingData.ArrayWithSameNumberRepeating));
         }
 
     }

@@ -7,6 +7,7 @@ using Xunit;
 
 namespace Algorithms.Test.Sorting
 {
+    [Trait("Algorithms", "Quick Select")]
     public class QuickSelectTests
     {
         [Fact(Skip = "NotComplete")]

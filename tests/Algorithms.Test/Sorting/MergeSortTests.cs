@@ -8,6 +8,7 @@ using Xunit;
 
 namespace Algorithms.Test.Sorting
 {
+    [Trait("Sorting", "MergeSort")]
     public class MergeSortTests : BaseSortTest
     {
 
