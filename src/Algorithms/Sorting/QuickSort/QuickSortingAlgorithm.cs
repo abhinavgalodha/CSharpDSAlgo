@@ -52,7 +52,6 @@ namespace Algorithms.Sorting
             // Sort the elements w.r.t Pivot
             // Elements to the left are less than the Pivot
             // Elements to the right are greater than the Pivot
-
             // Traverse all items other than the pivot
             for (int currentIndex = leftIndex; currentIndex <= rightIndex - 1; currentIndex++)
             {

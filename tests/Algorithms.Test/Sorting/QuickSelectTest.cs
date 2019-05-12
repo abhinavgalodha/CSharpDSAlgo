@@ -10,8 +10,7 @@ namespace Algorithms.Test.Sorting
     [Trait("Algorithms", "Quick Select")]
     public class QuickSelectTests
     {
-        [Fact(Skip = "NotComplete")]
-        public void Find3rdLargestInArray()
+        public void Find3RdLargestInArray()
         {
             var inputArray = new int[] {32, 89, 1, 4, 10 };
             var inputArray1 = new int[] {3, 89, 1, 4, 10 };
@@ -28,7 +27,6 @@ namespace Algorithms.Test.Sorting
             //actualValue.Should().Be(expectedValue);
         }
 
-        [Fact(Skip = "NotComplete")]
         public void FindElementAtFirstShouldReturnSmallestElement()
         {
             var inputArray = new int[] {32, 89, 1, 4, 10 };
@@ -41,7 +39,6 @@ namespace Algorithms.Test.Sorting
         }
 
 
-        [Fact(Skip = "NotComplete")]
         public void FindElementAtLastShouldReturnLargestElement()
         {
             var inputArray = new int[] {-32, -89, 1, -4, -10 };
@@ -53,7 +50,6 @@ namespace Algorithms.Test.Sorting
             actualValue.Should().Be(expectedValue);
         }
 
-        [Fact(Skip = "NotComplete")]
         public void FindElementOutOfRangeShouldThrowException()
         {
             var inputArray = new int[] {32, 89, 1, 4, 10 };

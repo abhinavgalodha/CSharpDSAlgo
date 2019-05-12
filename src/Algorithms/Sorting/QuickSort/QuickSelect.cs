@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Core;
 
@@ -8,47 +9,76 @@ namespace Algorithms.Sorting
     public class QuickSelect
     {
 
-        public static int Find(int[] array, uint indexToFind)
+        public static int Find<T>(ICollection<T> collection, uint indexToFind)
         {
-            if(array == null)
+            if(collection == null)
             {
                 throw new ArgumentNullException();
             }
 
-            int arrayLength = array.Length;
+            int arrayLength = collection.Count;
 
             if(indexToFind > arrayLength)
             {
                 throw new ArgumentOutOfRangeException(nameof(indexToFind));
             }
 
+            var leftIndex = 0;
+            var rightIndex = arrayLength;
+            var arrayToSort = collection.ToArray();
+            var comparer = Comparer<T>.Default;
 
-            // Same Strategy as used in the Quick Sort
-            int leftIndex = 0;
-            int rightIndex = arrayLength - 1;
-            
-            //int pivotIndex = (leftIndex + rightIndex) / 2;
-            int pivotIndex = new Random().Next(leftIndex, rightIndex);
-
-            while (leftIndex <  rightIndex)
+            while (true)
             {
-                while (array[leftIndex] < array[pivotIndex] &&
-                       leftIndex < rightIndex )
+                var partitionIndex = Partition(arrayToSort, leftIndex, rightIndex, comparer, indexToFind);
+                if (partitionIndex == indexToFind)
                 {
-                    leftIndex++;
+                    return partitionIndex;
                 }
-
-                while (array[rightIndex] > array[pivotIndex] &&
-                       leftIndex < rightIndex )
+                else if(partitionIndex < indexToFind)
                 {
-                    rightIndex--;
+                    rightIndex = partitionIndex - 1;
                 }
+                else
+                {
+                    leftIndex = partitionIndex + 1;
+                }
+            }
+        }
 
+        private static int Partition<T>(T[] arrayToSort, int leftIndex, int rightIndex, Comparer<T> comparer, uint indexToFind)
+        {
+            int pivotIndex = new Random().Next(leftIndex, rightIndex);
+            T pivotElement = arrayToSort[pivotIndex];
+
+            int partitionIndex = leftIndex;
+
+            // Swap pivot to rightmost element so that we don't need to traverse one extra element in the array.
+            arrayToSort.Swap(pivotIndex, rightIndex);
+
+            // Sort the elements w.r.t Pivot
+            // Elements to the left are less than the Pivot
+            // Elements to the right are greater than the Pivot
+            // Traverse all items other than the pivot
+            for (int currentIndex = leftIndex; currentIndex <= rightIndex - 1; currentIndex++)
+            {
+                var currentElement = arrayToSort[currentIndex];
                 
+                // If item is less than pivot, then swap with the partition Index
+                // This would keep ensure that elements less than pivot are on left side of partition index
+                if (currentElement.IsLessThanEqualTo(pivotElement, comparer))
+                {
+                    arrayToSort.Swap(currentIndex, partitionIndex);
+                    partitionIndex++;
+                }
             }
 
+            // Bring back the Pivot to it's Partition index
+            arrayToSort.Swap(partitionIndex, rightIndex);
 
-            throw new NotImplementedException();
+            return partitionIndex;
+
         }
+
     }
 }
