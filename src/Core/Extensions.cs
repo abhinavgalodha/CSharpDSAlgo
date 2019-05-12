@@ -3,11 +3,16 @@ using System.Collections.Generic;
 
 namespace Core
 {
-    public static class Extensions
+    public static partial class Extensions
     {
         public static void Swap<T>(this IList<T> collection, int leftIndex, int rightIndex)
         {
             collection.ThrowIfNull(nameof(collection));
+
+            if (leftIndex == rightIndex)
+            {
+                return;
+            }
 
             if (leftIndex < collection.Count ||
                 rightIndex < collection.Count)
