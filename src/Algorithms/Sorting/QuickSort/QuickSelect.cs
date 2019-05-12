@@ -9,7 +9,7 @@ namespace Algorithms.Sorting
     public class QuickSelect
     {
 
-        public static int Find<T>(ICollection<T> collection, uint indexToFind)
+        public static T Find<T>(ICollection<T> collection, uint positionToFind)
         {
             if(collection == null)
             {
@@ -18,24 +18,28 @@ namespace Algorithms.Sorting
 
             int arrayLength = collection.Count;
 
-            if(indexToFind > arrayLength)
+            if(positionToFind > arrayLength)
             {
-                throw new ArgumentOutOfRangeException(nameof(indexToFind));
+                throw new ArgumentOutOfRangeException(nameof(positionToFind));
             }
 
             var leftIndex = 0;
-            var rightIndex = arrayLength;
-            var arrayToSort = collection.ToArray();
+            var rightIndex = arrayLength - 1;
+            var inputArray = collection.ToArray();
             var comparer = Comparer<T>.Default;
+
+            // Decrementing Index to Find by 1, so that zero based index can be ignored
+            positionToFind = positionToFind - 1;
 
             while (true)
             {
-                var partitionIndex = Partition(arrayToSort, leftIndex, rightIndex, comparer, indexToFind);
-                if (partitionIndex == indexToFind)
+                var partitionIndex = Partition(inputArray, leftIndex, rightIndex, comparer);
+                if (partitionIndex == positionToFind)
                 {
-                    return partitionIndex;
+                    return inputArray[partitionIndex];
                 }
-                else if(partitionIndex < indexToFind)
+
+                if(positionToFind < partitionIndex)
                 {
                     rightIndex = partitionIndex - 1;
                 }
@@ -43,10 +47,11 @@ namespace Algorithms.Sorting
                 {
                     leftIndex = partitionIndex + 1;
                 }
+
             }
         }
 
-        private static int Partition<T>(T[] arrayToSort, int leftIndex, int rightIndex, Comparer<T> comparer, uint indexToFind)
+        private static int Partition<T>(T[] arrayToSort, int leftIndex, int rightIndex, Comparer<T> comparer)
         {
             int pivotIndex = new Random().Next(leftIndex, rightIndex);
             T pivotElement = arrayToSort[pivotIndex];
