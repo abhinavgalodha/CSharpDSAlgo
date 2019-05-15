@@ -45,7 +45,6 @@ namespace Core
         {
             if (obj == null)
                 throw new ArgumentNullException(paramName);
-
         }
 
         internal static void ThrowIfNullOrWhiteSpace(this string inputString, string paramName)
@@ -54,6 +53,7 @@ namespace Core
             {
                 throw new ArgumentNullException(paramName);
             }
+            
         }
 
     }
