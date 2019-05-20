@@ -7,6 +7,7 @@ using Xunit;
 
 namespace Algorithms.Test.Other
 {
+    [Trait("String", "Reverse")]
     public class StringReverseTests
     {
         [Fact]

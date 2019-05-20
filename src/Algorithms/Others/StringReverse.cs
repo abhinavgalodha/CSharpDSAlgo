@@ -9,7 +9,7 @@ namespace Algorithms.Others
         {
             var reversedString = inputString.ToCharArray();
 
-            inputString.ThrowIfNullOrWhiteSpace(nameof(inputString));
+            inputString.ThrowIfNull(nameof(inputString));
 
             // Implementation using finding Mid
             // Next, Check if the number of elements in the Array are even or odd
@@ -29,7 +29,8 @@ namespace Algorithms.Others
                 {
                     var leftIndex = midIndex - currentIndex;
                     var rightIndex = midIndex + currentIndex;
-                    reversedString[currentIndex] = reversedString[currentIndex-1];
+                    
+                    reversedString.Swap(leftIndex, rightIndex);
                 }
             }
             else
@@ -37,19 +38,10 @@ namespace Algorithms.Others
                 // Swap the elements w.r.t Mid
                 for (int currentIndex = 1; currentIndex <= midIndex; currentIndex++)
                 {
-                    int leftIndex = 0;
+                    var leftIndex = midIndex - currentIndex;
+                    var rightIndex = midIndex + currentIndex - 1;
 
-                    if (currentIndex == 1)
-                    {
-                        leftIndex = midIndex;
-                    }
-                    else
-                    {
-                        leftIndex = midIndex - currentIndex;
-                    }
-                        
-                    var rightIndex = midIndex +  currentIndex;
-                    reversedString[currentIndex] = reversedString[currentIndex-1];
+                    reversedString.Swap(leftIndex, rightIndex);
                 }
             }
             return new string(reversedString);

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using Core;
 
@@ -6,7 +7,7 @@ namespace Algorithms.Strings
 {
     public class PermutationsOfAString
     {
-        public List<string> Create(string inputString)
+        public static List<string> Create(string inputString)
         {
             // Not sure why it is not working..
             //inputString.ThrowIfNullOrWhiteSpace(inputString);
@@ -25,7 +26,7 @@ namespace Algorithms.Strings
             return new List<string>();
         }
 
-        private List<string> CreatePermutations(string inputString)
+        private static List<string> CreatePermutations(string inputString)
         {
             if (inputString.Length == 0)
             {
@@ -35,10 +36,8 @@ namespace Algorithms.Strings
             for (int index = 0; index < inputString.Length; index++)
             {
                 var nthCharacter = inputString[index];
-
-
             }
-
+            throw new NotImplementedException();
 
         }
     }
