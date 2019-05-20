@@ -16,34 +16,22 @@ namespace Algorithms.Others
             // If Odd, then Middle Element can be left and rest should be swapped
 
             var stringLength = inputString.Length;
-            var midIndex = stringLength/2;
+            var midIndex = stringLength / 2;
 
             static bool isOdd(int x) => x % 2 != 0;
 
             var isStringLengthOdd = isOdd(stringLength);
+            var effectiveRightIndexDecrement = isStringLengthOdd ? 0 : 1;
 
-            if (isStringLengthOdd)
+            // Swap the elements w.r.t Mid
+            for (int currentIndex = 1; currentIndex <= midIndex; currentIndex++)
             {
-                // Swap the elements w.r.t Mid
-                for (int currentIndex = 1; currentIndex <= midIndex; currentIndex++)
-                {
-                    var leftIndex = midIndex - currentIndex;
-                    var rightIndex = midIndex + currentIndex;
-                    
-                    reversedString.Swap(leftIndex, rightIndex);
-                }
-            }
-            else
-            {
-                // Swap the elements w.r.t Mid
-                for (int currentIndex = 1; currentIndex <= midIndex; currentIndex++)
-                {
-                    var leftIndex = midIndex - currentIndex;
-                    var rightIndex = midIndex + currentIndex - 1;
+                var leftIndex = midIndex - currentIndex;
+                var rightIndex = midIndex + currentIndex - effectiveRightIndexDecrement;
 
-                    reversedString.Swap(leftIndex, rightIndex);
-                }
+                reversedString.Swap(leftIndex, rightIndex);
             }
+
             return new string(reversedString);
         }
     }
