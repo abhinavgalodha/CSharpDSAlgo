@@ -41,13 +41,13 @@ namespace Core
             return result;
         }
 
-        internal static void ThrowIfNull<T>(this T obj, string paramName) where T : class
+        public static void ThrowIfNull<T>(this T obj, string paramName) where T : class
         {
             if (obj == null)
                 throw new ArgumentNullException(paramName);
         }
 
-        internal static void ThrowIfNullOrWhiteSpace(this string inputString, string paramName)
+        public static void ThrowIfNullOrWhiteSpace(this string inputString, string paramName = "inputParameter")
         {
             if (String.IsNullOrWhiteSpace(inputString))
             {
