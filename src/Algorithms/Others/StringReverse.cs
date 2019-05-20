@@ -21,6 +21,9 @@ namespace Algorithms.Others
             static bool isOdd(int x) => x % 2 != 0;
 
             var isStringLengthOdd = isOdd(stringLength);
+            // For String with Odd Count length, the Middle number can be ignored, but for even count length,
+            // the Middle element shouldn't be ignored. So by decrementing the right by 1 in case of event count we are also including
+            // the Mid point as well
             var effectiveRightIndexDecrement = isStringLengthOdd ? 0 : 1;
 
             // Swap the elements w.r.t Mid
