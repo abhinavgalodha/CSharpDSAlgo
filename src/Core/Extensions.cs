@@ -41,7 +41,7 @@ namespace Core
             return result;
         }
 
-        public static void ThrowIfNull<T>(this T obj, string paramName) where T : class
+        public static void ThrowIfNull<T>(this T obj, string paramName) 
         {
             if (obj == null)
                 throw new ArgumentNullException(paramName);
