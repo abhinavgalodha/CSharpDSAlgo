@@ -7,11 +7,18 @@ namespace DataStructures
 {
     public class LinkedList<T> : ICollection<T>
     {
-        public class LinkedListNode<T>
+        public class LinkedListNode<V> 
         {
-            public T Value { get; set; }
+            public V Value { get; }
 
-            public LinkedListNode<T>? Next { get; set; }
+            //  C# 8.0 Nullable Reference for Next
+            public LinkedListNode<V>? Next { get; set; }
+
+            
+            public LinkedListNode(V value)
+            {
+                this.Value = value;
+            }
         }
 
         // Head
@@ -20,10 +27,14 @@ namespace DataStructures
         // Tail
         private LinkedListNode<T> _tail;
 
+        private bool IsEmpty => _head == null;
+
+        private bool IsNotEmpty => !IsEmpty;
+
 
         public LinkedList()
         {
-                
+
         }
 
 
@@ -39,7 +50,22 @@ namespace DataStructures
 
         public void Add(T item)
         {
-            
+            item.ThrowIfNull(nameof(item));
+
+            // Create a new LinkedListNode from item
+            LinkedListNode<T> nodeToAdd = new LinkedListNode<T>(item);
+
+            if (IsNotEmpty)
+            {
+                var oldTail = _tail;
+                _tail = nodeToAdd;
+                oldTail.Next = nodeToAdd;
+            }
+            else
+            {
+                _head = nodeToAdd;
+                _tail = _head;
+            }
         }
 
         public void Clear()
