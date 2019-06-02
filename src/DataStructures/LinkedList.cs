@@ -48,12 +48,12 @@ namespace DataStructures
             return GetEnumerator();
         }
 
-        public void Add(T item)
+        public void Add(T itemToAdd)
         {
-            item.ThrowIfNull(nameof(item));
+            itemToAdd.ThrowIfNull(nameof(itemToAdd));
 
             // Create a new LinkedListNode from item
-            LinkedListNode<T> nodeToAdd = new LinkedListNode<T>(item);
+            LinkedListNode<T> nodeToAdd = new LinkedListNode<T>(itemToAdd);
 
             if (IsNotEmpty)
             {
@@ -83,9 +83,15 @@ namespace DataStructures
             throw new NotImplementedException();
         }
 
-        public bool Remove(T item)
+        public bool Remove(T itemToRemove)
         {
-            throw new NotImplementedException();
+            itemToRemove.ThrowIfNull(nameof(itemToRemove));
+
+            // Find the item in the linked List
+            while (expression)
+            {
+                
+            }
         }
 
         public int Count { get; }
