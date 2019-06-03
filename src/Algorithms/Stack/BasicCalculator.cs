@@ -3,7 +3,7 @@ using Core;
 
 namespace Algorithms.Stack
 {
-    class BasicCalculator
+    public class BasicCalculator
     {
 
         // https://leetcode.com/problems/basic-calculator/
