@@ -85,13 +85,15 @@ namespace DataStructures
 
         public bool Remove(T itemToRemove)
         {
-            itemToRemove.ThrowIfNull(nameof(itemToRemove));
+            //itemToRemove.ThrowIfNull(nameof(itemToRemove));
 
-            // Find the item in the linked List
-            while (expression)
-            {
+            //// Find the item in the linked List
+            //while (expression)
+            //{
                 
-            }
+            //}
+
+            throw new NotImplementedException();
         }
 
         public int Count { get; }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Core;
 
 namespace Algorithms.Stack
@@ -23,58 +24,77 @@ namespace Algorithms.Stack
             inputExpression.ThrowIfNullOrWhiteSpace(nameof(inputExpression));
 
             var result = 0.0;
-            Stack<int> stackOfOperands = new Stack<int>();
+            Stack<char> stackOfOperandsOrBraces = new Stack<char>();
             Stack<char> stackOfOperators = new Stack<char>();
             
-            foreach (var character in inputExpression)
+            // Insert the first Digit into the stack, this shouldn't be evaluated
+            // This can also include any left braces
+            var index = 0;
+            bool isFirstDigitVisited = false;
+
+            while(index < inputExpression.Length)
             {
+                char currentChar = inputExpression[index];
+
                 // Skip any empty space
-                if (character == ' ' ||
-                    character == '(')
+                if (currentChar == ' ')
                 {
                     continue;
                 }
-                if (character == ')')
+
+                if (currentChar == '(')
                 {
-                    Compute(stackOfOperands, stackOfOperators);
+                    stackOfOperandsOrBraces.Push(currentChar);
+                    continue;
                 }
-                if (char.IsDigit(character))
+
+                if(char.IsNumber(currentChar) && 
+                   isFirstDigitVisited == false)
                 {
-                    stackOfOperands.Push(int.Parse(character.ToString()));
+                    isFirstDigitVisited = true;
+                    stackOfOperandsOrBraces.Push(currentChar);
                 }
                 else
                 {
-                    // everything else should be operator
-                    stackOfOperators.Push(character);
+                    EvaluateAndPushResult(stackOfOperandsOrBraces, stackOfOperators, currentChar);
                 }
+
             }
 
-            result = stackOfOperands.Pop();
+            result = stackOfOperandsOrBraces.Pop();
 
             return result;
         }
 
-        private static void Compute(Stack<int> stackOfOperands, Stack<char> stackOfOperators)
+        private static void EvaluateAndPushResult(Stack<char> stackOfOperandsOrBraces, Stack<char> stackOfOperators, char currentChar)
         {
-            var leftElement = stackOfOperands.Pop();
-            var rightElement = stackOfOperands.Pop();
-            int result = 0;
-
-            var operatorToApply = stackOfOperators.Pop();
-
-            if (operatorToApply == '+')
+            if(currentChar == ')')
             {
-                result = leftElement + rightElement;
+                ComputeRightExpression(stackOfOperandsOrBraces, stackOfOperators);
             }
             else
             {
-                result = rightElement - leftElement;
-            }
+                var operatorToApply = stackOfOperators.Pop();
+                var rightOperand = stackOfOperandsOrBraces.Pop();
+                var leftOperand = stackOfOperandsOrBraces.Pop();
+                var result = 0;
 
-            stackOfOperands.Push(result);
-            
+                if (operatorToApply == '+')
+                {
+                    result = leftOperand + rightOperand ;
+                }
+                else
+                {
+                    result = leftOperand - rightOperand ;
+                }
+
+                stackOfOperandsOrBraces.Push(result.ToString()[0]);
+            }
         }
 
-        
+        private static void ComputeRightExpression(Stack<char> stackOfOperandsOrBraces, Stack<char> stackOfOperators)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
