@@ -29,10 +29,9 @@ namespace Algorithms.Stack
             
             // Insert the first Digit into the stack, this shouldn't be evaluated
             // This can also include any left braces
-            var index = 0;
             bool isFirstDigitVisited = false;
 
-            while(index < inputExpression.Length)
+            for (int index = 0; index < inputExpression.Length; index++)
             {
                 char currentChar = inputExpression[index];
 
@@ -45,6 +44,13 @@ namespace Algorithms.Stack
                 if (currentChar == '(')
                 {
                     stackOfOperandsOrBraces.Push(currentChar);
+                    continue;
+                }
+
+                if (currentChar == '+' ||
+                    currentChar == '-' )
+                {
+                    stackOfOperators.Push(currentChar);
                     continue;
                 }
 
@@ -75,8 +81,8 @@ namespace Algorithms.Stack
             else
             {
                 var operatorToApply = stackOfOperators.Pop();
-                var rightOperand = stackOfOperandsOrBraces.Pop();
-                var leftOperand = stackOfOperandsOrBraces.Pop();
+                var rightOperand = int.Parse(currentChar.ToString());
+                var leftOperand =  int.Parse(stackOfOperandsOrBraces.Pop().ToString());
                 var result = 0;
 
                 if (operatorToApply == '+')
