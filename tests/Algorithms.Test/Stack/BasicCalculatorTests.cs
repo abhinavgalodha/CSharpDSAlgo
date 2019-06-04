@@ -16,7 +16,7 @@ namespace Algorithms.Test.Stack
             var expectedOutput = 2;
 
             var actualOutput = BasicCalculator.Evaluate(inputExpression);
-            expectedOutput.Should().Be(expectedOutput);
+            actualOutput.Should().Be(expectedOutput);
 
         }
 
@@ -27,7 +27,7 @@ namespace Algorithms.Test.Stack
             var expectedOutput = 3;
 
             var actualOutput = BasicCalculator.Evaluate(inputExpression);
-            expectedOutput.Should().Be(expectedOutput);
+            actualOutput.Should().Be(expectedOutput);
         }
 
         [Fact]
@@ -37,7 +37,7 @@ namespace Algorithms.Test.Stack
             var expectedOutput = 23;
 
             var actualOutput = BasicCalculator.Evaluate(inputExpression);
-            expectedOutput.Should().Be(expectedOutput);
+            actualOutput.Should().Be(expectedOutput);
         }
     }
 }

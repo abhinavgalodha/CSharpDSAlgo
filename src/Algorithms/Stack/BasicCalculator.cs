@@ -117,8 +117,8 @@ namespace Algorithms.Stack
 
         private static int EvaluateMathematicalExpression(char operatorToApply, char rightOperandChar, char leftOperandChar)
         {
-            var rightOperand = (int)Char.GetNumericValue(rightOperandChar);
-            var leftOperand = (int)Char.GetNumericValue(leftOperandChar);
+            var rightOperand = (int.Parse(rightOperandChar.ToString()));
+            var leftOperand = (int.Parse(leftOperandChar.ToString()));
             var result = 0;
 
             if (operatorToApply == '+')
