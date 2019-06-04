@@ -80,27 +80,57 @@ namespace Algorithms.Stack
             }
             else
             {
+                var leftOperandChar = stackOfOperandsOrBraces.Pop();
+
+                // if left operand is left brace then we can't execute..
+                if (leftOperandChar == '(')
+                {
+                    stackOfOperandsOrBraces.Push(leftOperandChar);
+                    stackOfOperandsOrBraces.Push(currentChar);
+                    return;
+                }
+
                 var operatorToApply = stackOfOperators.Pop();
-                var rightOperand = int.Parse(currentChar.ToString());
-                var leftOperand =  int.Parse(stackOfOperandsOrBraces.Pop().ToString());
-                var result = 0;
+                int result = EvaluateMathematicalExpression(operatorToApply, currentChar, leftOperandChar);
 
-                if (operatorToApply == '+')
-                {
-                    result = leftOperand + rightOperand ;
-                }
-                else
-                {
-                    result = leftOperand - rightOperand ;
-                }
-
-                stackOfOperandsOrBraces.Push(result.ToString()[0]);
+                stackOfOperandsOrBraces.Push((char)result);
             }
         }
 
         private static void ComputeRightExpression(Stack<char> stackOfOperandsOrBraces, Stack<char> stackOfOperators)
         {
-            throw new NotImplementedException();
+            var rightOperand = stackOfOperandsOrBraces.Pop();
+            var operatorToApply = stackOfOperandsOrBraces.Pop();
+            if (operatorToApply == '(')
+            {
+                // if the expression is like (4), then push the result 4, directly into the stack
+                stackOfOperandsOrBraces.Push(rightOperand);
+            }
+            else
+            {
+                var leftOperand = stackOfOperandsOrBraces.Pop();
+                int result = EvaluateMathematicalExpression(operatorToApply, rightOperand, leftOperand);
+                stackOfOperandsOrBraces.Push((char)result);
+            }
+
+        }
+
+        private static int EvaluateMathematicalExpression(char operatorToApply, char rightOperandChar, char leftOperandChar)
+        {
+            var rightOperand = (int)Char.GetNumericValue(rightOperandChar);
+            var leftOperand = (int)Char.GetNumericValue(leftOperandChar);
+            var result = 0;
+
+            if (operatorToApply == '+')
+            {
+                result = leftOperand + rightOperand;
+            }
+            else
+            {
+                result = leftOperand - rightOperand;
+            }
+
+            return result;
         }
     }
 }
