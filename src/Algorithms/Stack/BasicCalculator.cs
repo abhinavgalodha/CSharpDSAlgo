@@ -93,7 +93,7 @@ namespace Algorithms.Stack
                 var operatorToApply = stackOfOperators.Pop();
                 int result = EvaluateMathematicalExpression(operatorToApply, currentChar, leftOperandChar);
 
-                stackOfOperandsOrBraces.Push((char)result);
+                stackOfOperandsOrBraces.Push(char.Parse(result.ToString()));
             }
         }
 
@@ -117,8 +117,8 @@ namespace Algorithms.Stack
 
         private static int EvaluateMathematicalExpression(char operatorToApply, char rightOperandChar, char leftOperandChar)
         {
-            var rightOperand = (int.Parse(rightOperandChar.ToString()));
-            var leftOperand = (int.Parse(leftOperandChar.ToString()));
+            var rightOperand = int.Parse(rightOperandChar.ToString());
+            var leftOperand = int.Parse(leftOperandChar.ToString());
             var result = 0;
 
             if (operatorToApply == '+')
