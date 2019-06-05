@@ -65,11 +65,24 @@ namespace Algorithms.Stack
                 }
 
             }
-            
 
-            var resultChar = stackOfOperandsOrBraces.Pop();
-            result = int.Parse(resultChar.ToString());
-            return result;
+            string resultString;
+            int finalResult = 0;
+
+            if (stackOfOperators.Count > 0)
+            {
+                var leftOperand = stackOfOperandsOrBraces.Pop();
+                var rightOperand = stackOfOperandsOrBraces.Pop();
+                var operatorToApply = stackOfOperators.Pop();
+                finalResult = EvaluateMathematicalExpression(operatorToApply, rightOperand, leftOperand);
+            }
+            else
+            {
+                resultString = stackOfOperandsOrBraces.Pop();
+                finalResult = int.Parse(resultString.ToString());    
+            }
+            
+            return finalResult;
         }
 
         private static void EvaluateAndPushResult(Stack<string> stackOfOperandsOrBraces, Stack<string> stackOfOperators, string currentChar)
@@ -108,8 +121,11 @@ namespace Algorithms.Stack
             }
             else
             {
-                var operatorToApply = stackOfOperandsOrBraces.Pop();
+                var operatorToApply = stackOfOperators.Pop();
                 int result = EvaluateMathematicalExpression(operatorToApply, rightOperand, leftOperand);
+
+                // Remove the "(" bracket as the right brace is evaluated.
+                stackOfOperandsOrBraces.Pop();
                 stackOfOperandsOrBraces.Push(result.ToString());
             }
 
