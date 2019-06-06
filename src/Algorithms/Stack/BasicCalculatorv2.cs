@@ -1,143 +1,127 @@
-﻿using Core;
+﻿using System;
+using Core;
 using System.Collections.Generic;
 
 namespace Algorithms.Stack
 {
+    // https://leetcode.com/problems/basic-calculator/
+    // Problem: 
+    //Implement a basic calculator to evaluate a simple expression string.
+    //The expression string may contain open ( and closing parentheses ), the plus + or minus sign -,
+    // non-negative integers and empty spaces .
+
+    // Example 3:
+    //Input: "(1+(4+5+2)-3)+(6+8)"
+    //Output: 23
+
     public class BasicCalculatorV2
     {
+        private const string LEFT_BRACE = "(";
+        private const string RIGHT_BRACE = ")";
+        private const string OPERATOR_PLUS = "+";
+        private const string OPERATOR_MINUS = "-";
+        private const string EMPTY_SPACE = " ";
 
-        // https://leetcode.com/problems/basic-calculator/
-        // Problem: 
-        //Implement a basic calculator to evaluate a simple expression string.
-        //The expression string may contain open ( and closing parentheses ), the plus + or minus sign -,
-        // non-negative integers and empty spaces .
-
-        // Example 3:
-
-        //Input: "(1+(4+5+2)-3)+(6+8)"
-        //Output: 23
-
-        public static double Evaluate(string inputExpression)
+        public static int Evaluate(string inputExpression)
         {
             // Gaurd Conditions
             inputExpression.ThrowIfNullOrWhiteSpace(nameof(inputExpression));
-            Stack<string> stackOfOperandsOrBraces = new Stack<string>();
-            Stack<string> stackOfOperators = new Stack<string>();
-
-            // Insert the first Digit into the stack, this shouldn't be evaluated
-            // This can also include any left braces
-            bool isFirstDigitVisited = false;
 
             foreach (var token in inputExpression)
             {
-                string currentChar = token.ToString();
+                string currentToken = token.ToString();
+            }
+        }
+        
 
-                switch (currentChar)
+        public class Evaluator
+        {
+            private Stack<int> _stackOfOperands;
+            private Stack<string> _stackOfOperators;
+
+            public Evaluator()
+            {
+                _stackOfOperands = new Stack<int>();
+                _stackOfOperators = new Stack<string>();
+            }
+
+
+            public int Evaluate(string inputExpression)
+            {
+                // This implementation is using Stack as a Basic Data Structure.
+                // A new stack is created whenever a left braces is started
+                // and ended when the right Brace is encountered.
+
+
+                // Gaurd Conditions
+                inputExpression.ThrowIfNullOrWhiteSpace(nameof(inputExpression));
+            
+                foreach (var token in inputExpression)
                 {
-                    // Skip any empty space
-                    case " ":
-                        continue;
-                    case "(":
-                        stackOfOperandsOrBraces.Push(currentChar);
-                        continue;
-                    case "+":
-                    case "-":
-                        stackOfOperators.Push(currentChar);
-                        continue;
+                    string currentToken = token.ToString();
+
+                    switch (currentToken)
+                    {
+                        // Skip any empty space
+                        case EMPTY_SPACE:
+                            continue;
+
+                        case OPERATOR_PLUS:
+                        case OPERATOR_MINUS:
+                            _stackOfOperators.Push(currentToken);
+                            continue;
+
+                        default:
+                            var currentInteger = int.Parse(currentToken);
+                            _stackOfOperands.Push(currentInteger);
+
+                            if (CannotEvaluate(_stackOfOperands, _stackOfOperators))
+                            {
+                                continue;
+                            }
+
+                            EvaluateAndUpdateStack(_stackOfOperands, _stackOfOperators);
+                        
+                            break;
+                    }
                 }
 
-                if (currentChar.IsInteger() &&
-                    isFirstDigitVisited == false)
+                int finalResult = _stackOfOperands.Pop();
+                return finalResult;
+            }
+
+            private static void EvaluateAndUpdateStack(Stack<int> stackOfOperands, Stack<string> stackOfOperators)
+            {
+                var rightOperand = stackOfOperands.Pop();
+                var leftOperand = stackOfOperands.Pop();
+                var operatorToApply = stackOfOperators.Pop();
+
+                var result = 0;
+
+                if (operatorToApply == OPERATOR_PLUS)
                 {
-                    isFirstDigitVisited = true;
-                    stackOfOperandsOrBraces.Push(currentChar);
+                    result = leftOperand + rightOperand;
                 }
                 else
                 {
-                    EvaluateAndPushResult(stackOfOperandsOrBraces, stackOfOperators, currentChar);
+                    result = leftOperand - rightOperand;
                 }
+
+                stackOfOperands.Push(result);
             }
 
-            int finalResult = 0;
-
-            if (stackOfOperators.Count > 0)
+            private static bool CannotEvaluate(Stack<int> stackOfOperands , Stack<string> stackOfOperators)
             {
-                string leftOperand = stackOfOperandsOrBraces.Pop();
-                string rightOperand = stackOfOperandsOrBraces.Pop();
-                string operatorToApply = stackOfOperators.Pop();
-                finalResult = EvaluateMathematicalExpression(operatorToApply, rightOperand, leftOperand);
-            }
-            else
-            {
-                var resultString = stackOfOperandsOrBraces.Pop();
-                finalResult = int.Parse(resultString.ToString());
-            }
+                // A stack can be evaluated if there is atleast 1 operator in operator stack 
+                // and a minimum of 2 operands in operands stack
 
-            return finalResult;
-        }
-
-        private static void EvaluateAndPushResult(Stack<string> stackOfOperandsOrBraces, Stack<string> stackOfOperators, string currentChar)
-        {
-            if (currentChar == ")")
-            {
-                ComputeRightExpression(stackOfOperandsOrBraces, stackOfOperators);
-            }
-            else
-            {
-                string leftOperandChar = stackOfOperandsOrBraces.Pop();
-
-                // if left operand is left brace then we can't execute..
-                if (leftOperandChar == "(")
+                if (stackOfOperators.Count > 0 && stackOfOperands.Count > 1)
                 {
-                    stackOfOperandsOrBraces.Push(leftOperandChar);
-                    stackOfOperandsOrBraces.Push(currentChar);
-                    return;
+                    return false;
                 }
 
-                string operatorToApply = stackOfOperators.Pop();
-                int result = EvaluateMathematicalExpression(operatorToApply, currentChar, leftOperandChar);
-
-                stackOfOperandsOrBraces.Push(result.ToString());
+                return true;
             }
-        }
-
-        private static void ComputeRightExpression(Stack<string> stackOfOperandsOrBraces, Stack<string> stackOfOperators)
-        {
-            string rightOperand = stackOfOperandsOrBraces.Pop();
-            string leftOperand = stackOfOperandsOrBraces.Pop();
-            if (leftOperand == "(")
-            {
-                // if the expression is like (4), then push the result 4, directly into the stack
-                stackOfOperandsOrBraces.Push(rightOperand);
-            }
-            else
-            {
-                string operatorToApply = stackOfOperators.Pop();
-                int result = EvaluateMathematicalExpression(operatorToApply, rightOperand, leftOperand);
-
-                // Remove the "(" bracket as the right brace is evaluated.
-                stackOfOperandsOrBraces.Pop();
-                stackOfOperandsOrBraces.Push(result.ToString());
-            }
-
-        }
-
-        private static int EvaluateMathematicalExpression(string operatorToApply, string rightOperandChar, string leftOperandChar)
-        {
-            int rightOperand = int.Parse(rightOperandChar);
-            int leftOperand = int.Parse(leftOperandChar);
-            int result = 0;
-
-            if (operatorToApply == "+")
-            {
-                result = leftOperand + rightOperand;
-            }
-            else
-            {
-                result = leftOperand - rightOperand;
-            }
-
-            return result;
         }
     }
 }

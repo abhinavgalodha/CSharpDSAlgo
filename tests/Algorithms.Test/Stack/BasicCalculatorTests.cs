@@ -15,7 +15,7 @@ namespace Algorithms.Test.Stack
             var inputExpression = "1 + 1";
             var expectedOutput = 2;
 
-            var actualOutput = BasicCalculator.Evaluate(inputExpression);
+            var actualOutput = BasicCalculatorV2.Evaluator.Evaluate(inputExpression);
             actualOutput.Should().Be(expectedOutput);
 
         }
@@ -26,7 +26,7 @@ namespace Algorithms.Test.Stack
             var inputExpression = " 2-1 + 2 ";
             var expectedOutput = 3;
 
-            var actualOutput = BasicCalculator.Evaluate(inputExpression);
+            var actualOutput = BasicCalculatorV2.Evaluator.Evaluate(inputExpression);
             actualOutput.Should().Be(expectedOutput);
         }
 
@@ -36,7 +36,7 @@ namespace Algorithms.Test.Stack
             var inputExpression = "(1+(4+5+2)-3)+(6+8)";
             var expectedOutput = 23;
 
-            var actualOutput = BasicCalculator.Evaluate(inputExpression);
+            var actualOutput = BasicCalculatorV2.Evaluator.Evaluate(inputExpression);
             actualOutput.Should().Be(expectedOutput);
         }
     }
