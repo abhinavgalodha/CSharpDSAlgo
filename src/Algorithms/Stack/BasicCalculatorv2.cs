@@ -27,17 +27,51 @@ namespace Algorithms.Stack
             // Gaurd Conditions
             inputExpression.ThrowIfNullOrWhiteSpace(nameof(inputExpression));
 
+            int result = 0;
+            Stack<Evaluator> stackOfEvaluators = new Stack<Evaluator>();
+
+            Evaluator currentEvaluator = new Evaluator();
+
             foreach (var token in inputExpression)
             {
                 string currentToken = token.ToString();
+
+                if (currentToken == EMPTY_SPACE)
+                {
+                    continue;
+                }
+
+                if (currentToken == LEFT_BRACE)
+                {
+                    currentEvaluator = new Evaluator();
+                    stackOfEvaluators.Push(currentEvaluator);
+                }
+                else if (currentToken == RIGHT_BRACE)
+                {
+                    int evaluatorResult = currentEvaluator.CalculateResult();
+                    stackOfEvaluators.Pop();
+                    bool isAnyStackOfEvaluatorPending = stackOfEvaluators.TryPop(out Evaluator previousEvaluator);
+                    if (isAnyStackOfEvaluatorPending)
+                    {
+                        previousEvaluator.ProcessToken(evaluatorResult.ToString());
+                    }
+                }
+                else
+                {
+                    currentEvaluator.ProcessToken(currentToken);
+                }
             }
+
+            // All tokens are processed, evaluate the results
+            result = currentEvaluator.CalculateResult();
+            return result;
         }
-        
+
 
         public class Evaluator
         {
-            private Stack<int> _stackOfOperands;
-            private Stack<string> _stackOfOperators;
+            private readonly Stack<int> _stackOfOperands;
+            private readonly Stack<string> _stackOfOperators;
 
             public Evaluator()
             {
@@ -46,7 +80,7 @@ namespace Algorithms.Stack
             }
 
 
-            public int Evaluate(string inputExpression)
+            public void ProcessToken(string inputToken)
             {
                 // This implementation is using Stack as a Basic Data Structure.
                 // A new stack is created whenever a left braces is started
@@ -54,18 +88,14 @@ namespace Algorithms.Stack
 
 
                 // Gaurd Conditions
-                inputExpression.ThrowIfNullOrWhiteSpace(nameof(inputExpression));
-            
-                foreach (var token in inputExpression)
+                inputToken.ThrowIfNullOrWhiteSpace(nameof(inputToken));
+
+                foreach (var token in inputToken)
                 {
                     string currentToken = token.ToString();
 
                     switch (currentToken)
                     {
-                        // Skip any empty space
-                        case EMPTY_SPACE:
-                            continue;
-
                         case OPERATOR_PLUS:
                         case OPERATOR_MINUS:
                             _stackOfOperators.Push(currentToken);
@@ -81,13 +111,9 @@ namespace Algorithms.Stack
                             }
 
                             EvaluateAndUpdateStack(_stackOfOperands, _stackOfOperators);
-                        
                             break;
                     }
                 }
-
-                int finalResult = _stackOfOperands.Pop();
-                return finalResult;
             }
 
             private static void EvaluateAndUpdateStack(Stack<int> stackOfOperands, Stack<string> stackOfOperators)
@@ -110,7 +136,7 @@ namespace Algorithms.Stack
                 stackOfOperands.Push(result);
             }
 
-            private static bool CannotEvaluate(Stack<int> stackOfOperands , Stack<string> stackOfOperators)
+            private static bool CannotEvaluate(Stack<int> stackOfOperands, Stack<string> stackOfOperators)
             {
                 // A stack can be evaluated if there is atleast 1 operator in operator stack 
                 // and a minimum of 2 operands in operands stack
@@ -121,6 +147,11 @@ namespace Algorithms.Stack
                 }
 
                 return true;
+            }
+
+            public int CalculateResult()
+            {
+                return _stackOfOperands.Pop();
             }
         }
     }
