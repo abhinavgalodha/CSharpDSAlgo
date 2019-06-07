@@ -50,7 +50,7 @@ namespace Algorithms.Stack
                 {
                     int evaluatorResult = currentEvaluator.CalculateResult();
                     stackOfEvaluators.Pop();
-                    bool isAnyStackOfEvaluatorPending = stackOfEvaluators.TryPop(out Evaluator previousEvaluator);
+                    bool isAnyStackOfEvaluatorPending = stackOfEvaluators.TryPeek(out Evaluator previousEvaluator);
                     if (isAnyStackOfEvaluatorPending)
                     {
                         previousEvaluator.ProcessToken(evaluatorResult.ToString());
