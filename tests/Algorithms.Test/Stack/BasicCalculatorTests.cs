@@ -39,5 +39,15 @@ namespace Algorithms.Test.Stack
             var actualOutput = BasicCalculatorV2.Evaluate(inputExpression);
             actualOutput.Should().Be(expectedOutput);
         }
+
+        [Fact]
+        public void OperandsAndBracesWithGreaterThan10()
+        {
+            var inputExpression = "99 + (1+(4+5+2)-3)+(6+8)";
+            var expectedOutput = 122;
+
+            var actualOutput = BasicCalculatorV2.Evaluate(inputExpression);
+            actualOutput.Should().Be(expectedOutput);
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using Core;
+﻿using Core;
 using System.Collections.Generic;
 
 namespace Algorithms.Stack
@@ -27,12 +26,13 @@ namespace Algorithms.Stack
             // Gaurd Conditions
             inputExpression.ThrowIfNullOrWhiteSpace(nameof(inputExpression));
 
-            int result = 0;
+            int result;
             Stack<Evaluator> stackOfEvaluators = new Stack<Evaluator>();
-
             Evaluator currentEvaluator = new Evaluator();
+            stackOfEvaluators.Push(currentEvaluator);
 
-            foreach (var token in inputExpression)
+            // TODO : Check how it works for a string like 11 (2 digits)
+            foreach (char token in inputExpression)
             {
                 string currentToken = token.ToString();
 
@@ -54,6 +54,7 @@ namespace Algorithms.Stack
                     if (isAnyStackOfEvaluatorPending)
                     {
                         previousEvaluator.ProcessToken(evaluatorResult.ToString());
+                        currentEvaluator = previousEvaluator;
                     }
                 }
                 else
@@ -63,8 +64,15 @@ namespace Algorithms.Stack
             }
 
             // All tokens are processed, evaluate the results
-            result = currentEvaluator.CalculateResult();
+            result = CalculateFinalResult(stackOfEvaluators);
             return result;
+        }
+
+        private static int CalculateFinalResult(Stack<Evaluator> stackOfEvaluators )
+        {
+            // All tokens are processed, evaluate the results
+            var lastStackOfEvaluator = stackOfEvaluators.Pop();
+            return lastStackOfEvaluator.CalculateResult();
         }
 
 
@@ -90,39 +98,35 @@ namespace Algorithms.Stack
                 // Gaurd Conditions
                 inputToken.ThrowIfNullOrWhiteSpace(nameof(inputToken));
 
-                foreach (var token in inputToken)
+
+                switch (inputToken)
                 {
-                    string currentToken = token.ToString();
+                    case OPERATOR_PLUS:
+                    case OPERATOR_MINUS:
+                        _stackOfOperators.Push(inputToken);
+                        break;
 
-                    switch (currentToken)
-                    {
-                        case OPERATOR_PLUS:
-                        case OPERATOR_MINUS:
-                            _stackOfOperators.Push(currentToken);
-                            continue;
+                    default:
+                        int currentInteger = int.Parse(inputToken);
+                        _stackOfOperands.Push(currentInteger);
 
-                        default:
-                            var currentInteger = int.Parse(currentToken);
-                            _stackOfOperands.Push(currentInteger);
-
-                            if (CannotEvaluate(_stackOfOperands, _stackOfOperators))
-                            {
-                                continue;
-                            }
-
-                            EvaluateAndUpdateStack(_stackOfOperands, _stackOfOperators);
+                        if (CannotEvaluate(_stackOfOperands, _stackOfOperators))
+                        {
                             break;
-                    }
+                        }
+
+                        EvaluateAndUpdateStack(_stackOfOperands, _stackOfOperators);
+                        break;
                 }
             }
 
             private static void EvaluateAndUpdateStack(Stack<int> stackOfOperands, Stack<string> stackOfOperators)
             {
-                var rightOperand = stackOfOperands.Pop();
-                var leftOperand = stackOfOperands.Pop();
-                var operatorToApply = stackOfOperators.Pop();
+                int rightOperand = stackOfOperands.Pop();
+                int leftOperand = stackOfOperands.Pop();
+                string operatorToApply = stackOfOperators.Pop();
 
-                var result = 0;
+                int result = 0;
 
                 if (operatorToApply == OPERATOR_PLUS)
                 {
