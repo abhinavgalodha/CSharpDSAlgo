@@ -37,42 +37,45 @@ namespace Algorithms.Stack
             for (var index = 0; index < inputExpression.Length; index++)
             {
                 char currentToken = inputExpression[index];
-                
+
                 if (char.IsNumber(currentToken))
                 {
-                    previousToken += currentToken;    
+                    previousToken += currentToken;
                     continue;
                 }
 
-                if(currentToken == EMPTY_SPACE)
-                {
-                    continue;    
-                }
-                
-                if (currentToken == LEFT_BRACE)
-                {
-                    currentEvaluator = new Evaluator();
-                    stackOfEvaluators.Push(currentEvaluator);
-                }
-                
-                if (currentToken == RIGHT_BRACE)
-                {
-                    int evaluatorResult = currentEvaluator.CalculateResult();
-                    stackOfEvaluators.Pop();
-                    bool isAnyStackOfEvaluatorPending = stackOfEvaluators.TryPeek(out Evaluator previousEvaluator);
-                    if (isAnyStackOfEvaluatorPending)
-                    {
-                        previousEvaluator.ProcessToken(evaluatorResult.ToString());
-                        currentEvaluator = previousEvaluator;
-                    }
-                }
-                else
+                if (!string.IsNullOrWhiteSpace(previousToken))
                 {
                     ProcessToken(currentEvaluator, previousToken);
-                    ProcessToken(currentEvaluator, currentToken.ToString());
                 }
 
                 previousToken = string.Empty;
+
+                switch (currentToken)
+                {
+                    case EMPTY_SPACE:
+                        break;
+
+                    case LEFT_BRACE:
+                        currentEvaluator = new Evaluator();
+                        stackOfEvaluators.Push(currentEvaluator);
+                        break;
+
+                    case RIGHT_BRACE:
+                        int evaluatorResult = currentEvaluator.CalculateResult();
+                        stackOfEvaluators.Pop();
+                        bool isAnyStackOfEvaluatorPending = stackOfEvaluators.TryPeek(out Evaluator previousEvaluator);
+                        if (isAnyStackOfEvaluatorPending)
+                        {
+                            previousEvaluator.ProcessToken(evaluatorResult.ToString());
+                            currentEvaluator = previousEvaluator;
+                        }
+                        break;
+
+                        default:
+                        ProcessToken(currentEvaluator, currentToken.ToString());    
+                        break;
+                }
             }
 
             if (!string.IsNullOrWhiteSpace(previousToken))
@@ -91,7 +94,7 @@ namespace Algorithms.Stack
             currentEvaluator.ProcessToken(token);
         }
 
-        private static int CalculateFinalResult(Stack<Evaluator> stackOfEvaluators )
+        private static int CalculateFinalResult(Stack<Evaluator> stackOfEvaluators)
         {
             // All tokens are processed, evaluate the results
             var lastStackOfEvaluator = stackOfEvaluators.Pop();
