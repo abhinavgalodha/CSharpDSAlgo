@@ -59,5 +59,15 @@ namespace Algorithms.Test.Stack
             var actualOutput = BasicCalculatorV2.Evaluate(inputExpression);
             actualOutput.Should().Be(expectedOutput);
         }
+
+        [Fact]
+        public void OperandsAndBracesBigNumbers()
+        {
+            var inputExpression = "990999 + 123912381297 - 888";
+            var expectedOutput = 123913371408;
+
+            var actualOutput = BasicCalculatorV2.Evaluate(inputExpression);
+            actualOutput.Should().Be(expectedOutput);
+        }
     }
 }

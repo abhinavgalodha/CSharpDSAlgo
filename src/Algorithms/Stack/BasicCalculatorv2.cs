@@ -21,7 +21,7 @@ namespace Algorithms.Stack
         private const string OPERATOR_MINUS = "-";
         private const char EMPTY_SPACE = ' ';
 
-        public static int Evaluate(string inputExpression)
+        public static long Evaluate(string inputExpression)
         {
             // Gaurd Conditions
             inputExpression.ThrowIfNullOrWhiteSpace(nameof(inputExpression));
@@ -62,7 +62,7 @@ namespace Algorithms.Stack
                         break;
 
                     case RIGHT_BRACE:
-                        int evaluatorResult = currentEvaluator.CalculateResult();
+                        long evaluatorResult = currentEvaluator.CalculateResult();
                         stackOfEvaluators.Pop();
                         bool isAnyStackOfEvaluatorPending = stackOfEvaluators.TryPeek(out Evaluator previousEvaluator);
                         if (isAnyStackOfEvaluatorPending)
@@ -85,7 +85,7 @@ namespace Algorithms.Stack
 
 
             // All tokens are processed, evaluate the results
-            int result = CalculateFinalResult(stackOfEvaluators);
+            long result = CalculateFinalResult(stackOfEvaluators);
             return result;
         }
 
@@ -94,7 +94,7 @@ namespace Algorithms.Stack
             currentEvaluator.ProcessToken(token);
         }
 
-        private static int CalculateFinalResult(Stack<Evaluator> stackOfEvaluators)
+        private static long CalculateFinalResult(Stack<Evaluator> stackOfEvaluators)
         {
             // All tokens are processed, evaluate the results
             var lastStackOfEvaluator = stackOfEvaluators.Pop();
@@ -104,12 +104,12 @@ namespace Algorithms.Stack
 
         public class Evaluator
         {
-            private readonly Stack<int> _stackOfOperands;
+            private readonly Stack<long> _stackOfOperands;
             private readonly Stack<string> _stackOfOperators;
 
             public Evaluator()
             {
-                _stackOfOperands = new Stack<int>();
+                _stackOfOperands = new Stack<long>();
                 _stackOfOperators = new Stack<string>();
             }
 
@@ -133,7 +133,7 @@ namespace Algorithms.Stack
                         break;
 
                     default:
-                        int currentInteger = int.Parse(inputToken);
+                        long currentInteger = long.Parse(inputToken);
                         _stackOfOperands.Push(currentInteger);
 
                         if (CannotEvaluate(_stackOfOperands, _stackOfOperators))
@@ -146,13 +146,13 @@ namespace Algorithms.Stack
                 }
             }
 
-            private static void EvaluateAndUpdateStack(Stack<int> stackOfOperands, Stack<string> stackOfOperators)
+            private static void EvaluateAndUpdateStack(Stack<long> stackOfOperands, Stack<string> stackOfOperators)
             {
-                int rightOperand = stackOfOperands.Pop();
-                int leftOperand = stackOfOperands.Pop();
+                long rightOperand = stackOfOperands.Pop();
+                long leftOperand = stackOfOperands.Pop();
                 string operatorToApply = stackOfOperators.Pop();
 
-                int result = 0;
+                long result = 0;
 
                 if (operatorToApply == OPERATOR_PLUS)
                 {
@@ -166,7 +166,7 @@ namespace Algorithms.Stack
                 stackOfOperands.Push(result);
             }
 
-            private static bool CannotEvaluate(Stack<int> stackOfOperands, Stack<string> stackOfOperators)
+            private static bool CannotEvaluate(Stack<long> stackOfOperands, Stack<string> stackOfOperators)
             {
                 // A stack can be evaluated if there is atleast 1 operator in operator stack 
                 // and a minimum of 2 operands in operands stack
@@ -179,7 +179,7 @@ namespace Algorithms.Stack
                 return true;
             }
 
-            public int CalculateResult()
+            public long CalculateResult()
             {
                 return _stackOfOperands.Pop();
             }
