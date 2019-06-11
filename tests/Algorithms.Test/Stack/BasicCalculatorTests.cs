@@ -49,5 +49,15 @@ namespace Algorithms.Test.Stack
             var actualOutput = BasicCalculatorV2.Evaluate(inputExpression);
             actualOutput.Should().Be(expectedOutput);
         }
+
+        [Fact]
+        public void OnlyOneOperand()
+        {
+            var inputExpression = "234567";
+            var expectedOutput = 122;
+
+            var actualOutput = BasicCalculatorV2.Evaluate(inputExpression);
+            actualOutput.Should().Be(expectedOutput);
+        }
     }
 }

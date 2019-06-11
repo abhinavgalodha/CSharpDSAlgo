@@ -15,38 +15,47 @@ namespace Algorithms.Stack
 
     public class BasicCalculatorV2
     {
-        private const string LEFT_BRACE = "(";
-        private const string RIGHT_BRACE = ")";
+        private const char LEFT_BRACE = '(';
+        private const char RIGHT_BRACE = ')';
         private const string OPERATOR_PLUS = "+";
         private const string OPERATOR_MINUS = "-";
-        private const string EMPTY_SPACE = " ";
+        private const char EMPTY_SPACE = ' ';
 
         public static int Evaluate(string inputExpression)
         {
             // Gaurd Conditions
             inputExpression.ThrowIfNullOrWhiteSpace(nameof(inputExpression));
 
-            int result;
+            // Char Processor
+
             Stack<Evaluator> stackOfEvaluators = new Stack<Evaluator>();
             Evaluator currentEvaluator = new Evaluator();
             stackOfEvaluators.Push(currentEvaluator);
+            string previousToken = "";
 
             // TODO : Check how it works for a string like 11 (2 digits)
-            foreach (char token in inputExpression)
+            for (var index = 0; index < inputExpression.Length; index++)
             {
-                string currentToken = token.ToString();
-
-                if (currentToken == EMPTY_SPACE)
+                char currentToken = inputExpression[index];
+                
+                if (char.IsNumber(currentToken))
                 {
+                    previousToken += currentToken;    
                     continue;
                 }
 
+                if(currentToken == EMPTY_SPACE)
+                {
+                    continue;    
+                }
+                
                 if (currentToken == LEFT_BRACE)
                 {
                     currentEvaluator = new Evaluator();
                     stackOfEvaluators.Push(currentEvaluator);
                 }
-                else if (currentToken == RIGHT_BRACE)
+                
+                if (currentToken == RIGHT_BRACE)
                 {
                     int evaluatorResult = currentEvaluator.CalculateResult();
                     stackOfEvaluators.Pop();
@@ -59,13 +68,27 @@ namespace Algorithms.Stack
                 }
                 else
                 {
-                    currentEvaluator.ProcessToken(currentToken);
+                    ProcessToken(currentEvaluator, previousToken);
+                    ProcessToken(currentEvaluator, currentToken.ToString());
                 }
+
+                previousToken = string.Empty;
             }
 
+            if (!string.IsNullOrWhiteSpace(previousToken))
+            {
+                ProcessToken(currentEvaluator, previousToken);
+            }
+
+
             // All tokens are processed, evaluate the results
-            result = CalculateFinalResult(stackOfEvaluators);
+            int result = CalculateFinalResult(stackOfEvaluators);
             return result;
+        }
+
+        private static void ProcessToken(Evaluator currentEvaluator, string token)
+        {
+            currentEvaluator.ProcessToken(token);
         }
 
         private static int CalculateFinalResult(Stack<Evaluator> stackOfEvaluators )
