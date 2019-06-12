@@ -17,9 +17,9 @@ namespace Algorithms.Stack
     {
         private const char LEFT_BRACE = '(';
         private const char RIGHT_BRACE = ')';
+        private const char EMPTY_SPACE = ' ';
         private const string OPERATOR_PLUS = "+";
         private const string OPERATOR_MINUS = "-";
-        private const char EMPTY_SPACE = ' ';
 
         public static long Evaluate(string inputExpression)
         {
@@ -27,11 +27,14 @@ namespace Algorithms.Stack
             inputExpression.ThrowIfNullOrWhiteSpace(nameof(inputExpression));
 
             // Char Processor
+            // This implementation is using Stack as a Basic Data Structure.
+            // A new stack is created whenever a left braces is started
+            // and ended when the right Brace is encountered.
 
             Stack<Evaluator> stackOfEvaluators = new Stack<Evaluator>();
             Evaluator currentEvaluator = new Evaluator();
             stackOfEvaluators.Push(currentEvaluator);
-            string previousToken = "";
+            string previousToken = string.Empty;
 
             // TODO : Check how it works for a string like 11 (2 digits)
             for (var index = 0; index < inputExpression.Length; index++)
@@ -116,15 +119,9 @@ namespace Algorithms.Stack
 
             public void ProcessToken(string inputToken)
             {
-                // This implementation is using Stack as a Basic Data Structure.
-                // A new stack is created whenever a left braces is started
-                // and ended when the right Brace is encountered.
-
-
                 // Gaurd Conditions
                 inputToken.ThrowIfNullOrWhiteSpace(nameof(inputToken));
-
-
+                
                 switch (inputToken)
                 {
                     case OPERATOR_PLUS:
@@ -146,6 +143,11 @@ namespace Algorithms.Stack
                 }
             }
 
+            /// <summary>
+            /// Evaluates the stack by applying the 2 operands with the operator
+            /// </summary>
+            /// <param name="stackOfOperands"></param>
+            /// <param name="stackOfOperators"></param>
             private static void EvaluateAndUpdateStack(Stack<long> stackOfOperands, Stack<string> stackOfOperators)
             {
                 long rightOperand = stackOfOperands.Pop();
