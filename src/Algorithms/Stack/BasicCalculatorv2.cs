@@ -1,4 +1,5 @@
-﻿using Core;
+﻿using System;
+using Core;
 using System.Collections.Generic;
 
 namespace Algorithms.Stack
@@ -23,7 +24,7 @@ namespace Algorithms.Stack
 
         public static long Evaluate(string inputExpression)
         {
-            // Gaurd Conditions
+            // Guard Conditions
             inputExpression.ThrowIfNullOrWhiteSpace(nameof(inputExpression));
 
             // Char Processor
@@ -31,16 +32,16 @@ namespace Algorithms.Stack
             // A new stack is created whenever a left braces is started
             // and ended when the right Brace is encountered.
 
-            Stack<Evaluator> stackOfEvaluators = new Stack<Evaluator>();
-            Evaluator currentEvaluator = new Evaluator();
-            stackOfEvaluators.Push(currentEvaluator);
+            Stack<MathExpressionEvaluator> stackOfEvaluators = new Stack<MathExpressionEvaluator>();
+            MathExpressionEvaluator currentMathExpressionEvaluator = new MathExpressionEvaluator();
+            stackOfEvaluators.Push(currentMathExpressionEvaluator);
+
             string previousToken = string.Empty;
 
-            // TODO : Check how it works for a string like 11 (2 digits)
-            for (var index = 0; index < inputExpression.Length; index++)
+            foreach (var currentToken in inputExpression)
             {
-                char currentToken = inputExpression[index];
-
+                // Handle the number greater than 10 digits, a char can process only single character or digit less than 10.
+                // 12 would come up as 2 characters '1' and '2'
                 if (char.IsNumber(currentToken))
                 {
                     previousToken += currentToken;
@@ -49,7 +50,7 @@ namespace Algorithms.Stack
 
                 if (!string.IsNullOrWhiteSpace(previousToken))
                 {
-                    ProcessToken(currentEvaluator, previousToken);
+                    ProcessToken(currentMathExpressionEvaluator, previousToken);
                 }
 
                 previousToken = string.Empty;
@@ -60,30 +61,30 @@ namespace Algorithms.Stack
                         break;
 
                     case LEFT_BRACE:
-                        currentEvaluator = new Evaluator();
-                        stackOfEvaluators.Push(currentEvaluator);
+                        currentMathExpressionEvaluator = new MathExpressionEvaluator();
+                        stackOfEvaluators.Push(currentMathExpressionEvaluator);
                         break;
 
                     case RIGHT_BRACE:
-                        long evaluatorResult = currentEvaluator.CalculateResult();
+                        long evaluatorResult = currentMathExpressionEvaluator.CalculateResult();
                         stackOfEvaluators.Pop();
-                        bool isAnyStackOfEvaluatorPending = stackOfEvaluators.TryPeek(out Evaluator previousEvaluator);
+                        bool isAnyStackOfEvaluatorPending = stackOfEvaluators.TryPeek(out MathExpressionEvaluator previousEvaluator);
                         if (isAnyStackOfEvaluatorPending)
                         {
                             previousEvaluator.ProcessToken(evaluatorResult.ToString());
-                            currentEvaluator = previousEvaluator;
+                            currentMathExpressionEvaluator = previousEvaluator;
                         }
                         break;
 
-                        default:
-                        ProcessToken(currentEvaluator, currentToken.ToString());    
+                    default:
+                        ProcessToken(currentMathExpressionEvaluator, currentToken.ToString());    
                         break;
                 }
             }
 
             if (!string.IsNullOrWhiteSpace(previousToken))
             {
-                ProcessToken(currentEvaluator, previousToken);
+                ProcessToken(currentMathExpressionEvaluator, previousToken);
             }
 
 
@@ -92,12 +93,12 @@ namespace Algorithms.Stack
             return result;
         }
 
-        private static void ProcessToken(Evaluator currentEvaluator, string token)
+        private static void ProcessToken(MathExpressionEvaluator currentMathExpressionEvaluator, string token)
         {
-            currentEvaluator.ProcessToken(token);
+            currentMathExpressionEvaluator.ProcessToken(token);
         }
 
-        private static long CalculateFinalResult(Stack<Evaluator> stackOfEvaluators)
+        private static long CalculateFinalResult(Stack<MathExpressionEvaluator> stackOfEvaluators)
         {
             // All tokens are processed, evaluate the results
             var lastStackOfEvaluator = stackOfEvaluators.Pop();
@@ -105,12 +106,14 @@ namespace Algorithms.Stack
         }
 
 
-        public class Evaluator
+        public class MathExpressionEvaluator
         {
+            // This class uses the stack of operands and operator to evaluate the expression.
+            // Whenever a operand is addded, it is evaluated eagerly provided there is an operator in the stack.
             private readonly Stack<long> _stackOfOperands;
             private readonly Stack<string> _stackOfOperators;
 
-            public Evaluator()
+            public MathExpressionEvaluator()
             {
                 _stackOfOperands = new Stack<long>();
                 _stackOfOperators = new Stack<string>();
@@ -130,7 +133,13 @@ namespace Algorithms.Stack
                         break;
 
                     default:
-                        long currentInteger = long.Parse(inputToken);
+                        bool conversionResult = long.TryParse(inputToken, out long currentInteger);
+
+                        if (!conversionResult)
+                        {
+                            throw new InvalidOperationException("The Token is invalid. It Can't be processed by the Mathematical Evaluator");
+                        }
+
                         _stackOfOperands.Push(currentInteger);
 
                         if (CannotEvaluate(_stackOfOperands, _stackOfOperators))
@@ -170,7 +179,7 @@ namespace Algorithms.Stack
 
             private static bool CannotEvaluate(Stack<long> stackOfOperands, Stack<string> stackOfOperators)
             {
-                // A stack can be evaluated if there is atleast 1 operator in operator stack 
+                // A stack can be evaluated if there is at least 1 operator in operator stack 
                 // and a minimum of 2 operands in operands stack
 
                 if (stackOfOperators.Count > 0 && stackOfOperands.Count > 1)
