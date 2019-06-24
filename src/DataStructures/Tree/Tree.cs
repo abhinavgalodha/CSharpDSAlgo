@@ -21,18 +21,4 @@ namespace DataStructures.Tree
 
     }
 
-    public class BinaryNode<T>
-    {
-        public T LeftNode {get;set;}
-
-        public T RightNode {get;set;}
-
-        public T Value { get;set;}
-
-    }
-
-    public class BinaryTree<T>
-    {
-        public BinaryTree<T> RootNode {get;set;}
-    }
 }
