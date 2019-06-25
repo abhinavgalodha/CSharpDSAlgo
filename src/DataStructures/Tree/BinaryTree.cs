@@ -9,14 +9,14 @@ namespace DataStructures.Tree
 
     public class BinaryTree<T>
     {
-        public BinaryTree<T> RootNode {get;set;}
+        //public BinaryNode<T> RootNode {get;set;}
 
         public BinaryTree(T[] arrayOfValuesInAnyOrder)
         {
             // How to create a Binary Search Tree, Provided we have any random array which is not sorted.
             //
 
-            Array
+            
 
         }
 
