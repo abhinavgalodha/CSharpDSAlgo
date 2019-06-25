@@ -46,7 +46,7 @@ namespace Core
         }
 
         /// <summary>
-        /// 
+        /// Checks whether a given values lies within lower and upper bounds.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="valueInBetween"></param>
@@ -68,6 +68,11 @@ namespace Core
                 return lowerBound.IsLessThan(valueInBetween) &&
                        upperBound.IsGreaterThan(valueInBetween);    
             }
+        }
+
+        public static bool IsNotInBetween<T>(this T valueInBetween, T lowerBound, T upperBound, bool includeEqualBounds = true)
+        {
+            return !IsInBetween(valueInBetween, lowerBound, upperBound, includeEqualBounds);
         }
     }
 }

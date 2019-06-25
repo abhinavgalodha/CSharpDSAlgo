@@ -27,21 +27,18 @@ namespace DataStructures.Tree
         {
             //  Invariants for a BST Should be met which is 
             // Left Node < Value < Right Node
-
-            if (leftNode.Value.IsLessThan(value) &&
-                rightNode.Value)
+            if (value.IsNotInBetween(leftNode.Value, rightNode.Value, false))
             {
-                
+                throw new ArgumentOutOfRangeException(
+                    "The inputs doesn't meet the BST property Left Node < Value < Right Node");
             }
-
-
+            
             Value = value;
             LeftNode = leftNode;
-            RightNode = rightNode;
-
-            
-            
+            RightNode = rightNode;    
         }
+
+        // TODO: Add a operator to simplify the comparison or working on LeftNode.Value with value. operator overloading..
 
         public BinaryNode<T> LeftNode {get;}
 
