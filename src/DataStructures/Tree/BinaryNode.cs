@@ -29,8 +29,7 @@ namespace DataStructures.Tree
             // Left Node < Value < Right Node
             if (value.IsNotInBetween(leftNode.Value, rightNode.Value, false))
             {
-                throw new ArgumentOutOfRangeException(
-                    "The inputs doesn't meet the BST property Left Node < Value < Right Node");
+                throw new ArgumentOutOfRangeException("The inputs doesn't meet the BST property Left Node < Value < Right Node");
             }
             
             Value = value;
