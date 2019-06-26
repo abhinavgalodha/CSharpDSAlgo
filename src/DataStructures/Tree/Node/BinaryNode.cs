@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Core;
 
-namespace DataStructures.Tree
+namespace DataStructures.Tree.Node
 {
-    public class BinaryNode<T> where T : IComparable<T>
+    public class BinaryNode<T> : LeafNode<T> where T : IComparable<T>
     {
-        
-
         /*
          * OBJECT CONSTRUCTION PROBLEM AND SOLUTION
          *
@@ -76,8 +73,6 @@ namespace DataStructures.Tree
         public BinaryNode<T> LeftNode {get;}
 
         public BinaryNode<T> RightNode {get;}
-
-        public T Value { get;}
 
         /// <summary>
         /// Is it the terminating leaf node or not?
