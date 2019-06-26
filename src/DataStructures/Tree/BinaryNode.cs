@@ -23,10 +23,44 @@ namespace DataStructures.Tree
 
         */
 
-        public BinaryNode(T value, BinaryNode<T> leftNode, BinaryNode<T> rightNode)
+        public BinaryNode(T value)
         {
+            value.ThrowIfNull(nameof(value));
+
+            // This is leaf node
+            this.Value = value;
+        }
+
+        public BinaryNode(T value, T leftNode, T rightNode)
+        {
+            value.ThrowIfNull(nameof(value));
+            leftNode.ThrowIfNull(nameof(leftNode));
+            rightNode.ThrowIfNull(nameof(rightNode));
+
+            //
             //  Invariants for a BST Should be met which is 
             // Left Node < Value < Right Node
+            //
+            if (value.IsNotInBetween(leftNode, rightNode, false))
+            {
+                throw new ArgumentOutOfRangeException("The inputs doesn't meet the BST property Left Node < Value < Right Node");
+            }
+            
+            Value = value;
+            //LeftNode = new Binar leftNode;
+            //RightNode = rightNode;    
+        }
+
+        public BinaryNode(T value, BinaryNode<T> leftNode, BinaryNode<T> rightNode)
+        {
+            value.ThrowIfNull(nameof(value));
+            leftNode.ThrowIfNull(nameof(leftNode));
+            rightNode.ThrowIfNull(nameof(rightNode));
+
+            //
+            //  Invariants for a BST Should be met which is 
+            // Left Node < Value < Right Node
+            //
             if (value.IsNotInBetween(leftNode.Value, rightNode.Value, false))
             {
                 throw new ArgumentOutOfRangeException("The inputs doesn't meet the BST property Left Node < Value < Right Node");
@@ -56,8 +90,6 @@ namespace DataStructures.Tree
         public bool IsAParentOfALeafNode => this.IsAParentNode &&
                                             this.LeftNode.IsLeafNode &&
                                             this.RightNode.IsLeafNode;
-
-
 
         public void InOrderTraverse(BinaryNode<T> nodeToTraverse, IList<T> listInOrderAfterTraversal)
         {
