@@ -20,35 +20,24 @@ namespace DataStructures.Tree.Node
 
         */
 
-        public BinaryNode(T value)
+        public BinaryNode(T value) : base(value)
         {
-            value.ThrowIfNull(nameof(value));
-
-            // This is leaf node
-            this.Value = value;
         }
 
-        public BinaryNode(T value, T leftNode, T rightNode)
+        public BinaryNode(T value, T leftNode, T rightNode) : this(value)
         {
             value.ThrowIfNull(nameof(value));
             leftNode.ThrowIfNull(nameof(leftNode));
             rightNode.ThrowIfNull(nameof(rightNode));
 
-            //
-            //  Invariants for a BST Should be met which is 
-            // Left Node < Value < Right Node
-            //
-            if (value.IsNotInBetween(leftNode, rightNode, false))
-            {
-                throw new ArgumentOutOfRangeException("The inputs doesn't meet the BST property Left Node < Value < Right Node");
-            }
-            
-            Value = value;
-            //LeftNode = new Binar leftNode;
-            //RightNode = rightNode;    
+            var leftBinaryNode = new BinaryNode<T>(leftNode);
+            var rightBinaryNode = new BinaryNode<T>(leftNode);
+
+            this.LeftNode = leftBinaryNode;
+            this.RightNode = rightBinaryNode;
         }
 
-        public BinaryNode(T value, BinaryNode<T> leftNode, BinaryNode<T> rightNode)
+        public BinaryNode(T value, BinaryNode<T> leftNode, BinaryNode<T> rightNode) : this(value)
         {
             value.ThrowIfNull(nameof(value));
             leftNode.ThrowIfNull(nameof(leftNode));
@@ -63,16 +52,16 @@ namespace DataStructures.Tree.Node
                 throw new ArgumentOutOfRangeException("The inputs doesn't meet the BST property Left Node < Value < Right Node");
             }
             
-            Value = value;
-            LeftNode = leftNode;
-            RightNode = rightNode;    
+            this.LeftNode = leftNode;
+            this.RightNode = rightNode;    
         }
+
 
         // TODO: Add a operator to simplify the comparison or working on LeftNode.Value with value. operator overloading..
 
-        public BinaryNode<T> LeftNode {get;}
+        public BinaryNode<T>? LeftNode {get;}
 
-        public BinaryNode<T> RightNode {get;}
+        public BinaryNode<T>? RightNode {get;}
 
         /// <summary>
         /// Is it the terminating leaf node or not?
