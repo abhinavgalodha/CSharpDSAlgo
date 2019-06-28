@@ -56,9 +56,21 @@ namespace DataStructures.Tree.Node
             this.RightNode = rightNode;    
         }
 
+        public BinaryNode(params T[] values) : this(default(T))
+        {
+            if (values.Length > 0)
+            {
+                var test = values[0];
+                this.Value = new LeafNode<T>(values[0]);
+            }
+            
+            for (int index = 1; index < values.Length; index++)
+            {
+                
+            }
+        }
 
         // TODO: Add a operator to simplify the comparison or working on LeftNode.Value with value. operator overloading..
-
         public BinaryNode<T>? LeftNode {get;}
 
         public BinaryNode<T>? RightNode {get;}
