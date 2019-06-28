@@ -56,25 +56,61 @@ namespace DataStructures.Tree.Node
             this.RightNode = rightNode;    
         }
 
-        public BinaryNode(params T[] values) : this(values[0]) 
-        {
-            for (int index = 1; index < values.Length; index++)
-            {
-                var currentNode = new BinaryNode<T>(values[index]);
+        //public BinaryNode(params T[] values) : this(values[0]) 
+        //{
+        //    for (int index = 1; index < values.Length; index++)
+        //    {
+        //        var currentNode = new BinaryNode<T>(values[index]);
 
-                if (currentNode.Value < this.Value)
+        //        if (currentNode.IsLessThan(this))
+        //        {
+        //            this.LeftNode
+        //        }
+
+        //        //ifthis.Value
+        //    }
+        //}
+
+        public BinaryNode<T> CreateABinaryNode(params T[] values)
+        {
+            if (values.Length == 0)
+            {
+                throw new ArgumentNullException("The Input doesn't contain any elements to create a Binary node");
+            }
+
+            // First element is taken as the Root Element
+            var rootNode = new BinaryNode<T>(values[0]);
+
+            foreach (var currentValue in values)
+            {
+                BinaryNode<T> currentNode = new BinaryNode<T>(currentValue);
+                if (currentNode.IsLessThan(rootNode))
+                {
+                    rootNode.LeftNode = currentNode;
+                }
+                else
                 {
                     
                 }
-
-                //ifthis.Value
             }
+
+            //for (int index = 1; index < values.Length; index++)
+            //{
+            //    var currentNode = new BinaryNode<T>(values[index]);
+
+            //    if (currentNode.IsLessThan(this))
+            //    {
+            //        this.LeftNode
+            //    }
+
+            //    //ifthis.Value
+            //}
         }
 
         // TODO: Add a operator to simplify the comparison or working on LeftNode.Value with value. operator overloading..
-        public BinaryNode<T>? LeftNode {get;}
+        public BinaryNode<T>? LeftNode {get; private set;}
 
-        public BinaryNode<T>? RightNode {get;}
+        public BinaryNode<T>? RightNode {get; private set;}
 
         /// <summary>
         /// Is it the terminating leaf node or not?
@@ -84,11 +120,18 @@ namespace DataStructures.Tree.Node
 
         public bool IsAParentNode => !this.IsLeafNode;
 
+        //
+        // Following property uses C# 8.0 Null reference on BinaryNode<T>? LeftNode
+        // Since we have designated that the left node, right node can be null
+        // If we remove the check this.LeftNode != null then the analyzer would warn of
+        // a possible null value dereference.
+        //
         public bool IsAParentOfALeafNode => this.IsAParentNode &&
+                                            this.LeftNode != null &&
                                             this.LeftNode.IsLeafNode &&
+                                            this.RightNode != null &&
                                             this.RightNode.IsLeafNode;
 
-        public static explicit operator T
 
         public void InOrderTraverse(BinaryNode<T> nodeToTraverse, IList<T> listInOrderAfterTraversal)
         {
@@ -97,6 +140,8 @@ namespace DataStructures.Tree.Node
             {
                 return;
             }
+
+            var test = this.LeftNode?.IsLeafNode;
 
             if (listInOrderAfterTraversal == null)
             {
