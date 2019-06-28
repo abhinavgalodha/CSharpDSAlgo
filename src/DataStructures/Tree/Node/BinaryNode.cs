@@ -56,17 +56,18 @@ namespace DataStructures.Tree.Node
             this.RightNode = rightNode;    
         }
 
-        public BinaryNode(params T[] values) : this(default(T))
+        public BinaryNode(params T[] values) : this(values[0]) 
         {
-            if (values.Length > 0)
-            {
-                var test = values[0];
-                this.Value = new LeafNode<T>(values[0]);
-            }
-            
             for (int index = 1; index < values.Length; index++)
             {
-                
+                var currentNode = new BinaryNode<T>(values[index]);
+
+                if (currentNode.Value < this.Value)
+                {
+                    
+                }
+
+                //ifthis.Value
             }
         }
 
@@ -86,6 +87,8 @@ namespace DataStructures.Tree.Node
         public bool IsAParentOfALeafNode => this.IsAParentNode &&
                                             this.LeftNode.IsLeafNode &&
                                             this.RightNode.IsLeafNode;
+
+        public static explicit operator T
 
         public void InOrderTraverse(BinaryNode<T> nodeToTraverse, IList<T> listInOrderAfterTraversal)
         {

@@ -11,5 +11,6 @@ namespace DataStructures.Tree.Node
             value.ThrowIfNull(nameof(value));
             this.Value = value;
         }
+
     }
 }
