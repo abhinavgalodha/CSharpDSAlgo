@@ -84,27 +84,17 @@ namespace DataStructures.Tree.Node
             foreach (var currentValue in values)
             {
                 BinaryNode<T> currentNode = new BinaryNode<T>(currentValue);
-                if (currentNode.IsLessThan(rootNode))
+                if (currentNode.Value.IsLessThan(rootNode.Value))
                 {
                     rootNode.LeftNode = currentNode;
                 }
                 else
                 {
-                    
+                    rootNode.RightNode = currentNode;
                 }
             }
 
-            //for (int index = 1; index < values.Length; index++)
-            //{
-            //    var currentNode = new BinaryNode<T>(values[index]);
-
-            //    if (currentNode.IsLessThan(this))
-            //    {
-            //        this.LeftNode
-            //    }
-
-            //    //ifthis.Value
-            //}
+            return rootNode;
         }
 
         // TODO: Add a operator to simplify the comparison or working on LeftNode.Value with value. operator overloading..
