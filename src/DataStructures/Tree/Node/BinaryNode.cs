@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Core;
 
 namespace DataStructures.Tree.Node
 {
+    
     public class BinaryNode<T> : LeafNode<T> where T : IComparable<T>
     {
         /*

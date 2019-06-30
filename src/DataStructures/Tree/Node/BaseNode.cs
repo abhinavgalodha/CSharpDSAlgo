@@ -1,5 +1,8 @@
-﻿namespace DataStructures.Tree.Node
+﻿using System.Diagnostics;
+
+namespace DataStructures.Tree.Node
 {
+    [DebuggerDisplay("NodeValue={Value}")]
     public abstract class BaseNode<T>
     {
         public abstract T Value {get;}
