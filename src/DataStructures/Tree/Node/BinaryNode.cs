@@ -71,7 +71,7 @@ namespace DataStructures.Tree.Node
         //    }
         //}
 
-        public BinaryNode<T> CreateABinaryNode(params T[] values)
+        public static BinaryNode<T> CreateABinaryNode(params T[] values)
         {
             if (values.Length == 0)
             {
@@ -81,8 +81,10 @@ namespace DataStructures.Tree.Node
             // First element is taken as the Root Element
             var rootNode = new BinaryNode<T>(values[0]);
 
-            foreach (var currentValue in values)
+            // Since the root node is already consumed, the counter starts at 1.
+            for (int index = 1; index < values.Length; index++)
             {
+                var currentValue = values[index];
                 BinaryNode<T> currentNode = new BinaryNode<T>(currentValue);
                 if (currentNode.Value.IsLessThan(rootNode.Value))
                 {
@@ -122,11 +124,23 @@ namespace DataStructures.Tree.Node
                                             this.RightNode != null &&
                                             this.RightNode.IsLeafNode;
 
+        public IEnumerable<T> TraverseInOrder()
+        {
+            List<T> listInOrderAfterTraversal = new List<T>();
+            TraverseInOrder(this, listInOrderAfterTraversal);
+            return listInOrderAfterTraversal;
+        }
 
-        public void InOrderTraverse(BinaryNode<T> nodeToTraverse, IList<T> listInOrderAfterTraversal)
+        public static IEnumerable<T> TraverseInOrder(BinaryNode<T> nodeToTraverse)
+        {
+            nodeToTraverse.ThrowIfNull(nameof(nodeToTraverse));
+            return nodeToTraverse.TraverseInOrder();
+        }
+
+        private void TraverseInOrder(BinaryNode<T> nodeToTraverse, IList<T> listInOrderAfterTraversal)
         {
             // Base condition
-            if (nodeToTraverse.IsLeafNode)
+            if (nodeToTraverse == null || nodeToTraverse.IsLeafNode)
             {
                 return;
             }
@@ -138,17 +152,29 @@ namespace DataStructures.Tree.Node
                 listInOrderAfterTraversal = new List<T>();
             }
 
-            InOrderTraverse(this.LeftNode, listInOrderAfterTraversal);
+            TraverseInOrder(this.LeftNode, listInOrderAfterTraversal);
             if (this.IsLeafNode)
             {
                 return;
             }
 
-            listInOrderAfterTraversal.Add(this.LeftNode.Value);
+            // C# 8, Possible Null Dereference suggested by analyzer, therefore checking..
+            if (this.LeftNode != null)
+            {
+                listInOrderAfterTraversal.Add(this.LeftNode.Value);    
+            }
+
+            
             listInOrderAfterTraversal.Add(this.Value);
 
-            InOrderTraverse(this.RightNode, listInOrderAfterTraversal);
-            listInOrderAfterTraversal.Add(this.RightNode.Value);
+            TraverseInOrder(this.RightNode, listInOrderAfterTraversal);
+
+            // C# 8, Possible Null Dereference suggested by analyzer, therefore checking..
+            if (this.RightNode != null)
+            {
+                listInOrderAfterTraversal.Add(this.RightNode.Value);    
+            }
+            
             
         }
 
