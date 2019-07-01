@@ -82,31 +82,24 @@ namespace DataStructures.Tree.Node
 
             // First element is taken as the Root Element
             var rootNode = new BinaryNode<T>(values[0]);
+            BinaryNode<T> currentNode = rootNode;
 
             // Since the root node is already consumed, the counter starts at 1.
             for (int index = 1; index < values.Length; index++)
             {
                 var currentValue = values[index];
-                BinaryNode<T> currentNode = new BinaryNode<T>(currentValue);
-                if (currentNode.Value.IsLessThan(rootNode.Value))
-                {
-                    rootNode.LeftNode = currentNode;
-                }
-                else
-                {
-                    rootNode.RightNode = currentNode;
-                }
+                AppendValueToBinaryNode(currentNode, currentValue);
             }
 
             return rootNode;
         }
 
-        private static BinaryNode<T> CreateABinaryNode(BinaryNode<T> binaryNode, T newValueToAdd)
+        private static void  AppendValueToBinaryNode(BinaryNode<T> binaryNode, T newValueToAdd)
         {
             BinaryNode<T> newBinaryNodeToAdd = new BinaryNode<T>(newValueToAdd);
             if (binaryNode.IsLeafNode)
             {
-                if (binaryNode.Value.IsLessThan(newBinaryNodeToAdd.Value))
+                if (newBinaryNodeToAdd.Value.IsLessThan(binaryNode.Value))
                 {
                     binaryNode.LeftNode = newBinaryNodeToAdd;
                 }
@@ -114,22 +107,18 @@ namespace DataStructures.Tree.Node
                 {
                     binaryNode.RightNode = newBinaryNodeToAdd;
                 }
-                return binaryNode;
+                return;
             }
-            else
+
+            if(binaryNode.HasLeftNode &&
+                newBinaryNodeToAdd.Value.IsLessThan(binaryNode.LeftNode.Value))
             {
-                if(binaryNode.Value.IsLessThan(newBinaryNodeToAdd.Value))
-                {
-                    return CreateABinaryNode(binaryNode,  newBinaryNodeToAdd.Value);
-                }
-
-                if (binaryNode.LeftNode != null)
-                {
-
-                }
-                CreateABinaryNode();
+                AppendValueToBinaryNode(binaryNode.LeftNode,  newBinaryNodeToAdd.Value);
             }
-            return binaryNode;
+            else if(binaryNode.HasRightNode)
+            {
+                AppendValueToBinaryNode(binaryNode.RightNode,  newBinaryNodeToAdd.Value);
+            }
         }
 
         // TODO: Add a operator to simplify the comparison or working on LeftNode.Value with value. operator overloading..
@@ -145,17 +134,23 @@ namespace DataStructures.Tree.Node
 
         public bool IsAParentNode => !this.IsLeafNode;
 
+        public bool HasLeftNode => this.LeftNode != null;
+
+        public bool HasRightNode => this.RightNode != null;
+
         //
         // Following property uses C# 8.0 Null reference on BinaryNode<T>? LeftNode
         // Since we have designated that the left node, right node can be null
         // If we remove the check this.LeftNode != null then the analyzer would warn of
         // a possible null value dereference.
         //
+        // Update: There has been new property added HasLeftNode, HasRightNode to handle the leftNode and RightNode null scenarios
+        //
         public bool IsAParentOfALeafNode => this.IsAParentNode &&
-                                            this.LeftNode != null &&
-                                            this.LeftNode.IsLeafNode &&
-                                            this.RightNode != null &&
-                                            this.RightNode.IsLeafNode;
+                                            (this.HasLeftNode &&
+                                            this.LeftNode.IsLeafNode) || 
+                                            (this.HasRightNode &&
+                                            this.RightNode.IsLeafNode);
 
         public IEnumerable<T> TraverseInOrder()
         {
