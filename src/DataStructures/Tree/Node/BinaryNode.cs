@@ -101,6 +101,37 @@ namespace DataStructures.Tree.Node
             return rootNode;
         }
 
+        private static BinaryNode<T> CreateABinaryNode(BinaryNode<T> binaryNode, T newValueToAdd)
+        {
+            BinaryNode<T> newBinaryNodeToAdd = new BinaryNode<T>(newValueToAdd);
+            if (binaryNode.IsLeafNode)
+            {
+                if (binaryNode.Value.IsLessThan(newBinaryNodeToAdd.Value))
+                {
+                    binaryNode.LeftNode = newBinaryNodeToAdd;
+                }
+                else
+                {
+                    binaryNode.RightNode = newBinaryNodeToAdd;
+                }
+                return binaryNode;
+            }
+            else
+            {
+                if(binaryNode.Value.IsLessThan(newBinaryNodeToAdd.Value))
+                {
+                    return CreateABinaryNode(binaryNode,  newBinaryNodeToAdd.Value);
+                }
+
+                if (binaryNode.LeftNode != null)
+                {
+
+                }
+                CreateABinaryNode();
+            }
+            return binaryNode;
+        }
+
         // TODO: Add a operator to simplify the comparison or working on LeftNode.Value with value. operator overloading..
         public BinaryNode<T>? LeftNode {get; private set;}
 

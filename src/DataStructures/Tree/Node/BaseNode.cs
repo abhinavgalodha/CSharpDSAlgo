@@ -2,6 +2,7 @@
 
 namespace DataStructures.Tree.Node
 {
+    // Adding the debugger display for easier debugging
     [DebuggerDisplay("NodeValue={Value}")]
     public abstract class BaseNode<T>
     {
