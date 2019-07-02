@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using DataStructures.Tree.Node;
 using Xunit;
+using FluentAssertions;
+
 
 namespace DataStructures.Test.Tree.Node
 {
@@ -11,6 +13,7 @@ namespace DataStructures.Test.Tree.Node
         {
             var binaryNode = BinaryNode<int>.CreateABinaryNode(1);
             var result = binaryNode.TraverseInOrder();
+            result.shou
         }
 
         [Fact]

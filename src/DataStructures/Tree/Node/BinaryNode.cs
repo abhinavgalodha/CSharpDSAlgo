@@ -190,41 +190,39 @@ namespace DataStructures.Tree.Node
 
         private static void TraverseInOrder(BinaryNode<T> nodeToTraverse, IList<T> listInOrderAfterTraversal)
         {
+            // In Order traversal
+            // Node Left -> Node Value -> Node Right
+            
+            // Start from Root
+            // Go To Left, 
+            // Move to penultimate node
+            // Left, Node, Right
+
             // Base condition
-            if (nodeToTraverse == null || nodeToTraverse.IsLeafNode)
+            if (nodeToTraverse == null)
             {
+                return;
+            }
+            if (nodeToTraverse.IsLeafNode)
+            {
+                if (listInOrderAfterTraversal == null)
+                {
+                    listInOrderAfterTraversal = new List<T>();
+                }
+                listInOrderAfterTraversal.Add(nodeToTraverse.Value);    
                 return;
             }
 
             // TODO : Handle the case of only 1 element in the Node
 
-            if (listInOrderAfterTraversal == null)
-            {
-                listInOrderAfterTraversal = new List<T>();
-            }
-
-            TraverseInOrder(nodeToTraverse.LeftNode, listInOrderAfterTraversal);
-            if (nodeToTraverse.IsLeafNode)
-            {
-                return;
-            }
-
-            // C# 8, Possible Null Dereference suggested by analyzer, therefore checking..
-            if (nodeToTraverse.LeftNode != null)
-            {
-                listInOrderAfterTraversal.Add(nodeToTraverse.LeftNode.Value);    
-            }
-
             
+            TraverseInOrder(nodeToTraverse.LeftNode, listInOrderAfterTraversal);
+
             listInOrderAfterTraversal.Add(nodeToTraverse.Value);
 
             TraverseInOrder(nodeToTraverse.RightNode, listInOrderAfterTraversal);
 
-            // C# 8, Possible Null Dereference suggested by analyzer, therefore checking..
-            if (nodeToTraverse.RightNode != null)
-            {
-                listInOrderAfterTraversal.Add(nodeToTraverse.RightNode.Value);    
-            }
         }
     }
 }
+
