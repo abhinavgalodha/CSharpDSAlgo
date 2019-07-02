@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using DataStructures.Tree.Node;
 using Xunit;
-using FluentAssertions;
+using Xunit.Sdk;
 
 
 namespace DataStructures.Test.Tree.Node
@@ -11,9 +12,10 @@ namespace DataStructures.Test.Tree.Node
         [Fact]
         public void CreateABinaryNodeWith1Value()
         {
-            var binaryNode = BinaryNode<int>.CreateABinaryNode(1);
+            List<int> listInputNumbers = new List<int>() {1};
+            var binaryNode = BinaryNode<int>.CreateABinaryNode(listInputNumbers.ToArray());
             var result = binaryNode.TraverseInOrder();
-            result.shou
+            result.ToList().SequenceEqual(listInputNumbers);
         }
 
         [Fact]
@@ -25,7 +27,10 @@ namespace DataStructures.Test.Tree.Node
         [Fact]
         public void CreateABinaryNodeWith3Values()
         {
-            BinaryNode<int>.CreateABinaryNode(2,1,3);
+            List<int> listInputNumbers = new List<int>() {2,1,3};
+            var binaryNode = BinaryNode<int>.CreateABinaryNode(listInputNumbers.ToArray());
+            var result = binaryNode.TraverseInOrder();
+            result.ToList().SequenceEqual(listInputNumbers);
         }
 
         [Fact]
@@ -33,6 +38,28 @@ namespace DataStructures.Test.Tree.Node
         {
             var createdBinaryNode = BinaryNode<int>.CreateABinaryNode(3,4,2,1,5);
             var inOrderTraversalList = createdBinaryNode.TraverseInOrder();
+
+        }
+
+
+        [Fact]
+        public void CreateARightOnlyUnbalancedTree()
+        {
+            List<int> listInputNumbers = new List<int>() {3,5,7,9,11};
+            var binaryNode = BinaryNode<int>.CreateABinaryNode(listInputNumbers.ToArray());
+            var result = binaryNode.TraverseInOrder();
+            result.ToList().SequenceEqual(listInputNumbers);
+
+        }
+
+
+        [Fact]
+        public void CreateLeftOnlyUnbalancedTree()
+        {
+            List<int> listInputNumbers = new List<int>() {30,15,7,4,1};
+            var binaryNode = BinaryNode<int>.CreateABinaryNode(listInputNumbers.ToArray());
+            var result = binaryNode.TraverseInOrder();
+            result.ToList().SequenceEqual(listInputNumbers);
 
         }
     }
