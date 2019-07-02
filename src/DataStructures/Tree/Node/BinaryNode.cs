@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Core;
+using DataStructures.Tree.Enum;
 
 namespace DataStructures.Tree.Node
 {
@@ -88,13 +89,23 @@ namespace DataStructures.Tree.Node
             for (int index = 1; index < values.Length; index++)
             {
                 var currentValue = values[index];
-                AppendValueToBinaryNode(currentNode, currentValue);
+                (BinaryNode<T> binaryNodeWhereTheValueCanBeAdded, BinaryNodePosition nodePosition)  = GetBinaryNodeToAppendTheValue(currentNode, currentValue);
+                switch (nodePosition)
+                {
+                    case BinaryNodePosition.Left:
+                        binaryNodeWhereTheValueCanBeAdded.LeftNode =  new BinaryNode<T>(currentValue);
+                        break;
+
+                    case BinaryNodePosition.Right:
+                        binaryNodeWhereTheValueCanBeAdded.RightNode =  new BinaryNode<T>(currentValue);
+                        break;
+                }
             }
 
             return rootNode;
         }
 
-        private static void  AppendValueToBinaryNode(BinaryNode<T> binaryNode, T newValueToAdd)
+        private static (BinaryNode<T>, BinaryNodePosition) GetBinaryNodeToAppendTheValue(BinaryNode<T> binaryNode, T newValueToAdd)
         {
             BinaryNode<T> newBinaryNodeToAdd = new BinaryNode<T>(newValueToAdd);
             if (binaryNode.IsLeafNode)
@@ -102,13 +113,11 @@ namespace DataStructures.Tree.Node
                 // If leaf node is the only node, then add to left or right depending if the element is less or greater than the Root value
                 if (newBinaryNodeToAdd.Value.IsLessThan(binaryNode.Value))
                 {
-                    binaryNode.LeftNode = newBinaryNodeToAdd;
+                    // Usage of C# 7.0 Tuples
+                    return (binaryNode, BinaryNodePosition.Left);
                 }
-                else
-                {
-                    binaryNode.RightNode = newBinaryNodeToAdd;
-                }
-                return;
+
+                return (binaryNode, BinaryNodePosition.Right);
             }
 
             // If you have reached here, then the node is not the leaf node and it needs further exploration
@@ -119,20 +128,18 @@ namespace DataStructures.Tree.Node
                 //
                 if (!binaryNode.HasLeftNode)
                 {
-                    binaryNode.LeftNode = newBinaryNodeToAdd;
-                    return;
+                    return (binaryNode, BinaryNodePosition.Left);
                 }
-                AppendValueToBinaryNode(binaryNode.LeftNode,  newBinaryNodeToAdd.Value);
+                return GetBinaryNodeToAppendTheValue(binaryNode.LeftNode,  newBinaryNodeToAdd.Value);
             }
             else
             {
                 // Go Right
                 if (!binaryNode.HasRightNode)
                 {
-                    binaryNode.RightNode = newBinaryNodeToAdd;
-                    return;
+                    return (binaryNode, BinaryNodePosition.Right);
                 }
-                AppendValueToBinaryNode(binaryNode.RightNode, newBinaryNodeToAdd.Value);
+                return GetBinaryNodeToAppendTheValue(binaryNode.RightNode, newBinaryNodeToAdd.Value);
             }
 
         }
