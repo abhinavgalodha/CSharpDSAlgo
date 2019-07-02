@@ -177,18 +177,18 @@ namespace DataStructures.Tree.Node
 
         public IEnumerable<T> TraverseInOrder()
         {
-            List<T> listInOrderAfterTraversal = new List<T>();
-            TraverseInOrder(this, listInOrderAfterTraversal);
-            return listInOrderAfterTraversal;
+            return BinaryNode<T>.TraverseInOrder(this);
         }
 
         public static IEnumerable<T> TraverseInOrder(BinaryNode<T> nodeToTraverse)
         {
             nodeToTraverse.ThrowIfNull(nameof(nodeToTraverse));
-            return nodeToTraverse.TraverseInOrder();
+            IList<T> listInOrderAfterTraversal = new List<T>();
+            TraverseInOrder(nodeToTraverse, listInOrderAfterTraversal);
+            return listInOrderAfterTraversal;
         }
 
-        private void TraverseInOrder(BinaryNode<T> nodeToTraverse, IList<T> listInOrderAfterTraversal)
+        private static void TraverseInOrder(BinaryNode<T> nodeToTraverse, IList<T> listInOrderAfterTraversal)
         {
             // Base condition
             if (nodeToTraverse == null || nodeToTraverse.IsLeafNode)
@@ -196,38 +196,35 @@ namespace DataStructures.Tree.Node
                 return;
             }
 
-            var test = this.LeftNode?.IsLeafNode;
+            // TODO : Handle the case of only 1 element in the Node
 
             if (listInOrderAfterTraversal == null)
             {
                 listInOrderAfterTraversal = new List<T>();
             }
 
-            TraverseInOrder(this.LeftNode, listInOrderAfterTraversal);
-            if (this.IsLeafNode)
+            TraverseInOrder(nodeToTraverse.LeftNode, listInOrderAfterTraversal);
+            if (nodeToTraverse.IsLeafNode)
             {
                 return;
             }
 
             // C# 8, Possible Null Dereference suggested by analyzer, therefore checking..
-            if (this.LeftNode != null)
+            if (nodeToTraverse.LeftNode != null)
             {
-                listInOrderAfterTraversal.Add(this.LeftNode.Value);    
+                listInOrderAfterTraversal.Add(nodeToTraverse.LeftNode.Value);    
             }
 
             
-            listInOrderAfterTraversal.Add(this.Value);
+            listInOrderAfterTraversal.Add(nodeToTraverse.Value);
 
-            TraverseInOrder(this.RightNode, listInOrderAfterTraversal);
+            TraverseInOrder(nodeToTraverse.RightNode, listInOrderAfterTraversal);
 
             // C# 8, Possible Null Dereference suggested by analyzer, therefore checking..
-            if (this.RightNode != null)
+            if (nodeToTraverse.RightNode != null)
             {
-                listInOrderAfterTraversal.Add(this.RightNode.Value);    
+                listInOrderAfterTraversal.Add(nodeToTraverse.RightNode.Value);    
             }
-            
-            
         }
-
     }
 }

@@ -1,4 +1,5 @@
-﻿using DataStructures.Tree.Node;
+﻿using System.Collections.Generic;
+using DataStructures.Tree.Node;
 using Xunit;
 
 namespace DataStructures.Test.Tree.Node
@@ -27,7 +28,9 @@ namespace DataStructures.Test.Tree.Node
         [Fact]
         public void CreateABinaryNodeWith5Values()
         {
-            BinaryNode<int>.CreateABinaryNode(3,4,2,1,5);
+            var createdBinaryNode = BinaryNode<int>.CreateABinaryNode(3,4,2,1,5);
+            var inOrderTraversalList = createdBinaryNode.TraverseInOrder();
+
         }
     }
 }
