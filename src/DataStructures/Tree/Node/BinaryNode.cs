@@ -99,6 +99,7 @@ namespace DataStructures.Tree.Node
             BinaryNode<T> newBinaryNodeToAdd = new BinaryNode<T>(newValueToAdd);
             if (binaryNode.IsLeafNode)
             {
+                // If leaf node is the only node, then add to left or right depending if the element is less or greater than the Root value
                 if (newBinaryNodeToAdd.Value.IsLessThan(binaryNode.Value))
                 {
                     binaryNode.LeftNode = newBinaryNodeToAdd;
@@ -110,15 +111,30 @@ namespace DataStructures.Tree.Node
                 return;
             }
 
-            if(binaryNode.HasLeftNode &&
-                newBinaryNodeToAdd.Value.IsLessThan(binaryNode.LeftNode.Value))
+            // If you have reached here, then the node is not the leaf node and it needs further exploration
+            if (newBinaryNodeToAdd.Value.IsLessThan(binaryNode.Value))
             {
+                //
+                // Go Left in tree 
+                //
+                if (!binaryNode.HasLeftNode)
+                {
+                    binaryNode.LeftNode = newBinaryNodeToAdd;
+                    return;
+                }
                 AppendValueToBinaryNode(binaryNode.LeftNode,  newBinaryNodeToAdd.Value);
             }
-            else if(binaryNode.HasRightNode)
+            else
             {
-                AppendValueToBinaryNode(binaryNode.RightNode,  newBinaryNodeToAdd.Value);
+                // Go Right
+                if (!binaryNode.HasRightNode)
+                {
+                    binaryNode.RightNode = newBinaryNodeToAdd;
+                    return;
+                }
+                AppendValueToBinaryNode(binaryNode.RightNode, newBinaryNodeToAdd.Value);
             }
+
         }
 
         // TODO: Add a operator to simplify the comparison or working on LeftNode.Value with value. operator overloading..
