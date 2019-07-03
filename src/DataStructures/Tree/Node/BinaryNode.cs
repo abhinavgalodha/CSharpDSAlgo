@@ -194,9 +194,10 @@ namespace DataStructures.Tree.Node
             // Node Left -> Node Value -> Node Right
             
             // Start from Root
-            // Go To Left, 
-            // Move to penultimate node
-            // Left, Node, Right
+            // Step 1: Keep Going Left
+            //         If Node is last node/leaf node, then Add it to the list
+            //         Next Add Parent
+            //  Keep Going Left and follow as on Step 1
 
             // Base condition
             if (nodeToTraverse == null)
