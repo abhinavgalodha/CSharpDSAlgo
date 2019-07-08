@@ -9,6 +9,8 @@ namespace DataStructures.Tree.Node
     
     public class BinaryNode<T> : LeafNode<T> where T : IComparable<T>
     {
+
+
         /*
          * OBJECT CONSTRUCTION PROBLEM AND SOLUTION
          *
@@ -22,6 +24,39 @@ namespace DataStructures.Tree.Node
         public T Value { get;set;}
 
         */
+
+        
+        // TODO: Add a operator to simplify the comparison or working on LeftNode.Value with value. operator overloading..
+        public BinaryNode<T>? LeftNode {get; private set;}
+
+        public BinaryNode<T>? RightNode {get; private set;}
+
+        /// <summary>
+        /// Is it the terminating leaf node or not?
+        /// If a node doesn't have Left or right Node, then it is a Leaf Node..
+        /// </summary>
+        public bool IsLeafNode => this.LeftNode == null && this.RightNode == null;
+
+        public bool IsAParentNode => !this.IsLeafNode;
+
+        public bool HasLeftNode => this.LeftNode != null;
+
+        public bool HasRightNode => this.RightNode != null;
+
+        //
+        // Following property uses C# 8.0 Null reference on BinaryNode<T>? LeftNode
+        // Since we have designated that the left node, right node can be null
+        // If we remove the check this.LeftNode != null then the analyzer would warn of
+        // a possible null value dereference.
+        //
+        // Update: There has been new property added HasLeftNode, HasRightNode to handle the leftNode and RightNode null scenarios
+        //
+        public bool IsAParentOfALeafNode => this.IsAParentNode &&
+                                            (this.HasLeftNode &&
+                                            this.LeftNode.IsLeafNode) || 
+                                            (this.HasRightNode &&
+                                            this.RightNode.IsLeafNode);
+
 
         public BinaryNode(T value) : base(value)
         {
@@ -143,37 +178,6 @@ namespace DataStructures.Tree.Node
             }
 
         }
-
-        // TODO: Add a operator to simplify the comparison or working on LeftNode.Value with value. operator overloading..
-        public BinaryNode<T>? LeftNode {get; private set;}
-
-        public BinaryNode<T>? RightNode {get; private set;}
-
-        /// <summary>
-        /// Is it the terminating leaf node or not?
-        /// If a node doesn't have Left or right Node, then it is a Leaf Node..
-        /// </summary>
-        public bool IsLeafNode => this.LeftNode == null && this.RightNode == null;
-
-        public bool IsAParentNode => !this.IsLeafNode;
-
-        public bool HasLeftNode => this.LeftNode != null;
-
-        public bool HasRightNode => this.RightNode != null;
-
-        //
-        // Following property uses C# 8.0 Null reference on BinaryNode<T>? LeftNode
-        // Since we have designated that the left node, right node can be null
-        // If we remove the check this.LeftNode != null then the analyzer would warn of
-        // a possible null value dereference.
-        //
-        // Update: There has been new property added HasLeftNode, HasRightNode to handle the leftNode and RightNode null scenarios
-        //
-        public bool IsAParentOfALeafNode => this.IsAParentNode &&
-                                            (this.HasLeftNode &&
-                                            this.LeftNode.IsLeafNode) || 
-                                            (this.HasRightNode &&
-                                            this.RightNode.IsLeafNode);
 
         public IEnumerable<T> TraverseInOrder()
         {

@@ -1,14 +1,18 @@
-﻿using System;
+﻿using DataStructures.Tree.Node;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Core;
 
 namespace DataStructures.Tree
 {
     
 
-    public class BinaryTree<T>
+    public class BinaryTree<T> where T : IComparable<T>
     {
+        public BinaryNode<T> RootNode {get; set;}
+
         // As per coursera princeton course
         //  TODO: Java definition. A BST is a reference to a root Node.
 
@@ -46,6 +50,26 @@ namespace DataStructures.Tree
             //Todo : Implement an Insert operation
             // If less, go left; if greater, go right; if null, insert.
             // throw new NotImplementedException();
+            this.RootNode = InsertRecursive(this.RootNode, valueToAdd);
+        }
+
+        private BinaryNode<T> InsertRecursive(BinaryNode<T> node, T valueToAdd)
+        {
+            // Base condition
+            if (node == null)
+            {
+                return new BinaryNode<T>(valueToAdd);
+            }
+
+            if (valueToAdd.IsLessThan(node.Value))
+            {
+                var leftNode = InsertRecursive(node.LeftNode, valueToAdd);
+                node = new BinaryNode<T>(node);
+            }
+            else if (valueToAdd.IsGreaterThan(node.Value))
+            {
+                InsertRecursive(node.RightNode, valueToAdd);
+            }
         }
 
         // TODO : Check if we need to implement the Get. Return value corresponding to given key, or null if no such key.
