@@ -59,7 +59,7 @@ namespace DataStructures.Tree.Node
             this.RightNode = rightNode;    
         }
 
-        //public BinaryNode(params T[] values) : this(values[0]) 
+        //public BinaryNode(params T[] values) : this(values[0])
         //{
         //    for (int index = 1; index < values.Length; index++)
         //    {
