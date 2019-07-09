@@ -58,6 +58,8 @@ namespace DataStructures.Tree.Node
                                             this.RightNode.IsLeafNode);
 
 
+        public Func<BinaryNode<T>,T, bool> SatisfiesBSTInvariant = (node, valueToAdd) => node.
+
         public BinaryNode(T value) : base(value)
         {
         }
@@ -138,6 +140,36 @@ namespace DataStructures.Tree.Node
             }
 
             return rootNode;
+        }
+
+        public void AddLeftNode(T valueToAdd)
+        {
+            // Valiation : Null Gaurd
+            valueToAdd.ThrowIfNull(nameof(valueToAdd));
+
+            // Valiation : If LeftNode already exists, it can't be added again
+            if (this.HasLeftNode)
+            {
+                throw new InvalidOperationException("The Node already has the left node. An Add operation can't update existing Node value.");
+            }
+
+            // validation: Left Node Invariant should always be met
+            // ToDo : This invariant can be done using FP, Declartively
+            if(valueToAdd.IsGreaterThan(this.Value))
+            {
+                throw new InvalidOperationException("The Left Node Should be less than the Parent Node.");
+            }
+
+            this.LeftNode = new BinaryNode<T>(valueToAdd);
+        }
+
+        public void AddRightNode(T valueToAdd)
+        {
+            valueToAdd.ThrowIfNull(nameof(valueToAdd));
+
+            // validation
+
+            this.RightNode = new BinaryNode<T>(valueToAdd);
         }
 
         private static (BinaryNode<T>, BinaryNodePosition) GetBinaryNodeToAppendTheValue(BinaryNode<T> binaryNode, T newValueToAdd)
