@@ -92,13 +92,13 @@ namespace DataStructures.Tree.Node
 
 
         private Func<BinaryNode<T>, T, BinaryNodePosition, bool> IsBSTInvariantMet = (node, valueToAdd, nodePosition) =>
-         {
+        {
              if (nodePosition == BinaryNodePosition.Left)
              {
-                 return node.Value.IsLessThanEqualTo(valueToAdd);
+                 return valueToAdd.IsLessThanEqualTo(node.Value);
              }
              return valueToAdd.IsGreaterThan(node.Value);
-         };
+        };
 
         public BinaryNode(T value) : base(value)
         {

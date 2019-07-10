@@ -7,12 +7,9 @@ namespace Algorithms.Tree
 {
     public class ValidateBst
     {
-        public static bool IsBst<T>(BinaryTree<T> binaryTree)
+        public static bool IsBst<T>(BinarySearchTree<T> binaryTree) where T : IComparable<T>
         {
             return false;
-
-            
-
         }
     }
 }

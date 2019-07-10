@@ -1,15 +1,10 @@
 ﻿using DataStructures.Tree.Node;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using Core;
 
 namespace DataStructures.Tree
 {
-    
-
-    public class BinaryTree<T> where T : IComparable<T>
+    public class BinarySearchTree<T> where T : IComparable<T>
     {
         public BinaryNode<T> RootNode {get; set;}
 
@@ -26,24 +21,24 @@ namespace DataStructures.Tree
 
         //public BinaryNode<T> RootNode {get;set;}
 
-        public BinaryTree(T[] arrayOfValuesInAnyOrder)
-        {
+        //public BinarySearchTree(T[] arrayOfValuesInAnyOrder)
+        //{
             // How to create a Binary Search Tree, Provided we have any random array which is not sorted.
             //
             
-        }
+        //}
 
         public static void Create()
         {
 
         }
 
-        public T BinarySearch(T valueToSearch)
-        {
+        //public T BinarySearchTree(T valueToSearch)
+        //{
             //Todo : Implement a Binary Search 
             // If less, go left; if greater, go right; if equal, search hit.
-            throw new NotImplementedException();
-        }
+            //throw new NotImplementedException();
+        //}
 
         public void Insert(T valueToAdd)
         {
@@ -83,7 +78,6 @@ namespace DataStructures.Tree
         //    else if (cmp == 0) return x.val;
         //}
         //return null;
-    }
 
     }
 }
