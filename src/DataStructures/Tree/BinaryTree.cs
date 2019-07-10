@@ -64,12 +64,14 @@ namespace DataStructures.Tree
             if (valueToAdd.IsLessThan(node.Value))
             {
                 var leftNode = InsertRecursive(node.LeftNode, valueToAdd);
-                node = new BinaryNode<T>(node);
+                node.AddLeafNodeToLeft(leftNode);
             }
             else if (valueToAdd.IsGreaterThan(node.Value))
             {
-                InsertRecursive(node.RightNode, valueToAdd);
+                var rightNode = InsertRecursive(node.RightNode, valueToAdd);
+                node.AddLeafNodeToRight(rightNode);
             }
+            return node;
         }
 
         // TODO : Check if we need to implement the Get. Return value corresponding to given key, or null if no such key.

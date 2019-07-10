@@ -6,7 +6,7 @@ using DataStructures.Tree.Enum;
 
 namespace DataStructures.Tree.Node
 {
-    
+
     public class BinaryNode<T> : LeafNode<T> where T : IComparable<T>
     {
 
@@ -25,11 +25,44 @@ namespace DataStructures.Tree.Node
 
         */
 
-        
-        // TODO: Add a operator to simplify the comparison or working on LeftNode.Value with value. operator overloading..
-        public BinaryNode<T>? LeftNode {get; private set;}
+        // TODO: Should LeftNode and RightNode be seperate classes with a relationship?
 
-        public BinaryNode<T>? RightNode {get; private set;}
+        private BinaryNode<T> m_LeftNode;
+        private BinaryNode<T> m_RightNode;
+
+        // TODO: Add a operator to simplify the comparison or working on LeftNode.Value with value. operator overloading..
+        public BinaryNode<T>? LeftNode
+        {
+            get => m_LeftNode;
+            private set
+            {
+                value.ThrowIfNull("LeftNode");
+
+                if (!IsBSTInvariantMet(this, value.Value, BinaryNodePosition.Left))
+                {
+                    throw new ArgumentException("The value of the left node has to be less than of the Parent Node");
+                };
+
+                m_LeftNode = value;
+            }
+        }
+
+        public BinaryNode<T>? RightNode
+        {
+            get => m_RightNode;
+            private set
+            {
+                value.ThrowIfNull("RightNode");
+
+                if (!IsBSTInvariantMet(this, value.Value, BinaryNodePosition.Right))
+                {
+                    throw new ArgumentException("The value of the Right node must be greater than the Parent Node");
+                };
+
+                m_RightNode = value;
+            }
+        }
+
 
         /// <summary>
         /// Is it the terminating leaf node or not?
@@ -53,12 +86,19 @@ namespace DataStructures.Tree.Node
         //
         public bool IsAParentOfALeafNode => this.IsAParentNode &&
                                             (this.HasLeftNode &&
-                                            this.LeftNode.IsLeafNode) || 
+                                            this.LeftNode.IsLeafNode) ||
                                             (this.HasRightNode &&
                                             this.RightNode.IsLeafNode);
 
 
-        public Func<BinaryNode<T>,T, bool> SatisfiesBSTInvariant = (node, valueToAdd) => node.
+        private Func<BinaryNode<T>, T, BinaryNodePosition, bool> IsBSTInvariantMet = (node, valueToAdd, nodePosition) =>
+         {
+             if (nodePosition == BinaryNodePosition.Left)
+             {
+                 return node.Value.IsLessThanEqualTo(valueToAdd);
+             }
+             return valueToAdd.IsGreaterThan(node.Value);
+         };
 
         public BinaryNode(T value) : base(value)
         {
@@ -91,11 +131,13 @@ namespace DataStructures.Tree.Node
             {
                 throw new ArgumentOutOfRangeException("The inputs doesn't meet the BST property Left Node < Value < Right Node");
             }
-            
+
             this.LeftNode = leftNode;
-            this.RightNode = rightNode;    
+            this.RightNode = rightNode;
         }
 
+
+        // TODO : DO we need a constructor with Params ?
         //public BinaryNode(params T[] values) : this(values[0])
         //{
         //    for (int index = 1; index < values.Length; index++)
@@ -126,15 +168,15 @@ namespace DataStructures.Tree.Node
             for (int index = 1; index < values.Length; index++)
             {
                 var currentValue = values[index];
-                (BinaryNode<T> binaryNodeWhereTheValueCanBeAdded, BinaryNodePosition nodePosition)  = GetBinaryNodeToAppendTheValue(currentNode, currentValue);
+                (BinaryNode<T> binaryNodeWhereTheValueCanBeAdded, BinaryNodePosition nodePosition) = GetBinaryNodeToAppendTheValue(currentNode, currentValue);
                 switch (nodePosition)
                 {
                     case BinaryNodePosition.Left:
-                        binaryNodeWhereTheValueCanBeAdded.LeftNode =  new BinaryNode<T>(currentValue);
+                        binaryNodeWhereTheValueCanBeAdded.LeftNode = new BinaryNode<T>(currentValue);
                         break;
 
                     case BinaryNodePosition.Right:
-                        binaryNodeWhereTheValueCanBeAdded.RightNode =  new BinaryNode<T>(currentValue);
+                        binaryNodeWhereTheValueCanBeAdded.RightNode = new BinaryNode<T>(currentValue);
                         break;
                 }
             }
@@ -142,34 +184,49 @@ namespace DataStructures.Tree.Node
             return rootNode;
         }
 
-        public void AddLeftNode(T valueToAdd)
+        public void AddLeafNodeToLeft(BinaryNode<T> nodeToAdd)
         {
-            // Valiation : Null Gaurd
-            valueToAdd.ThrowIfNull(nameof(valueToAdd));
+            // Validation : Null Gaurd
+            nodeToAdd.ThrowIfNull(nameof(nodeToAdd));
 
-            // Valiation : If LeftNode already exists, it can't be added again
+            // Validation : If LeftNode already exists, it can't be added again
             if (this.HasLeftNode)
             {
                 throw new InvalidOperationException("The Node already has the left node. An Add operation can't update existing Node value.");
             }
 
-            // validation: Left Node Invariant should always be met
-            // ToDo : This invariant can be done using FP, Declartively
-            if(valueToAdd.IsGreaterThan(this.Value))
-            {
-                throw new InvalidOperationException("The Left Node Should be less than the Parent Node.");
-            }
-
-            this.LeftNode = new BinaryNode<T>(valueToAdd);
+            this.LeftNode = nodeToAdd;
         }
 
-        public void AddRightNode(T valueToAdd)
+        public void AddLeafNodeToLeft(T valueToAdd)
+        {
+            // Validation : Null Gaurd
+            valueToAdd.ThrowIfNull(nameof(valueToAdd));
+            this.AddLeafNodeToLeft(new BinaryNode<T>(valueToAdd));
+        }
+
+        public void AddLeafNodeToRight(BinaryNode<T> nodeToAdd)
+        {
+            // Validation : Null Gaurd
+            nodeToAdd.ThrowIfNull(nameof(nodeToAdd));
+
+            // Validation : If LeftNode already exists, it can't be added again
+            if (this.HasRightNode)
+            {
+                throw new InvalidOperationException("The Node already has the left node. An Add operation can't update existing Node value.");
+            }
+
+            this.RightNode = nodeToAdd;
+        }
+
+        /// <summary>
+        /// Adds a value to the Right of the Existing Binary Node
+        /// </summary>
+        /// <param name="valueToAdd"></param>
+        public void AddLeafNodeToRight(T valueToAdd)
         {
             valueToAdd.ThrowIfNull(nameof(valueToAdd));
-
-            // validation
-
-            this.RightNode = new BinaryNode<T>(valueToAdd);
+            this.AddLeafNodeToRight(new BinaryNode<T>(valueToAdd));
         }
 
         private static (BinaryNode<T>, BinaryNodePosition) GetBinaryNodeToAppendTheValue(BinaryNode<T> binaryNode, T newValueToAdd)
@@ -197,7 +254,7 @@ namespace DataStructures.Tree.Node
                 {
                     return (binaryNode, BinaryNodePosition.Left);
                 }
-                return GetBinaryNodeToAppendTheValue(binaryNode.LeftNode,  newBinaryNodeToAdd.Value);
+                return GetBinaryNodeToAppendTheValue(binaryNode.LeftNode, newBinaryNodeToAdd.Value);
             }
             else
             {
@@ -228,7 +285,7 @@ namespace DataStructures.Tree.Node
         {
             // In Order traversal
             // Node Left -> Node Value -> Node Right
-            
+
             // Start from Root
             // Step 1: Keep Going Left
             //         If Node is last node/leaf node, then Add it to the list
@@ -246,13 +303,13 @@ namespace DataStructures.Tree.Node
                 {
                     listInOrderAfterTraversal = new List<T>();
                 }
-                listInOrderAfterTraversal.Add(nodeToTraverse.Value);    
+                listInOrderAfterTraversal.Add(nodeToTraverse.Value);
                 return;
             }
 
             // TODO : Handle the case of only 1 element in the Node
 
-            
+
             TraverseInOrder(nodeToTraverse.LeftNode, listInOrderAfterTraversal);
 
             listInOrderAfterTraversal.Add(nodeToTraverse.Value);

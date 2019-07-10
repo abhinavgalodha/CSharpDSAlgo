@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5D305B79-E3EB-4B76-9080-2E1A58D1AF57}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{83C52F84-E539-45E7-9C3C-CFE6356BAB15}"
+	ProjectSection(SolutionItems) = preProject
+		tests.md = tests.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "src\Core\Core.csproj", "{437162D4-9552-4026-8415-F4EC40AFED56}"
 EndProject
