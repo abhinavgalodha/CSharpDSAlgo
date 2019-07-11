@@ -6,7 +6,13 @@ namespace DataStructures.Tree
 {
     public class BinarySearchTree<T> where T : IComparable<T>
     {
-        public BinaryNode<T> RootNode {get; set;}
+
+        public BinarySearchTree(T rootNodeValue)
+        {
+            this.RootNode = new BinaryNode<T>(rootNodeValue);
+        }
+
+        public BinaryNode<T> RootNode {get; private set;}
 
         // As per coursera princeton course
         //  TODO: Java definition. A BST is a reference to a root Node.
@@ -85,30 +91,66 @@ namespace DataStructures.Tree
             //Todo : Implement an Insert operation
             // If less, go left; if greater, go right; if null, insert.
             // throw new NotImplementedException();
-            this.RootNode = InsertRecursive(this.RootNode, valueToAdd);
+            InsertRecursive(this.RootNode, valueToAdd);
         }
 
         private BinaryNode<T> InsertRecursive(BinaryNode<T> node, T valueToAdd)
         {
             // Base condition
-            if (node == null)
+            //if (node == null)
+            //{
+            //    return new BinaryNode<T>(valueToAdd);
+            //}
+
+            //if (valueToAdd.IsLessThan(node.Value))
+            //{
+            //    var leftNode = InsertRecursive(node.LeftNode, valueToAdd);
+            //    node.AddLeafNodeToLeft(leftNode);
+            //}
+            //else if (valueToAdd.IsGreaterThan(node.Value))
+            //{
+            //    var rightNode = InsertRecursive(node.RightNode, valueToAdd);
+            //    node.AddLeafNodeToRight(rightNode);
+            //}
+
+            while (true)
             {
-                return new BinaryNode<T>(valueToAdd);
+                if (node == null)
+                {
+                    return new BinaryNode<T>(valueToAdd);
+                }
+
+                if (valueToAdd.IsLessThan(node.Value))
+                {
+                    node = node.LeftNode;
+                    var leftNode = InsertRecursive(node.LeftNode, valueToAdd);
+                    node.AddLeafNodeToLeft(leftNode);
+                }
+                else if (valueToAdd.IsGreaterThan(node.Value))
+                {
+                    var rightNode = InsertRecursive(node.RightNode, valueToAdd);
+                    node.AddLeafNodeToRight(rightNode);
+                }   
             }
 
-            if (valueToAdd.IsLessThan(node.Value))
-            {
-                var leftNode = InsertRecursive(node.LeftNode, valueToAdd);
-                node.AddLeafNodeToLeft(leftNode);
-            }
-            else if (valueToAdd.IsGreaterThan(node.Value))
-            {
-                var rightNode = InsertRecursive(node.RightNode, valueToAdd);
-                node.AddLeafNodeToRight(rightNode);
-            }
             return node;
         }
 
+        /// <summary>
+        /// Gets the minimum element in the tree
+        /// The leftmost element is the minimum element
+        /// </summary>
+        /// <returns></returns>
+        public T Minimum()
+        {
+            BinaryNode<T> binaryNode = this.RootNode;
+            while (binaryNode.HasLeftNode)
+            {
+                binaryNode = binaryNode.LeftNode;
+            }
+
+            return binaryNode.Value;
+        }
 
 
     }

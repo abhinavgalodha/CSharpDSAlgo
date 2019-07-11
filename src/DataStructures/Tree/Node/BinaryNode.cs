@@ -213,7 +213,7 @@ namespace DataStructures.Tree.Node
             // Validation : If LeftNode already exists, it can't be added again
             if (this.HasRightNode)
             {
-                throw new InvalidOperationException("The Node already has the left node. An Add operation can't update existing Node value.");
+                throw new InvalidOperationException("The Node already has the Right node. An Add operation can't update existing Node value.");
             }
 
             this.RightNode = nodeToAdd;
