@@ -60,7 +60,7 @@ namespace DataStructures.Test.Tree
             bst.Insert(1);
 
             // Assert
-            bst.RootNode.Value.Should().Be(1);
+            bst.Minimum().Should().Be(1);
         }
 
     }

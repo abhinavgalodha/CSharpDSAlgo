@@ -89,16 +89,16 @@ namespace DataStructures.Tree
         // Rank -  How many keys < k
         //
 
-        public void Insert(T valueToAdd)
+        public void InsertOld(T valueToAdd)
         {
             //Todo : Implement an Insert operation
             // If less, go left; if greater, go right; if null, insert.
             InsertRecursive(this.RootNode, valueToAdd);
         }
-        public void InsertV1(T valueToAdd)
+        public void Insert(T valueToAdd)
         {
             // Get the Value to add
-            var parentNode = GetParentNodeToInsert(valueToAdd);
+            AddLeafNodeToParentNode(valueToAdd);
             //
         }
 
@@ -125,7 +125,7 @@ namespace DataStructures.Tree
         }
 
 
-        private BinaryNode<T> GetParentNodeToInsert(T valueToAdd)
+        public void AddLeafNodeToParentNode(T valueToAdd)
         {
             // TODO: Handle the scenario if valueToAdd is equal to any existing Node.
             // Should it be added to left or right?
@@ -138,15 +138,20 @@ namespace DataStructures.Tree
                 if (valueToAdd.IsLessThan(node.Value))
                 {
                     node = node.LeftNode;
-                    
+                    if (node == null)
+                    {
+                        parentNode.AddLeafNodeToLeft(valueToAdd);
+                    }
                 }
                 else if (valueToAdd.IsGreaterThan(node.Value))
                 {
                     node = node.RightNode;
-                }   
+                    if (node == null)
+                    {
+                        parentNode.AddLeafNodeToRight(valueToAdd);
+                    }
+                }
             }
-
-            return parentNode;
         }
 
         /// <summary>
