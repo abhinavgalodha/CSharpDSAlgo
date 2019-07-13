@@ -4,6 +4,8 @@ using Xunit;
 
 namespace DataStructures.Test.Tree
 {
+    [Trait("Category", "BST")]
+    [Trait("Category", "Min")]
     public partial class BinaryTreeTest
     {
         [Fact]
@@ -27,7 +29,7 @@ namespace DataStructures.Test.Tree
             bst.Insert(6);
 
             // Assert
-            bst.Maximum().Should().Be(4);
+            bst.Minimum().Should().Be(4);
         }
 
         [Fact]
@@ -43,7 +45,7 @@ namespace DataStructures.Test.Tree
             bst.Insert(9);
 
             // Assert
-            bst.Maximum().Should().Be(5);
+            bst.Minimum().Should().Be(5);
         }
 
         [Fact]

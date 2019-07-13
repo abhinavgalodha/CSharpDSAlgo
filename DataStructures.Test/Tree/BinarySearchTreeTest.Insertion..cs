@@ -4,6 +4,8 @@ using Xunit;
 
 namespace DataStructures.Test.Tree
 {
+    [Trait("Category", "BST")]
+    [Trait("Category", "Insertion")]
     public partial class BinaryTreeTest
     {
         [Fact]
