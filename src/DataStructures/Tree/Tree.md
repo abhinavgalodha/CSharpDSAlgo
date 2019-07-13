@@ -51,3 +51,9 @@ We will use the language construct of properties with setter to make sure that t
             }
         }
 ```   
+
+## TODO : Should LeftNode and RightNode be seperate classes as both have a defining invariants
+
+## TODO : Is there a generic implementation of a class with the Inverse Relationship
+
+e.g left node is the inverse of the right node, So define a class and then have an inverse representation of the same class

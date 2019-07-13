@@ -7,17 +7,17 @@ namespace DataStructures.Test.Tree
     public partial class BinaryTreeTest
     {
         [Fact]
-        public void Should_ReturnMinAsRoot_WhenOnlyElementIsRoot()
+        public void Should_ReturnMaxAsRoot_WhenOnlyElementIsRoot()
         {
             // Act
             BinarySearchTree<int> bst = new BinarySearchTree<int>(5);
 
             // Assert
-            bst.Minimum().Should().Be(5);
+            bst.Maximum().Should().Be(5);
         }
 
         [Fact]
-        public void Should_ReturnMinAsLeftmost_WhenLeftSubTreeIsPresent()
+        public void Should_ReturnMaxAsRightMost_WhenRightSubTreeIsPresent()
         {
             // Act
             BinarySearchTree<int> bst = new BinarySearchTree<int>(5);
@@ -27,27 +27,27 @@ namespace DataStructures.Test.Tree
             bst.Insert(6);
 
             // Assert
-            bst.Minimum().Should().Be(4);
+            bst.Maximum().Should().Be(6);
         }
 
         [Fact]
-        public void Should_ReturnMinAsRoot_WhenOnlyRightSubTreeIsPresent()
+        public void Should_ReturnMaxAsRoot_WhenOnlyLeftSubTreeIsPresent()
         {
             // Act
             BinarySearchTree<int> bst = new BinarySearchTree<int>(5);
 
             // Arrange
-            bst.Insert(6);
-            bst.Insert(7);
-            bst.Insert(8);
-            bst.Insert(9);
+            bst.Insert(4);
+            bst.Insert(3);
+            bst.Insert(2);
+            bst.Insert(1);
 
             // Assert
-            bst.Minimum().Should().Be(5);
+            bst.Maximum().Should().Be(5);
         }
 
         [Fact]
-        public void Should_ReturnMinAsLeftmost_WhenLeftSubTreeIsBig()
+        public void Should_ReturnMaxAsRightMost_WhenRightSubTreeIsBig()
         {
             // Act
             BinarySearchTree<int> bst = new BinarySearchTree<int>(10);
@@ -56,13 +56,12 @@ namespace DataStructures.Test.Tree
             bst.Insert(6);
             bst.Insert(20);
             bst.Insert(5);
-            bst.Insert(8);
+            bst.Insert(80);
             bst.Insert(1);
 
             // Assert
-            bst.Minimum().Should().Be(1);
+            bst.Minimum().Should().Be(80);
         }
 
     }
 }
-
