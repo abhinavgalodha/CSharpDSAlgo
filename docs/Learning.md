@@ -9,3 +9,12 @@
 * Check for overflow when dealing with numbers.
 
 
+## Debugging
+Using the `DebuggerDisplay` attribute to decorate a class to easily a complex class expression
+
+```
+// Adding the debugger display for easier debugging
+    [DebuggerDisplay("NodeValue={Value}")]
+    public abstract class BaseNode<T>
+```
+
