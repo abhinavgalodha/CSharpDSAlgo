@@ -15,12 +15,13 @@ namespace Algorithms.Bits
         Output: N 10001001100
         Hints: # 137, #169, #215
      */
-    public partial class Bits
+    public partial class BitManipulations
     {
         public static int Insertion(int firstNumber, int secondNumber, int i, int j)
         {
             var shiftLeft = secondNumber << i;
             var result = firstNumber & shiftLeft;
+            return result;
         }
     }
 }
