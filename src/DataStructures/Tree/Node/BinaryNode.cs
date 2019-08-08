@@ -25,6 +25,10 @@ namespace DataStructures.Tree.Node
 
         */
 
+
+        private LeftNode<T> m_LeftNode1;
+        private RightNode<T> m_RightNode1;
+
         // TODO: Should LeftNode and RightNode be seperate classes with a relationship?
 
         private BinaryNode<T> m_LeftNode;
