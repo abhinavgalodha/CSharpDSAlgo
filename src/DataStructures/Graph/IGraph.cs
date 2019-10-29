@@ -20,6 +20,8 @@ namespace DataStructures.Graph
 
         int NumberOVertices { get; }
 
+        int Degree(T vertex);
+
 
     }
 }
