@@ -19,6 +19,10 @@ namespace Algorithms.Bits
     {
         public static int Insertion(int firstNumber, int secondNumber, int i, int j)
         {
+            var allBinaryOnes = ~0;
+            var allBinaryOnesAfterleftShift = allBinaryOnes << i;
+            var complementAfterLeftShift = ~allBinaryOnesAfterleftShift;
+
             var shiftLeft = secondNumber << i;
             var result = firstNumber & shiftLeft;
             return result;

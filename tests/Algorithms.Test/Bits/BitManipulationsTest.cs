@@ -9,7 +9,7 @@ namespace Algorithms.Test.Bits
         [Fact]
         public void InsertionIntoAnotherShouldWork()
         {
-            var result = BitManipulations.Insertion(100, 10, 2, 6);
+            var result = BitManipulations.Insertion(100, 19, 2, 6);
             result.Should().Be(1100);
 
         }
