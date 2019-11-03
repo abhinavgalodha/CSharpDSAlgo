@@ -35,16 +35,20 @@ namespace DataStructures.Graph
                 .Select(x => x.Destination);
         }
 
-        public override int NumberOfVertices
+        public override IEnumerable<T> GetAllVertices()
         {
-            get
-            {
-                IEnumerable<T> sourceVertices = m_listOfEdges.Select(x => x.Source);
-                IEnumerable<T> destinationVertices = m_listOfEdges.Select(x => x.Destination);
-                IEnumerable<T> uniqueVerticesInGraph = sourceVertices.Union(destinationVertices).Distinct();
-                return uniqueVerticesInGraph.Count();
-            }
+            IEnumerable<T> sourceVertices = m_listOfEdges.Select(x => x.Source);
+            IEnumerable<T> destinationVertices = m_listOfEdges.Select(x => x.Destination);
+            IEnumerable<T> uniqueVerticesInGraph = sourceVertices.Union(destinationVertices).Distinct();
+            return uniqueVerticesInGraph;
         }
+
+        public override IEnumerable<Edge<T>> GetAllEdges()
+        {
+            return m_listOfEdges;
+        }
+
+        public override int NumberOfVertices => GetAllVertices().Count();
 
         public override int NumberOfEdges => m_listOfEdges.Count;
     }

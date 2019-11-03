@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using DataStructures.Graph;
 using FluentAssertions;
 using Xunit;
+using System.Linq;
 
 namespace DataStructures.Test.Graph
 {
@@ -36,7 +35,20 @@ namespace DataStructures.Test.Graph
         {
             BaseGraph<int> graph = new GraphUsingArray<int>();
             graph.AddEdge(1, 2);
-            Should().not
+            graph.GetAllEdges().Any(x => x.Source == 1 && x.Destination == 2).Should().BeTrue();
+        }
+
+
+        [Fact]
+        public void Should_Return_All_Vertices_FromGraph()
+        {
+            BaseGraph<int> graph = new GraphUsingArray<int>();
+            graph.AddEdge(1, 2);
+            graph.AddEdge(2, 3);
+
+            var listOfExpectedVertices = new List<int>() {1, 2, 3};
+
+            graph.GetAllVertices().Should().BeEquivalentTo(listOfExpectedVertices);
         }
 
 
