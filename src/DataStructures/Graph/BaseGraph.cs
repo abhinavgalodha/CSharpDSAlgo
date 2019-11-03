@@ -14,6 +14,10 @@ namespace DataStructures.Graph
 
         public abstract IEnumerable<T> GetAllAdjacentVertices(T vertex);
 
+        public abstract IEnumerable<T> GetAllVertices();
+
+        public abstract IEnumerable<Edge<T>> GetAllEdges();
+
         public abstract int NumberOfEdges { get; }
 
         public abstract int NumberOfVertices { get; }

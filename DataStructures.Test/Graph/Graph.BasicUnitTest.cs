@@ -30,5 +30,15 @@ namespace DataStructures.Test.Graph
             graph.AddEdge(4, 5);
             graph.NumberOfEdges.Should().Be(4);
         }
+
+        [Fact]
+        public void Should_Add_Edge_InGraph()
+        {
+            BaseGraph<int> graph = new GraphUsingArray<int>();
+            graph.AddEdge(1, 2);
+            Should().not
+        }
+
+
     }
 }
