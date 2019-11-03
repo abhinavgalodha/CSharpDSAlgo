@@ -18,7 +18,7 @@ namespace DataStructures.Graph
 
         int NumberOfEdges { get; }
 
-        int NumberOVertices { get; }
+        int NumberOfVertices { get; }
 
         int Degree(T vertex);
 
