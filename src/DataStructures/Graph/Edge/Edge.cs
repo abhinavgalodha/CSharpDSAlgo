@@ -20,5 +20,15 @@ namespace DataStructures.Graph
 
         public T Destination { get;}
 
+        public Edge<T> ReverseEdge()
+        {
+            return new Edge<T>(Destination, Source);
+        }
+
+        public override string ToString()
+        {
+            return Source.ToString() + "->" + Destination.ToString();
+        }
+
     }
 }

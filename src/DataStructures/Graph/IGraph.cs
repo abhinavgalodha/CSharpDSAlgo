@@ -20,6 +20,8 @@ namespace DataStructures.Graph
 
         IEnumerable<Edge<T>> GetAllEdges();
 
+        bool IsCycleExists(); 
+
         int NumberOfEdges { get; }
 
         int NumberOfVertices { get; }
