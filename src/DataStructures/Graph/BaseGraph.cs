@@ -14,7 +14,7 @@ namespace DataStructures.Graph
 
         public abstract IEnumerable<T> GetAllAdjacentVertices(T vertex);
 
-        public abstract virtual IEnumerable<T> GetAllVertices();
+        public abstract IEnumerable<T> GetAllVertices();
 
         public abstract IEnumerable<Edge<T>> GetAllEdges();
 
@@ -24,11 +24,25 @@ namespace DataStructures.Graph
 
         public abstract int NumberOfVertices { get; }
 
-        // Number of vertices connected to a given vertex
+        /// <summary>
+        /// Number of vertices connected to a given vertex 
+        /// </summary>
+        /// <param name="vertex">Vertex for which need to find the degree</param>
+        /// <returns></returns>
         public int Degree(T vertex)
         {
             vertex.ThrowIfNull(nameof(vertex));
             return GetAllAdjacentVertices(vertex).ToList().Count;
         }
+
+        public override string ToString()
+        {
+            return GetAllEdges()
+                   .Aggregate( seed: string.Empty, (accumulator, initialValue) => accumulator + 
+                                                                         (!string.IsNullOrWhiteSpace(accumulator)  ? " , " : string.Empty) + 
+                                                                         initialValue);
+        }
+
+
     }
 }

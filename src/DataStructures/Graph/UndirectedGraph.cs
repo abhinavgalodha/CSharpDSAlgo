@@ -15,13 +15,13 @@ namespace DataStructures.Graph
 
         public abstract override IEnumerable<T> GetAllVertices();
 
-        public abstract IEnumerable<Edge<T>> GetAllEdges()
-        {
-            var oneWayEdges = base.GetAllEdges();
-            var reverseEdges = oneWayEdges.Select(x=>x.ReverseEdge());
-            return oneWayEdges.Union(reverseEdges);
+        public abstract override IEnumerable<Edge<T>> GetAllEdges();
+        //{
+        //    var oneWayEdges = base.GetAllEdges();
+        //    var reverseEdges = oneWayEdges.Select(x=>x.ReverseEdge());
+        //    return oneWayEdges.Union(reverseEdges);
             
-        }
+        //}
 
         public abstract override bool IsCycleExists();
 

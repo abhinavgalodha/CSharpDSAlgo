@@ -51,6 +51,18 @@ namespace DataStructures.Test.Graph
             graph.GetAllVertices().Should().BeEquivalentTo(listOfExpectedVertices);
         }
 
+        [Fact]
+        public void Should_Have_SeperatorIn_ToStringRepresentation_OfGraph()
+        {
+            BaseGraph<int> graph = new GraphUsingArray<int>();
+            graph.AddEdge(1, 2);
+            graph.AddEdge(2, 3);
+
+            var expectedToString = "1->2 , 2->3";
+
+            graph.ToString().Should().Be(expectedToString);
+        }
+
 
     }
 }
