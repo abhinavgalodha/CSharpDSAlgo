@@ -68,17 +68,29 @@ namespace DataStructures.Graph
 
         public override IEnumerable<T> GetAllAdjacentVertices(T vertex)
         {
-            throw new NotImplementedException();
+            return _adjacencyList[vertex];
         }
 
         public override IEnumerable<T> GetAllVertices()
         {
-            throw new NotImplementedException();
+            var allVerticesAsKeys = _adjacencyList.Keys.Select(x=>x);
+            var allVerticesAsValues = _adjacencyList.Values.SelectMany(x=>x);
+            return allVerticesAsKeys.Union(allVerticesAsValues).Distinct();
         }
 
         public override IEnumerable<Edge<T>> GetAllEdges()
         {
-            throw new NotImplementedException();
+            foreach (var fromVertexKeyValuePair in _adjacencyList)
+            {
+                var fromVertex = fromVertexKeyValuePair.Key;
+                var toVertexList = fromVertexKeyValuePair.Value;
+
+                foreach (var toVertex in toVertexList)
+                {
+                    Edge<T> edge = new Edge<T>(fromVertex, toVertex);   
+                    yield return edge;
+                }
+            }
         }
 
         public override bool IsCycleExists()
@@ -86,8 +98,5 @@ namespace DataStructures.Graph
             throw new NotImplementedException();
         }
 
-        public override int NumberOfVertices => GetAllVertices().Count();
-
-        public override int NumberOfEdges => throw new NotImplementedException();
     }
 }

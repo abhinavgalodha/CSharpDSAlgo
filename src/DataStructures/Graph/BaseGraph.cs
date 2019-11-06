@@ -20,9 +20,9 @@ namespace DataStructures.Graph
 
         public abstract bool IsCycleExists();
 
-        public abstract int NumberOfEdges { get; }
+        public virtual int NumberOfEdges  => GetAllVertices().Count();
 
-        public abstract int NumberOfVertices { get; }
+        public virtual int NumberOfVertices => GetAllEdges().Count();
 
         /// <summary>
         /// Number of vertices connected to a given vertex 

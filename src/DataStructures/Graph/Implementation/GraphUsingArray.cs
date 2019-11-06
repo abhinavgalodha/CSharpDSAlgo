@@ -53,8 +53,5 @@ namespace DataStructures.Graph
             throw new NotImplementedException();
         }
 
-        public override int NumberOfVertices => GetAllVertices().Count();
-
-        public override int NumberOfEdges => m_listOfEdges.Count;
     }
 }
