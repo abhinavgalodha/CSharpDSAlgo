@@ -18,57 +18,47 @@ namespace DataStructures.Graph
 
         public override void AddEdge(Edge<T> edgeToAdd)
         {
+            //testNull(edgeToAdd);
             edgeToAdd.ThrowIfNull(nameof(edgeToAdd));
 
-            var vertexFrom = edgeToAdd.From;
-            var vertexTo = edgeToAdd.To;
-
-            if (_adjacencyList.ContainsKey(vertexFrom))
+            if (IsFromVertexAlreadyInAdjacencyList(_adjacencyList, edgeToAdd))
             {
-                _adjacencyList[vertexFrom].Add(vertexTo);
-                return;
+                AppendToVertexInExistingListOfFromVertex(_adjacencyList, edgeToAdd);
+            }
+            else
+            {
+                AddNewFromVertexInAdjacencyDictAndAddToVertexInList(_adjacencyList, edgeToAdd);    
             }
 
-            List<T> listOfVerticesFromVertex = new List<T> {vertexTo};
-            _adjacencyList.Add(vertexFrom, listOfVerticesFromVertex);
-
-        }
-
-        public void AddEdge1(Edge<T> edgeToAdd)
-        {
-            edgeToAdd.ThrowIfNull(nameof(edgeToAdd));
-
-            if (vertexFrom)
+            bool IsFromVertexAlreadyInAdjacencyList(Dictionary<T, List<T>> adjacencyList, Edge<T> edgeToAdd)
             {
-                
+                var vertexTo = edgeToAdd.To;
+                return adjacencyList.ContainsKey(edgeToAdd.From);
             }
 
-            AddNewVertexInAdjacencyDictAndAddToVertexInList(_adjacencyList, edgeToAdd);
-
-            AppendToVertexInExistingVertexInAdjacencyList(_adjacencyList, edgeToAdd);
-        }
-
-        private void AppendToVertexInExistingVertexInAdjacencyList(Dictionary<T, List<T>> adjacencyList, Edge<T> edgeToAdd)
-        {
-            var vertexFrom = edgeToAdd.From;
-            var vertexTo = edgeToAdd.To;
-
-            List<T> listOfVerticesFromVertex = new List<T> {vertexTo};
-            _adjacencyList.Add(vertexFrom, listOfVerticesFromVertex);
-
-        }
-
-        private void AddNewVertexInAdjacencyDictAndAddToVertexInList(Dictionary<T, List<T>> adjacencyList, Edge<T> edgeToAdd)
-        {
-            var vertexFrom = edgeToAdd.From;
-            var vertexTo = edgeToAdd.To;
-
-            if (_adjacencyList.ContainsKey(vertexFrom))
+            void AppendToVertexInExistingListOfFromVertex(Dictionary<T, List<T>> adjacencyList, Edge<T> edgeToAdd)
             {
-                _adjacencyList[vertexFrom].Add(vertexTo);
+                var vertexFrom = edgeToAdd.From;
+                var vertexTo = edgeToAdd.To;
+
+                List<T> listOfVerticesFromVertex = new List<T> {vertexTo};
+                _adjacencyList.Add(vertexFrom, listOfVerticesFromVertex);
+
+            }
+
+            void AddNewFromVertexInAdjacencyDictAndAddToVertexInList(Dictionary<T, List<T>> adjacencyList, Edge<T> edgeToAdd)
+            {
+                var vertexFrom = edgeToAdd.From;
+                var vertexTo = edgeToAdd.To;
+
+                if (_adjacencyList.ContainsKey(vertexFrom))
+                {
+                    _adjacencyList[vertexFrom].Add(vertexTo);
+                }
             }
         }
 
+        
 
         public override void AddEdge(T source, T destination)
         {
@@ -78,21 +68,17 @@ namespace DataStructures.Graph
 
         public override IEnumerable<T> GetAllAdjacentVertices(T vertex)
         {
-            return GetAllAdjacentVertices().Where(x => x.Source.Equals(vertex))
-                .Select(x => x.Destination);
+            throw new NotImplementedException();
         }
 
         public override IEnumerable<T> GetAllVertices()
         {
-            IEnumerable<T> sourceVertices = m_listOfEdges.Select(x => x.Source);
-            IEnumerable<T> destinationVertices = m_listOfEdges.Select(x => x.Destination);
-            IEnumerable<T> uniqueVerticesInGraph = sourceVertices.Union(destinationVertices).Distinct();
-            return uniqueVerticesInGraph;
+            throw new NotImplementedException();
         }
 
         public override IEnumerable<Edge<T>> GetAllEdges()
         {
-            return m_listOfEdges;
+            throw new NotImplementedException();
         }
 
         public override bool IsCycleExists()
@@ -102,6 +88,6 @@ namespace DataStructures.Graph
 
         public override int NumberOfVertices => GetAllVertices().Count();
 
-        public override int NumberOfEdges => m_listOfEdges.Count;
+        public override int NumberOfEdges => throw new NotImplementedException();
     }
 }
