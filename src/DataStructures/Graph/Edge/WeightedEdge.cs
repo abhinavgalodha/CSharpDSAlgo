@@ -9,7 +9,7 @@ namespace DataStructures.Graph
     {
         public int Weight { get;}
 
-        public WeightedEdge(T source, T destination, int weight) : base(source, destination)
+        public WeightedEdge(T from, T to, int weight) : base(@from, to)
         {
             if (weight < 0)
             {

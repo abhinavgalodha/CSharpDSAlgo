@@ -7,27 +7,32 @@ namespace DataStructures.Graph
 {
     public class Edge<T>
     {
-        public Edge(T source, T destination)
+        public Edge(T from, T to)
         {
-            source.ThrowIfNull(nameof(source));
-            source.ThrowIfNull(nameof(destination));
+            from.ThrowIfNull(nameof(@from));
+            from.ThrowIfNull(nameof(to));
 
-            Source = source;
-            Destination = destination;
+            From = from;
+            To = to;
         }
 
-        public T Source { get;}
+        public T From { get;}
 
-        public T Destination { get;}
+        public T To { get;}
+
+        public bool IsSelfLoop()
+        {
+            return EqualityComparer<T>.Default.Equals(From, To);
+        }
 
         public Edge<T> ReverseEdge()
         {
-            return new Edge<T>(Destination, Source);
+            return new Edge<T>(To, From);
         }
 
         public override string ToString()
         {
-            return Source.ToString() + "->" + Destination.ToString();
+            return From.ToString() + "->" + To.ToString();
         }
 
     }

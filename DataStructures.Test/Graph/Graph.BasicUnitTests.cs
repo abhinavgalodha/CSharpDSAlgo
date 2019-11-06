@@ -35,7 +35,7 @@ namespace DataStructures.Test.Graph
         {
             BaseGraph<int> graph = new GraphUsingArray<int>();
             graph.AddEdge(1, 2);
-            graph.GetAllEdges().Any(x => x.Source == 1 && x.Destination == 2).Should().BeTrue();
+            graph.GetAllEdges().Any(x => x.From == 1 && x.To == 2).Should().BeTrue();
         }
 
 

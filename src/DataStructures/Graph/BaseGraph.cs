@@ -35,6 +35,12 @@ namespace DataStructures.Graph
             return GetAllAdjacentVertices(vertex).ToList().Count;
         }
 
+        public int NumberOfSelfLoops()
+        {
+            // A self loop is created when Source = Destination
+            return GetAllEdges().Count(x => x.IsSelfLoop());
+        }
+
         public override string ToString()
         {
             return GetAllEdges()

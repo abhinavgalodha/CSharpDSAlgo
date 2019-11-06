@@ -7,9 +7,12 @@ namespace DataStructures.Graph
 {
     public class DirectedEdge<T> : Edge<T>
     {
-        public DirectedEdge(T source, T destination) : base(source, destination)
+        public DirectedEdge(T @from, T to) : base(@from, to)
         {
+
         }
+
+
 
 
     }

@@ -19,5 +19,29 @@ namespace DataStructures.Test.Graph
             edge.ToString().Should().Be(expectedToString);
 
         }
+
+        [Fact]
+        public void Should_Have_SelfLoop_When_Edge_Has_SelfLoop()
+        {
+            Edge<int> edge = new Edge<int>(1,1);
+
+            var expectedResult = true;
+
+            edge.IsSelfLoop().Should().BeTrue();
+
+        }
+
+
+        public void Should_Not_Have_SelfLoop_When_Edge_Has_SelfLoop()
+        {
+            Edge<int> edge = new Edge<int>(1,1);
+
+            var expectedResult = false;
+
+            edge.IsSelfLoop().Should().BeFalse();
+
+        }
+
+
     }
 }

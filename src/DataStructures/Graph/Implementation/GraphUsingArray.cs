@@ -31,14 +31,14 @@ namespace DataStructures.Graph
 
         public override IEnumerable<T> GetAllAdjacentVertices(T vertex)
         {
-            return m_listOfEdges.Where(x => x.Source.Equals(vertex))
-                .Select(x => x.Destination);
+            return m_listOfEdges.Where(x => x.From.Equals(vertex))
+                .Select(x => x.To);
         }
 
         public override IEnumerable<T> GetAllVertices()
         {
-            IEnumerable<T> sourceVertices = m_listOfEdges.Select(x => x.Source);
-            IEnumerable<T> destinationVertices = m_listOfEdges.Select(x => x.Destination);
+            IEnumerable<T> sourceVertices = m_listOfEdges.Select(x => x.From);
+            IEnumerable<T> destinationVertices = m_listOfEdges.Select(x => x.To);
             IEnumerable<T> uniqueVerticesInGraph = sourceVertices.Union(destinationVertices).Distinct();
             return uniqueVerticesInGraph;
         }
