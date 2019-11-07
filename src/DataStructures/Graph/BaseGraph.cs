@@ -10,7 +10,11 @@ namespace DataStructures.Graph
     {
         public abstract void AddEdge(Edge<T> edgeToAdd);
 
-        public abstract void AddEdge(T source, T destination);
+        public virtual void AddEdge(T source, T destination)
+        {
+            var edgeToAdd = new Edge<T>(source, destination);
+            AddEdge(edgeToAdd);
+        }
 
         public abstract IEnumerable<T> GetAllAdjacentVertices(T vertex);
 

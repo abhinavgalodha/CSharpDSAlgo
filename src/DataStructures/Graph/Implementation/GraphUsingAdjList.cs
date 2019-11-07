@@ -58,13 +58,6 @@ namespace DataStructures.Graph
             }
         }
 
-        
-
-        public override void AddEdge(T source, T destination)
-        {
-            var edgeToAdd = new Edge<T>(source, destination);
-            AddEdge(edgeToAdd);
-        }
 
         public override IEnumerable<T> GetAllAdjacentVertices(T vertex)
         {
