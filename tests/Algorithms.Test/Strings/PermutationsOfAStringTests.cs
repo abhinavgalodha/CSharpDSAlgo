@@ -6,6 +6,7 @@ namespace Algorithms.Test.Strings
 {
     public class PermutationsOfAStringTests
     {
+        [Fact]
         public void PermutationsOf3Words()
         {
             //Act

@@ -60,11 +60,6 @@ namespace DataStructures.Graph
             }
         }
 
-        public override void AddEdge(T source, T destination)
-        {
-            
-        }
-
         public override IEnumerable<T> GetAllAdjacentVertices(T vertex)
         {
             throw new NotImplementedException();

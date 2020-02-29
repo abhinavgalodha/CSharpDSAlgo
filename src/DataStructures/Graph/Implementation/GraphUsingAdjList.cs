@@ -18,7 +18,6 @@ namespace DataStructures.Graph
 
         public override void AddEdge(Edge<T> edgeToAdd)
         {
-            //testNull(edgeToAdd);
             edgeToAdd.ThrowIfNull(nameof(edgeToAdd));
 
             if (IsFromVertexAlreadyInAdjacencyList(_adjacencyList, edgeToAdd))
