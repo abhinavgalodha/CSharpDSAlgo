@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Algorithms.Strings;
 using FluentAssertions;
+using Xunit;
 
 namespace Algorithms.Test.Strings
 {

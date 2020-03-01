@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Algorithms.Strings;
+﻿using Algorithms.Strings;
 using FluentAssertions;
+using Xunit;
 
 namespace Algorithms.Test.Strings
 {
@@ -14,7 +14,7 @@ namespace Algorithms.Test.Strings
             var patternString = "AABBCC";
             
             //Arrange
-            var isSubstring = SubStringSearch.Find(inputString, patternString);
+            var isSubstring = SubStringSearch.Search(inputString, patternString);
 
             //Assert
             isSubstring.Should().BeTrue();
@@ -31,7 +31,7 @@ namespace Algorithms.Test.Strings
             var isSubstring = SubStringSearch.Search(inputString, patternString);
 
             //Assert
-            isSubstring.Should().BeTrue();
+            isSubstring.Should().BeFalse();
         } 
 
         [Fact]
@@ -45,7 +45,7 @@ namespace Algorithms.Test.Strings
             var isSubstring = SubStringSearch.Search(inputString, patternString);
 
             //Assert
-            isSubstring.Should().BeTrue();
+            isSubstring.Should().BeFalse();
         } 
     }
 }
