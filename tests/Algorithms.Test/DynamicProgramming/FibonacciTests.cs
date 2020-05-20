@@ -26,9 +26,16 @@ namespace Algorithms.Test.DynamicProgramming
 
         [Theory]
         [MemberData(nameof(TestData))]
-        public void CalculateFibonacciUsingDPBottomUp(long numberToFind, long expectedResult)
+        public void CalculateFibonacciUsingDPTabulation(long numberToFind, long expectedResult)
         {
-            var actualResult = new FibonacciUsingDPBottomUp().CalculateFibonacci(numberToFind);
+            var actualResult = new FibonacciUsingDPTabulation().CalculateFibonacci(numberToFind);
+        }
+
+        [Theory]
+        [MemberData(nameof(TestData))]
+        public void CalculateFibonacciUsingDPMemoization(long numberToFind, long expectedResult)
+        {
+            var actualResult = new FibonacciUsingDPTabulation().CalculateFibonacci(numberToFind);
         }
     }
 }

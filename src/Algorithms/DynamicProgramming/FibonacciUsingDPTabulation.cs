@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Algorithms.DynamicProgramming
 {
-    public class FibonacciUsingDPBottomUp
+    public class FibonacciUsingDPTabulation
     {
         public long CalculateFibonacci(long number)
         {
