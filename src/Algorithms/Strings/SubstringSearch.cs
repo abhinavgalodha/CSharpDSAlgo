@@ -12,6 +12,7 @@ namespace Algorithms.Strings
             var patternLength = patternString.Length;
             var textToSearchFromLength = textToSearchFrom.Length;
 
+            // Bound Check
             if (patternLength > textToSearchFromLength)
             {
                 return false;
@@ -22,6 +23,7 @@ namespace Algorithms.Strings
                 int patternIndex;
                 for (patternIndex = 0; patternIndex < patternLength; patternIndex++)
                 {
+                    // check for text current char + next characters matching in the pattern
                     var charText = textToSearchFrom[textIndex + patternIndex];
                     var charPattern = patternString[patternIndex];
 
