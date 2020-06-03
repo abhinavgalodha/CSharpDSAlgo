@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using Algorithms.Sorting.MergeSort;
+using Algorithms.Sorting.QuickSort;
 
 namespace Algorithms.Sorting.Factory
 {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Core;
+using DataStructures.Graph.Edge;
 
 namespace DataStructures.Graph
 {

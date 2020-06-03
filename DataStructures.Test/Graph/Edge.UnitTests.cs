@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using DataStructures.Graph;
+using DataStructures.Graph.Edge;
 using FluentAssertions;
 
 namespace DataStructures.Test.Graph

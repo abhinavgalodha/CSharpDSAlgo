@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Core;
 using System.Linq;
+using Core;
+using DataStructures.Graph.Edge;
 
-namespace DataStructures.Graph
+namespace DataStructures.Graph.Implementation
 {
     public class GraphUsingArray<T> : BaseGraph<T>
     {

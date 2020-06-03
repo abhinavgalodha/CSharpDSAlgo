@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Algorithms.Sorting.Interfaces;
 using Core;
 
-namespace Algorithms.Sorting
+namespace Algorithms.Sorting.QuickSort
 {
     public class QuickSortingAlgorithm : ISortingAlgorithm
     {

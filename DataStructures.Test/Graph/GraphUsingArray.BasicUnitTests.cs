@@ -3,6 +3,7 @@ using DataStructures.Graph;
 using FluentAssertions;
 using Xunit;
 using System.Linq;
+using DataStructures.Graph.Implementation;
 
 namespace DataStructures.Test.Graph
 {

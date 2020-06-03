@@ -3,6 +3,7 @@ using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Algorithms.Sorting.QuickSort;
 using Xunit;
 
 namespace Algorithms.Test.Sorting

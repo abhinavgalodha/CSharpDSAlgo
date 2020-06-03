@@ -1,11 +1,9 @@
-﻿using Algorithms.Sorting.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Algorithms.Sorting.Interfaces;
 using Core;
 
-namespace Algorithms.Sorting
+namespace Algorithms.Sorting.MergeSort
 {
     public class MergeSortingAlgorithm : ISortingAlgorithm
     {

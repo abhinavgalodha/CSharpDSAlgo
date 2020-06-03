@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core;
 
-namespace DataStructures.Graph
+namespace DataStructures.Graph.Edge
 {
     public class WeightedEdge<T> : Edge<T>
     {

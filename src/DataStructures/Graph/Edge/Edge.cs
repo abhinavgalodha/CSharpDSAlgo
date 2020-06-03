@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Core;
 
-namespace DataStructures.Graph
+namespace DataStructures.Graph.Edge
 {
     public class Edge<T>
     {
