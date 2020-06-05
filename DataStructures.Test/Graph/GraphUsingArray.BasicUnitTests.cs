@@ -12,7 +12,7 @@ namespace DataStructures.Test.Graph
         [Fact]
         public void Should_Have_5_Vertices_When_4_Edges_Added_ToConnectAllVertices_InGraph()
         {
-            BaseGraph<int> graph = new GraphUsingArray<int>();
+            BaseGraph<int> graph = new GraphUsingArrayOfEdges<int>();
             graph.AddEdge(1, 2);
             graph.AddEdge(2, 3);
             graph.AddEdge(3, 4);
@@ -23,7 +23,7 @@ namespace DataStructures.Test.Graph
         [Fact]
         public void Should_Have_4_Edges_When_4_Edges_Added_InGraph()
         {
-            BaseGraph<int> graph = new GraphUsingArray<int>();
+            BaseGraph<int> graph = new GraphUsingArrayOfEdges<int>();
             graph.AddEdge(1, 2);
             graph.AddEdge(2, 3);
             graph.AddEdge(3, 4);
@@ -34,7 +34,7 @@ namespace DataStructures.Test.Graph
         [Fact]
         public void Should_Add_Edge_InGraph()
         {
-            BaseGraph<int> graph = new GraphUsingArray<int>();
+            BaseGraph<int> graph = new GraphUsingArrayOfEdges<int>();
             graph.AddEdge(1, 2);
             graph.GetAllEdges().Any(x => x.From == 1 && x.To == 2).Should().BeTrue();
         }
@@ -43,7 +43,7 @@ namespace DataStructures.Test.Graph
         [Fact]
         public void Should_Return_All_Vertices_FromGraph()
         {
-            BaseGraph<int> graph = new GraphUsingArray<int>();
+            BaseGraph<int> graph = new GraphUsingArrayOfEdges<int>();
             graph.AddEdge(1, 2);
             graph.AddEdge(2, 3);
 
@@ -55,7 +55,7 @@ namespace DataStructures.Test.Graph
         [Fact]
         public void Should_Have_SeperatorIn_ToStringRepresentation_OfGraph()
         {
-            BaseGraph<int> graph = new GraphUsingArray<int>();
+            BaseGraph<int> graph = new GraphUsingArrayOfEdges<int>();
             graph.AddEdge(1, 2);
             graph.AddEdge(2, 3);
 

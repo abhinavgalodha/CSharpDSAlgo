@@ -64,6 +64,22 @@ namespace DataStructures.Test.Graph
             graph.ToString().Should().Be(expectedToString);
         }
 
+        [Fact]
+        public void Should_Have_Correct_Graph_DFS_Traversal_When_More_ThanOne_ConnectedVertices()
+        {
+            GraphUsingAdjList<int> graph = new GraphUsingAdjList<int>();
+            graph.AddEdge(0, 1);  
+            graph.AddEdge(0, 2);  
+            graph.AddEdge(1, 2);  
+            graph.AddEdge(2, 0);  
+            graph.AddEdge(2, 3);  
+            graph.AddEdge(3, 3);
 
+            var vertices = graph.DepthFirstTraversal();
+            var actualVertices = vertices.ToList();
+            var expectedVertices = new List<int> { 0, 1, 2, 3};
+
+            actualVertices.Should().BeEquivalentTo(expectedVertices, options => options.WithStrictOrdering());
+        }
     }
 }

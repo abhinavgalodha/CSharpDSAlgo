@@ -6,11 +6,11 @@ using DataStructures.Graph.Edge;
 
 namespace DataStructures.Graph.Implementation
 {
-    public class GraphUsingArray<T> : BaseGraph<T>
+    public class GraphUsingArrayOfEdges<T> : BaseGraph<T>
     {
         private readonly List<Edge<T>> _listOfEdges;
 
-        public GraphUsingArray()
+        public GraphUsingArrayOfEdges()
         {
             _listOfEdges = new List<Edge<T>>();
         }

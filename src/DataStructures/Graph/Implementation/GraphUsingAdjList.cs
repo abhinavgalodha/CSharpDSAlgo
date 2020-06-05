@@ -39,9 +39,8 @@ namespace DataStructures.Graph.Implementation
                 var vertexFrom = edgeToAdd.From;
                 var vertexTo = edgeToAdd.To;
 
-                List<T> listOfVerticesFromVertex = new List<T> { vertexTo };
-                _adjacencyList.Add(vertexFrom, listOfVerticesFromVertex);
-
+                var listOfNeighbors = _adjacencyList[vertexFrom];
+                listOfNeighbors.Add(vertexTo);
             }
 
             void AddNewFromVertexInAdjacencyDictAndAddToVertexInList(Dictionary<T, List<T>> adjacencyList, Edge<T> edgeToAdd)
@@ -49,10 +48,7 @@ namespace DataStructures.Graph.Implementation
                 var vertexFrom = edgeToAdd.From;
                 var vertexTo = edgeToAdd.To;
 
-                if (_adjacencyList.ContainsKey(vertexFrom))
-                {
-                    _adjacencyList[vertexFrom].Add(vertexTo);
-                }
+                _adjacencyList.Add(vertexFrom, new List<T>() {vertexTo});
             }
         }
 
@@ -91,7 +87,8 @@ namespace DataStructures.Graph.Implementation
         public IEnumerable<T> DepthFirstTraversal()
         {
             // 
-            var visitedTracker = new Dictionary<T, bool>(VertexCount);
+            var visitedTracker = new Dictionary<T, bool>(this.NumberOfVertices);
+            var depthFirstTraversalList = new List<T>();
 
             foreach (var vertexKeyValuePair in _adjacencyList)
             {
@@ -99,21 +96,23 @@ namespace DataStructures.Graph.Implementation
                 var vertex = vertexKeyValuePair.Key;
                 if (!visitedTracker.ContainsKey(vertex))
                 {
-                    yield return (T)DepthFirstTraversalRecursive(vertex);
+                    DepthFirstTraversalRecursive(vertex);
                 }
             }
 
-            IEnumerable<T> DepthFirstTraversalRecursive(T vertex)
+            return depthFirstTraversalList;
+
+            void DepthFirstTraversalRecursive(T vertex)
             {
                 visitedTracker.Add(vertex, true);
-                yield return vertex;
+                depthFirstTraversalList.Add(vertex);
                 var adjacentVertices = GetAllAdjacentVertices(vertex);
 
                 foreach (var adjacentVertex in adjacentVertices)
                 {
-                    if (visitedTracker.ContainsKey(adjacentVertex))
+                    if (!visitedTracker.ContainsKey(adjacentVertex))
                     {
-                        yield return (T)DepthFirstTraversalRecursive(adjacentVertex);    
+                        DepthFirstTraversalRecursive(adjacentVertex);    
                     }
                 }
             }
