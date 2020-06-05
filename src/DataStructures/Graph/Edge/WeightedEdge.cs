@@ -14,8 +14,6 @@ namespace DataStructures.Graph.Edge
             }
 
             Weight = weight;
-
         }
-
     }
 }

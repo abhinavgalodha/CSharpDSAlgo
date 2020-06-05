@@ -8,18 +8,18 @@ namespace DataStructures.Graph.Implementation
 {
     public class GraphUsingArray<T> : BaseGraph<T>
     {
-        private readonly List<Edge<T>> m_listOfEdges;
+        private readonly List<Edge<T>> _listOfEdges;
 
         public GraphUsingArray()
         {
-            m_listOfEdges = new List<Edge<T>>();
+            _listOfEdges = new List<Edge<T>>();
         }
 
         public override void AddEdge(Edge<T> edgeToAdd)
         {
             edgeToAdd.ThrowIfNull(nameof(edgeToAdd));
 
-            m_listOfEdges.Add(edgeToAdd);
+            _listOfEdges.Add(edgeToAdd);
         }
 
         public override void AddEdge(T source, T destination)
@@ -30,21 +30,21 @@ namespace DataStructures.Graph.Implementation
 
         public override IEnumerable<T> GetAllAdjacentVertices(T vertex)
         {
-            return m_listOfEdges.Where(x => x.From.Equals(vertex))
+            return _listOfEdges.Where(x => x.From.Equals(vertex))
                 .Select(x => x.To);
         }
 
         public override IEnumerable<T> GetAllVertices()
         {
-            IEnumerable<T> sourceVertices = m_listOfEdges.Select(x => x.From);
-            IEnumerable<T> destinationVertices = m_listOfEdges.Select(x => x.To);
+            IEnumerable<T> sourceVertices = _listOfEdges.Select(x => x.From);
+            IEnumerable<T> destinationVertices = _listOfEdges.Select(x => x.To);
             IEnumerable<T> uniqueVerticesInGraph = sourceVertices.Union(destinationVertices).Distinct();
             return uniqueVerticesInGraph;
         }
 
         public override IEnumerable<Edge<T>> GetAllEdges()
         {
-            return m_listOfEdges;
+            return _listOfEdges;
         }
 
         public override bool IsCycleExists()

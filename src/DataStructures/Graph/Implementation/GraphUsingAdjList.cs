@@ -25,7 +25,7 @@ namespace DataStructures.Graph.Implementation
             }
             else
             {
-                AddNewFromVertexInAdjacencyDictAndAddToVertexInList(_adjacencyList, edgeToAdd);    
+                AddNewFromVertexInAdjacencyDictAndAddToVertexInList(_adjacencyList, edgeToAdd);
             }
 
             bool IsFromVertexAlreadyInAdjacencyList(Dictionary<T, List<T>> adjacencyList, Edge<T> edgeToAdd)
@@ -39,7 +39,7 @@ namespace DataStructures.Graph.Implementation
                 var vertexFrom = edgeToAdd.From;
                 var vertexTo = edgeToAdd.To;
 
-                List<T> listOfVerticesFromVertex = new List<T> {vertexTo};
+                List<T> listOfVerticesFromVertex = new List<T> { vertexTo };
                 _adjacencyList.Add(vertexFrom, listOfVerticesFromVertex);
 
             }
@@ -56,7 +56,6 @@ namespace DataStructures.Graph.Implementation
             }
         }
 
-
         public override IEnumerable<T> GetAllAdjacentVertices(T vertex)
         {
             return _adjacencyList[vertex];
@@ -64,8 +63,8 @@ namespace DataStructures.Graph.Implementation
 
         public override IEnumerable<T> GetAllVertices()
         {
-            var allVerticesAsKeys = _adjacencyList.Keys.Select(x=>x);
-            var allVerticesAsValues = _adjacencyList.Values.SelectMany(x=>x);
+            var allVerticesAsKeys = _adjacencyList.Keys.Select(x => x);
+            var allVerticesAsValues = _adjacencyList.Values.SelectMany(x => x);
             return allVerticesAsKeys.Union(allVerticesAsValues).Distinct();
         }
 
@@ -78,7 +77,7 @@ namespace DataStructures.Graph.Implementation
 
                 foreach (var toVertex in toVertexList)
                 {
-                    Edge<T> edge = new Edge<T>(fromVertex, toVertex);   
+                    Edge<T> edge = new Edge<T>(fromVertex, toVertex);
                     yield return edge;
                 }
             }
@@ -89,5 +88,36 @@ namespace DataStructures.Graph.Implementation
             throw new NotImplementedException();
         }
 
+        public IEnumerable<T> DepthFirstTraversal()
+        {
+            // 
+            var visitedTracker = new Dictionary<T, bool>(VertexCount);
+
+            foreach (var vertexKeyValuePair in _adjacencyList)
+            {
+                // 1. Start with first node
+                var vertex = vertexKeyValuePair.Key;
+                if (!visitedTracker.ContainsKey(vertex))
+                {
+                    yield return (T)DepthFirstTraversalRecursive(vertex);
+                }
+            }
+
+            IEnumerable<T> DepthFirstTraversalRecursive(T vertex)
+            {
+                visitedTracker.Add(vertex, true);
+                yield return vertex;
+                var adjacentVertices = GetAllAdjacentVertices(vertex);
+
+                foreach (var adjacentVertex in adjacentVertices)
+                {
+                    if (visitedTracker.ContainsKey(adjacentVertex))
+                    {
+                        yield return (T)DepthFirstTraversalRecursive(adjacentVertex);    
+                    }
+                }
+            }
+
+        }
     }
 }
