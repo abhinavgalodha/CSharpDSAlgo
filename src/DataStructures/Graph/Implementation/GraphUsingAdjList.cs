@@ -15,6 +15,8 @@ namespace DataStructures.Graph.Implementation
             _adjacencyList = new Dictionary<T, List<T>>();
         }
 
+        public override int NumberOfVertices => _adjacencyList.Count;
+
         public override void AddEdge(Edge<T> edgeToAdd)
         {
             edgeToAdd.ThrowIfNull(nameof(edgeToAdd));
@@ -84,11 +86,10 @@ namespace DataStructures.Graph.Implementation
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T> DepthFirstTraversal()
+        public IEnumerable<T> IterateDepthFirst()
         {
-            // 
             var visitedTracker = new Dictionary<T, bool>(this.NumberOfVertices);
-            var depthFirstTraversalList = new List<T>();
+            var listOfVertex = new List<T>();
 
             foreach (var vertexKeyValuePair in _adjacencyList)
             {
@@ -100,12 +101,12 @@ namespace DataStructures.Graph.Implementation
                 }
             }
 
-            return depthFirstTraversalList;
+            return listOfVertex;
 
             void DepthFirstTraversalRecursive(T vertex)
             {
                 visitedTracker.Add(vertex, true);
-                depthFirstTraversalList.Add(vertex);
+                listOfVertex.Add(vertex);
                 var adjacentVertices = GetAllAdjacentVertices(vertex);
 
                 foreach (var adjacentVertex in adjacentVertices)
@@ -116,7 +117,30 @@ namespace DataStructures.Graph.Implementation
                     }
                 }
             }
+        }
 
+        public IEnumerable<T> IterateDepthFirstUsingStack()
+        {
+            var visitedTracker = new HashSet<T>(this.NumberOfVertices);
+            var stackNodes = new Stack<T>();
+            var listOfVertex = new List<T>();
+
+            foreach (var vertexKvPair in _adjacencyList)
+            {
+                var vertex = vertexKvPair.Key;
+                visitedTracker.Add(vertex);
+                listOfVertex.Add(vertex);
+
+                while (stackNodes.IsNotEmpty())
+                {
+                    var listOfNeighbors = vertexKvPair.Value;
+                    stackNodes.
+                }
+
+                stackNodes.Push(vertex);
+            }
+
+            void IterateDepthFirstUsingStack
         }
     }
 }

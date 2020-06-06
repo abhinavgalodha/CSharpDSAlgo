@@ -11,9 +11,9 @@ namespace DataStructures.Graph
     {
         public abstract void AddEdge(Edge<T> edgeToAdd);
 
-        public virtual void AddEdge(T source, T destination)
+        public virtual void AddEdge(T @from, T to)
         {
-            var edgeToAdd = new Edge<T>(source, destination);
+            var edgeToAdd = new Edge<T>(@from, to);
             AddEdge(edgeToAdd);
         }
 

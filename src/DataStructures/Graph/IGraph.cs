@@ -11,9 +11,9 @@ namespace DataStructures.Graph
         /// Adds and edge from source to destination
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="source"></param>
-        /// <param name="destination"></param>
-        void AddEdge(T source, T destination);
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        void AddEdge(T @from, T to);
 
         IEnumerable<T> GetAllAdjacentVertices(T vertex);
 

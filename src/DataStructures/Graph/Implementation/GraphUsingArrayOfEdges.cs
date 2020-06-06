@@ -22,9 +22,9 @@ namespace DataStructures.Graph.Implementation
             _listOfEdges.Add(edgeToAdd);
         }
 
-        public override void AddEdge(T source, T destination)
+        public override void AddEdge(T @from, T to)
         {
-            var edgeToAdd = new Edge<T>(source, destination);
+            var edgeToAdd = new Edge<T>(@from, to);
             AddEdge(edgeToAdd);
         }
 

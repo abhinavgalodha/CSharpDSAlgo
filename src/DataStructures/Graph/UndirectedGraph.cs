@@ -10,7 +10,7 @@ namespace DataStructures.Graph
     {
         public abstract override void AddEdge(Edge<T> edgeToAdd);
 
-        public abstract override void AddEdge(T source, T destination);
+        public abstract override void AddEdge(T @from, T to);
 
         public abstract override IEnumerable<T> GetAllAdjacentVertices(T vertex);
 
