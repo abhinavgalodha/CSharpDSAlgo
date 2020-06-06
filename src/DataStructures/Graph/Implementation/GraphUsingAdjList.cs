@@ -50,12 +50,16 @@ namespace DataStructures.Graph.Implementation
                 var vertexFrom = edgeToAdd.From;
                 var vertexTo = edgeToAdd.To;
 
-                _adjacencyList.Add(vertexFrom, new List<T>() {vertexTo});
+                _adjacencyList.Add(vertexFrom, new List<T>() { vertexTo });
             }
         }
 
         public override IEnumerable<T> GetAllAdjacentVertices(T vertex)
         {
+            if (!_adjacencyList.ContainsKey(vertex))
+            {
+                return Enumerable.Empty<T>();
+            }
             return _adjacencyList[vertex];
         }
 
@@ -113,7 +117,7 @@ namespace DataStructures.Graph.Implementation
                 {
                     if (!visitedTracker.ContainsKey(adjacentVertex))
                     {
-                        DepthFirstTraversalRecursive(adjacentVertex);    
+                        DepthFirstTraversalRecursive(adjacentVertex);
                     }
                 }
             }
@@ -121,26 +125,59 @@ namespace DataStructures.Graph.Implementation
 
         public IEnumerable<T> IterateDepthFirstUsingStack()
         {
+            /*
+             * 	How Stack can help implement DFS?
+               • Stack has property of LIFO.
+               • It is used only to keep a list of nodes without the need for recursion.
+               
+               Algorithm
+               a. Created a stack of nodes and visited array.
+               b. Insert the root in the stack.
+               c. Run a loop till the stack is not empty.
+               d. Pop the element from the stack and print the element. 
+               e. For every adjacent and unvisited node of current node, mark the node and insert it in the stack.
+               
+               Complexity Analysis: 
+               • Time complexity: O(V + E), where V is the number of vertices and E is the number of edges in the graph.
+               • Space Complexity: O(V). Since an extra visited array is needed of size V.
+               
+             */
+
             var visitedTracker = new HashSet<T>(this.NumberOfVertices);
             var stackNodes = new Stack<T>();
-            var listOfVertex = new List<T>();
 
             foreach (var vertexKvPair in _adjacencyList)
             {
                 var vertex = vertexKvPair.Key;
-                visitedTracker.Add(vertex);
-                listOfVertex.Add(vertex);
 
-                while (stackNodes.IsNotEmpty())
+                if (visitedTracker.Contains(vertex))
                 {
-                    var listOfNeighbors = vertexKvPair.Value;
-                    stackNodes.
+                    continue;
                 }
 
                 stackNodes.Push(vertex);
-            }
 
-            void IterateDepthFirstUsingStack
-        }
+                while (stackNodes.IsNotEmpty())
+                {
+                    var vertexAtTop = stackNodes.Pop();
+                    if (visitedTracker.Contains(vertexAtTop))
+                    {
+                        continue;
+                    }
+
+                    visitedTracker.Add(vertexAtTop);
+                    yield return vertexAtTop;
+
+                    var listOfNeighbors = GetAllAdjacentVertices(vertexAtTop).ToList();
+                    listOfNeighbors.ForEach(x =>
+                    {
+                        if (!visitedTracker.Contains(x))
+                        {
+                            stackNodes.Push(x);
+                        }
+                    });
+                }
+            }
+        }   
     }
 }
