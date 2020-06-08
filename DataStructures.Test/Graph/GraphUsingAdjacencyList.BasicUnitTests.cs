@@ -75,7 +75,7 @@ namespace DataStructures.Test.Graph
             graph.AddEdge(2, 3);  
             graph.AddEdge(3, 3);
 
-            var vertices = graph.IterateDepthFirst();
+            var vertices = graph.IterateDepthFirst;
             var actualVertices = vertices.ToList();
             var expectedVertices = new List<int> { 0, 1, 2, 3};
 

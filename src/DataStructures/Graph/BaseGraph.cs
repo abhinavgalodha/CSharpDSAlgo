@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using DataStructures.Graph.Edge;
 
 namespace DataStructures.Graph
 {
-    public abstract class BaseGraph<T> :  IGraph<T>
+    public abstract class BaseGraph<T> :  IGraph<T>, IEnumerable<T>
     {
         public abstract void AddEdge(Edge<T> edgeToAdd);
 
@@ -54,6 +55,59 @@ namespace DataStructures.Graph
                                                                          initialValue);
         }
 
+        public virtual IEnumerable<T> IterateDepthFirst
+        {
+            get
+            {
+                //
+                // 1. Go through all the vertices.
+                // 2. Keep a visited Array to keep a track of all the visited nodes.
+                // 3. Visit root Node or any arbitrary node to start
+                // 4. Mark the node as visited.
+                // 5. Get all the adjacent neighbors of the vertex.
+                // 6. Repeat steps 3 to 5
+                //
 
+                // Since recursion causes a lot of State machine generation if the stack is too deep.
+                // A list is used instead of yield.
+
+                var visitedNodes = new HashSet<T>(this.NumberOfVertices);
+                var listVertices = new List<T>(this.NumberOfVertices);
+
+                foreach (var vertex in this.GetAllVertices())
+                {
+                    if (visitedNodes.Contains(vertex))
+                        continue;
+                    
+                    DepthFirstIterationRecursive(vertex);
+                }
+
+                return listVertices;
+
+                void DepthFirstIterationRecursive(T vertex)
+                {
+                    visitedNodes.Add(vertex);
+                    listVertices.Add(vertex);
+
+                    foreach (var adjacentNeighbor in GetAllAdjacentVertices(vertex))
+                    {
+                        if (visitedNodes.Contains(adjacentNeighbor))
+                            continue;
+
+                        DepthFirstIterationRecursive(adjacentNeighbor);
+                    }
+                }
+            }
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return (IEnumerator<T>)IterateDepthFirst;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 }

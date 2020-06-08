@@ -90,39 +90,6 @@ namespace DataStructures.Graph.Implementation
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T> IterateDepthFirst()
-        {
-            var visitedTracker = new Dictionary<T, bool>(this.NumberOfVertices);
-            var listOfVertex = new List<T>();
-
-            foreach (var vertexKeyValuePair in _adjacencyList)
-            {
-                // 1. Start with first node
-                var vertex = vertexKeyValuePair.Key;
-                if (!visitedTracker.ContainsKey(vertex))
-                {
-                    DepthFirstTraversalRecursive(vertex);
-                }
-            }
-
-            return listOfVertex;
-
-            void DepthFirstTraversalRecursive(T vertex)
-            {
-                visitedTracker.Add(vertex, true);
-                listOfVertex.Add(vertex);
-                var adjacentVertices = GetAllAdjacentVertices(vertex);
-
-                foreach (var adjacentVertex in adjacentVertices)
-                {
-                    if (!visitedTracker.ContainsKey(adjacentVertex))
-                    {
-                        DepthFirstTraversalRecursive(adjacentVertex);
-                    }
-                }
-            }
-        }
-
         public IEnumerable<T> IterateDepthFirstUsingStack()
         {
             /*
