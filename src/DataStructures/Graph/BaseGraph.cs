@@ -2,13 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using Core;
 using DataStructures.Graph.Edge;
 
 namespace DataStructures.Graph
 {
-    public abstract class BaseGraph<T> :  IGraph<T>, IEnumerable<T>
+    public abstract class BaseGraph<T> : IGraph<T>, IEnumerable<T>
     {
         public abstract void AddEdge(Edge<T> edgeToAdd);
 
@@ -26,7 +27,7 @@ namespace DataStructures.Graph
 
         public abstract bool IsCycleExists();
 
-        public virtual int NumberOfEdges  => GetAllEdges().Count();
+        public virtual int NumberOfEdges => GetAllEdges().Count();
 
         public virtual int NumberOfVertices => GetAllVertices().Count();
 
@@ -50,9 +51,9 @@ namespace DataStructures.Graph
         public override string ToString()
         {
             return GetAllEdges()
-                   .Aggregate( seed: string.Empty, (accumulator, initialValue) => accumulator + 
-                                                                         (!string.IsNullOrWhiteSpace(accumulator)  ? " , " : string.Empty) + 
-                                                                         initialValue);
+                   .Aggregate(seed: string.Empty, (accumulator, initialValue) => accumulator +
+                                                                        (!string.IsNullOrWhiteSpace(accumulator) ? " , " : string.Empty) +
+                                                                        initialValue);
         }
 
         public virtual IEnumerable<T> IterateDepthFirst
@@ -78,7 +79,7 @@ namespace DataStructures.Graph
                 {
                     if (visitedNodes.Contains(vertex))
                         continue;
-                    
+
                     DepthFirstIterationRecursive(vertex);
                 }
 
@@ -108,6 +109,36 @@ namespace DataStructures.Graph
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public IEnumerable<T> TopologicalSort()
+        {
+            //	1. Run depth-first search.
+            //  2. Return vertices in reverse postorder.
+
+            var visitedTracker = new HashSet<T>();
+            var stackOfVertex = new Stack<T>();
+
+            foreach (var vertex in GetAllVertices())
+            {
+                if (!visitedTracker.Contains(vertex))
+                    DFS(vertex);
+            }
+
+            return stackOfVertex;
+
+            void DFS(T vertex)
+            {
+                visitedTracker.Add(vertex);
+
+                foreach (var adjacentVertex in GetAllAdjacentVertices(vertex))
+                {
+                    if (!visitedTracker.Contains(vertex))
+                        DFS(adjacentVertex);
+                }
+
+                stackOfVertex.Push(vertex);
+            }
         }
     }
 }

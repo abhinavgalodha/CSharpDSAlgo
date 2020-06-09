@@ -45,5 +45,7 @@ namespace DataStructures.Test.Graph
 
             actualVertices.Should().BeEquivalentTo(expectedVertices, options => options.WithStrictOrdering());
         }
+
+
     }
 }
