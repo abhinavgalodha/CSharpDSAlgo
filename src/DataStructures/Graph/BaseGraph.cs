@@ -133,7 +133,7 @@ namespace DataStructures.Graph
 
                 foreach (var adjacentVertex in GetAllAdjacentVertices(vertex))
                 {
-                    if (!visitedTracker.Contains(vertex))
+                    if (!visitedTracker.Contains(adjacentVertex))
                         DFS(adjacentVertex);
                 }
 
