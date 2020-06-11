@@ -9,8 +9,6 @@ namespace DataStructures.Tree.Node
 
     public class BinaryNode<T> : LeafNode<T>
     {
-
-
         /*
          * OBJECT CONSTRUCTION PROBLEM AND SOLUTION
          *
@@ -30,28 +28,10 @@ namespace DataStructures.Tree.Node
         private BinaryNode<T>? m_RightNode;
 
         // TODO: Add a operator to simplify the comparison or working on LeftNode.Value with value. operator overloading..
-        public BinaryNode<T>? LeftNode
-        {
-            get => m_LeftNode;
-            private set
-            {
-                value.ThrowIfNull(nameof(LeftNode));
-                m_LeftNode = value;
-            }
-        }
-
-        public BinaryNode<T>? RightNode
-        {
-            get => m_RightNode;
-            private set
-            {
-                value.ThrowIfNull("RightNode");
-
-                m_RightNode = value;
-            }
-        }
-
-
+        public BinaryNode<T>? LeftNode { get; set;}
+        
+        public BinaryNode<T>? RightNode { get; set;}
+        
         /// <summary>
         /// Is it the terminating leaf node or not?
         /// If a node doesn't have Left or right Node, then it is a Leaf Node..

@@ -7,7 +7,7 @@ using DataStructures.Tree.Enum;
 namespace DataStructures.Tree.Node
 {
 
-    public class BinarySearchNode<T> : LeafNode<T> where T : IComparable<T>
+    public class BinarySearchNode<T> : BinaryNode<T> where T : IComparable<T>
     {
 
 

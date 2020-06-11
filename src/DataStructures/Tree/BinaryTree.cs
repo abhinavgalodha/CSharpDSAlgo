@@ -15,6 +15,12 @@ namespace DataStructures.Tree
             this.RootNode = new BinaryNode<T>(rootNodeValue);
         }
 
+
+        public BinaryTree(BinaryNode<T> rootNode)
+        {
+            this.RootNode = rootNode ?? throw new ArgumentNullException(nameof(rootNode));
+        }
+
         /// <summary>
         ///  Immutable version where RootNode can't be changed once created..
         /// </summary>
@@ -24,12 +30,13 @@ namespace DataStructures.Tree
         /// Perform a Breadth First search in a tree.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<T> IterateBreadthFirst()
+        public IEnumerable<T> TraversalBreadthFirst()
         {
             if (RootNode == null)
                 yield return (T)Enumerable.Empty<T>();
 
             var queueOfNodes = new Queue<BinaryNode<T>>();
+            queueOfNodes.Enqueue(RootNode!);
 
             while (queueOfNodes.Count != 0)
             {
