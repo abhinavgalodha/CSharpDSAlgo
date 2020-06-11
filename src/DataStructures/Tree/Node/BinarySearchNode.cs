@@ -7,7 +7,7 @@ using DataStructures.Tree.Enum;
 namespace DataStructures.Tree.Node
 {
 
-    public class BinaryNode<T> : LeafNode<T>
+    public class BinarySearchNode<T> : LeafNode<T> where T : IComparable<T>
     {
 
 
@@ -26,26 +26,40 @@ namespace DataStructures.Tree.Node
         */
 
 
-        private BinaryNode<T>? m_LeftNode;
-        private BinaryNode<T>? m_RightNode;
+
+        // TODO: Should LeftNode and RightNode be seperate classes with a relationship?
+
+        private BinarySearchNode<T> m_LeftNode;
+        private BinarySearchNode<T> m_RightNode;
 
         // TODO: Add a operator to simplify the comparison or working on LeftNode.Value with value. operator overloading..
-        public BinaryNode<T>? LeftNode
+        public BinarySearchNode<T>? LeftNode
         {
             get => m_LeftNode;
             private set
             {
-                value.ThrowIfNull(nameof(LeftNode));
+                value.ThrowIfNull("LeftNode");
+
+                if (!IsBSTInvariantMet(this, value.Value, BinaryNodePosition.Left))
+                {
+                    throw new ArgumentException("The value of the left node has to be less than of the Parent Node");
+                };
+
                 m_LeftNode = value;
             }
         }
 
-        public BinaryNode<T>? RightNode
+        public BinarySearchNode<T>? RightNode
         {
             get => m_RightNode;
             private set
             {
                 value.ThrowIfNull("RightNode");
+
+                if (!IsBSTInvariantMet(this, value.Value, BinaryNodePosition.Right))
+                {
+                    throw new ArgumentException("The value of the Right node must be greater than the Parent Node");
+                };
 
                 m_RightNode = value;
             }
@@ -73,30 +87,39 @@ namespace DataStructures.Tree.Node
         // Update: There has been new property added HasLeftNode, HasRightNode to handle the leftNode and RightNode null scenarios
         //
         public bool IsAParentOfALeafNode => this.IsAParentNode &&
-                                            this.HasLeftNode &&
-                                            this.LeftNode.IsLeafNode ||
+                                            (this.HasLeftNode &&
+                                            this.LeftNode.IsLeafNode) ||
                                             (this.HasRightNode &&
                                             this.RightNode.IsLeafNode);
 
 
-        public BinaryNode(T value) : base(value)
+        private Func<BinarySearchNode<T>, T, BinaryNodePosition, bool> IsBSTInvariantMet = (node, valueToAdd, nodePosition) =>
+        {
+             if (nodePosition == BinaryNodePosition.Left)
+             {
+                 return valueToAdd.IsLessThanEqualTo(node.Value);
+             }
+             return valueToAdd.IsGreaterThan(node.Value);
+        };
+
+        public BinarySearchNode(T value) : base(value)
         {
         }
 
-        public BinaryNode(T value, T leftNode, T rightNode) : this(value)
+        public BinarySearchNode(T value, T leftNode, T rightNode) : this(value)
         {
             value.ThrowIfNull(nameof(value));
             leftNode.ThrowIfNull(nameof(leftNode));
             rightNode.ThrowIfNull(nameof(rightNode));
 
-            var leftBinaryNode = new BinaryNode<T>(leftNode);
-            var rightBinaryNode = new BinaryNode<T>(leftNode);
+            var leftBinaryNode = new BinarySearchNode<T>(leftNode);
+            var rightBinaryNode = new BinarySearchNode<T>(leftNode);
 
             this.LeftNode = leftBinaryNode;
             this.RightNode = rightBinaryNode;
         }
 
-        public BinaryNode(T value, BinaryNode<T> leftNode, BinaryNode<T> rightNode) : this(value)
+        public BinarySearchNode(T value, BinarySearchNode<T> leftNode, BinarySearchNode<T> rightNode) : this(value)
         {
             value.ThrowIfNull(nameof(value));
             leftNode.ThrowIfNull(nameof(leftNode));
@@ -116,7 +139,23 @@ namespace DataStructures.Tree.Node
         }
 
 
-        public static BinaryNode<T> CreateABinaryNode(params T[] values)
+        // TODO : DO we need a constructor with Params ?
+        //public BinaryNode(params T[] values) : this(values[0])
+        //{
+        //    for (int index = 1; index < values.Length; index++)
+        //    {
+        //        var currentNode = new BinaryNode<T>(values[index]);
+
+        //        if (currentNode.IsLessThan(this))
+        //        {
+        //            this.LeftNode
+        //        }
+
+        //        //ifthis.Value
+        //    }
+        //}
+
+        public static BinarySearchNode<T> CreateABinaryNode(params T[] values)
         {
             if (values.Length == 0)
             {
@@ -124,22 +163,22 @@ namespace DataStructures.Tree.Node
             }
 
             // First element is taken as the Root Element
-            var rootNode = new BinaryNode<T>(values[0]);
-            BinaryNode<T> currentNode = rootNode;
+            var rootNode = new BinarySearchNode<T>(values[0]);
+            BinarySearchNode<T> currentNode = rootNode;
 
             // Since the root node is already consumed, the counter starts at 1.
             for (int index = 1; index < values.Length; index++)
             {
                 var currentValue = values[index];
-                (BinaryNode<T> binaryNodeWhereTheValueCanBeAdded, BinaryNodePosition nodePosition) = GetBinaryNodeToAppendTheValue(currentNode, currentValue);
+                (BinarySearchNode<T> binaryNodeWhereTheValueCanBeAdded, BinaryNodePosition nodePosition) = GetBinaryNodeToAppendTheValue(currentNode, currentValue);
                 switch (nodePosition)
                 {
                     case BinaryNodePosition.Left:
-                        binaryNodeWhereTheValueCanBeAdded.LeftNode = new BinaryNode<T>(currentValue);
+                        binaryNodeWhereTheValueCanBeAdded.LeftNode = new BinarySearchNode<T>(currentValue);
                         break;
 
                     case BinaryNodePosition.Right:
-                        binaryNodeWhereTheValueCanBeAdded.RightNode = new BinaryNode<T>(currentValue);
+                        binaryNodeWhereTheValueCanBeAdded.RightNode = new BinarySearchNode<T>(currentValue);
                         break;
                 }
             }
@@ -147,7 +186,7 @@ namespace DataStructures.Tree.Node
             return rootNode;
         }
 
-        public void AddLeafNodeToLeft(BinaryNode<T> nodeToAdd)
+        public void AddLeafNodeToLeft(BinarySearchNode<T> nodeToAdd)
         {
             // Validation : Null Gaurd
             nodeToAdd.ThrowIfNull(nameof(nodeToAdd));
@@ -165,10 +204,10 @@ namespace DataStructures.Tree.Node
         {
             // Validation : Null Gaurd
             valueToAdd.ThrowIfNull(nameof(valueToAdd));
-            this.AddLeafNodeToLeft(new BinaryNode<T>(valueToAdd));
+            this.AddLeafNodeToLeft(new BinarySearchNode<T>(valueToAdd));
         }
 
-        public void AddLeafNodeToRight(BinaryNode<T> nodeToAdd)
+        public void AddLeafNodeToRight(BinarySearchNode<T> nodeToAdd)
         {
             // Validation : Null Gaurd
             nodeToAdd.ThrowIfNull(nameof(nodeToAdd));
@@ -189,12 +228,12 @@ namespace DataStructures.Tree.Node
         public void AddLeafNodeToRight(T valueToAdd)
         {
             valueToAdd.ThrowIfNull(nameof(valueToAdd));
-            this.AddLeafNodeToRight(new BinaryNode<T>(valueToAdd));
+            this.AddLeafNodeToRight(new BinarySearchNode<T>(valueToAdd));
         }
 
-        private static (BinaryNode<T>, BinaryNodePosition) GetBinaryNodeToAppendTheValue(BinaryNode<T> binaryNode, T newValueToAdd)
+        private static (BinarySearchNode<T>, BinaryNodePosition) GetBinaryNodeToAppendTheValue(BinarySearchNode<T> binaryNode, T newValueToAdd)
         {
-            BinaryNode<T> newBinaryNodeToAdd = new BinaryNode<T>(newValueToAdd);
+            var newBinaryNodeToAdd = new BinarySearchNode<T>(newValueToAdd);
             if (binaryNode.IsLeafNode)
             {
                 // If leaf node is the only node, then add to left or right depending if the element is less or greater than the Root value
@@ -233,10 +272,10 @@ namespace DataStructures.Tree.Node
 
         public IEnumerable<T> TraverseInOrder()
         {
-            return BinaryNode<T>.TraverseInOrder(this);
+            return BinarySearchNode<T>.TraverseInOrder(this);
         }
 
-        public static IEnumerable<T> TraverseInOrder(BinaryNode<T> nodeToTraverse)
+        public static IEnumerable<T> TraverseInOrder(BinarySearchNode<T> nodeToTraverse)
         {
             nodeToTraverse.ThrowIfNull(nameof(nodeToTraverse));
             IList<T> listInOrderAfterTraversal = new List<T>();
@@ -244,7 +283,7 @@ namespace DataStructures.Tree.Node
             return listInOrderAfterTraversal;
         }
 
-        private static void TraverseInOrder(BinaryNode<T> nodeToTraverse, IList<T> listInOrderAfterTraversal)
+        private static void TraverseInOrder(BinarySearchNode<T> nodeToTraverse, IList<T> listInOrderAfterTraversal)
         {
             // In Order traversal
             // Node Left -> Node Value -> Node Right

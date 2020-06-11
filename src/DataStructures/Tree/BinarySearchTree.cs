@@ -9,13 +9,13 @@ namespace DataStructures.Tree
 
         public BinarySearchTree(T rootNodeValue)
         {
-            this.RootNode = new BinaryNode<T>(rootNodeValue);
+            this.RootNode = new BinarySearchNode<T>(rootNodeValue);
         }
 
         /// <summary>
         ///  Immutable version where RootNode can't be changed once created..
         /// </summary>
-        public BinaryNode<T> RootNode {get;}
+        public BinarySearchNode<T> RootNode {get;}
 
         // As per coursera princeton course
         //  TODO: Java definition. A BST is a reference to a root Node.
@@ -45,7 +45,7 @@ namespace DataStructures.Tree
 
         }
 
-        public BinaryNode<T>? BinarySearch(T valueToSearch)
+        public BinarySearchNode<T>? BinarySearch(T valueToSearch)
         {
             //Todo : Implement a Binary Search 
             // If less, go left; if greater, go right; if equal, search hit.
@@ -61,7 +61,7 @@ namespace DataStructures.Tree
 
             valueToSearch.ThrowIfNull(nameof(valueToSearch));
              
-            BinaryNode<T> node = this.RootNode;
+            BinarySearchNode<T> node = this.RootNode;
 
             while (node != null)
             {
@@ -102,12 +102,12 @@ namespace DataStructures.Tree
             //
         }
 
-        private BinaryNode<T> InsertRecursive(BinaryNode<T> node, T valueToAdd)
+        private BinarySearchNode<T> InsertRecursive(BinarySearchNode<T> node, T valueToAdd)
         {
             //Base condition
             if (node == null)
             {
-                return new BinaryNode<T>(valueToAdd);
+                return new BinarySearchNode<T>(valueToAdd);
             }
 
             if (valueToAdd.IsLessThan(node.Value))
@@ -130,8 +130,8 @@ namespace DataStructures.Tree
             // TODO: Handle the scenario if valueToAdd is equal to any existing Node.
             // Should it be added to left or right?
 
-            BinaryNode<T> node = this.RootNode;
-            BinaryNode<T> parentNode = node;
+            BinarySearchNode<T> node = this.RootNode;
+            BinarySearchNode<T> parentNode = node;
             while (node != null)
             {
                 parentNode =  node;
@@ -161,7 +161,7 @@ namespace DataStructures.Tree
         /// <returns></returns>
         public T Minimum()
         {
-            BinaryNode<T> binaryNode = this.RootNode;
+            BinarySearchNode<T> binaryNode = this.RootNode;
             while (binaryNode.HasLeftNode)
             {
                 binaryNode = binaryNode.LeftNode;
@@ -177,7 +177,7 @@ namespace DataStructures.Tree
         /// <returns></returns>
         public T Maximum()
         {
-            BinaryNode<T> binaryNode = this.RootNode;
+            BinarySearchNode<T> binaryNode = this.RootNode;
             while (binaryNode.HasRightNode)
             {
                 binaryNode = binaryNode.RightNode;

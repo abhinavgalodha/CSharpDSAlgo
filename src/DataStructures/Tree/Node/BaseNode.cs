@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 
 namespace DataStructures.Tree.Node
 {
@@ -6,7 +7,7 @@ namespace DataStructures.Tree.Node
     [DebuggerDisplay("NodeValue={Value}")]
     public abstract class BaseNode<T>
     {
-        public abstract T Value {get;}
+        public abstract T Value { get; }
 
         /*
          * OPERATOR OVERLOADING USED FOR CONVERSION FROM ONE USER DEFINED TO ANOTHER
@@ -21,6 +22,10 @@ namespace DataStructures.Tree.Node
          */
         public static explicit operator T(BaseNode<T> leafNode)
         {
+            if (leafNode == null)
+            {
+                throw new ArgumentNullException(nameof(leafNode));
+            }
             return leafNode.Value;
         }
     }
