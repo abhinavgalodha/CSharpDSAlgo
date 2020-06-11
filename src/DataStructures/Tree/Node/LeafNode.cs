@@ -4,7 +4,7 @@ namespace DataStructures.Tree.Node
 {
     public class LeafNode<T> : BaseNode<T>
     {
-        public override T Value {get;}
+        public override T Value { get; }
 
         public LeafNode(T value)
         {

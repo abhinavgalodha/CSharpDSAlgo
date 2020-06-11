@@ -119,6 +119,7 @@ namespace DataStructures.Graph
             var visitedTracker = new HashSet<T>();
             var stackOfVertex = new Stack<T>();
 
+            // For loop runs V times
             foreach (var vertex in GetAllVertices())
             {
                 if (!visitedTracker.Contains(vertex))
@@ -131,6 +132,7 @@ namespace DataStructures.Graph
             {
                 visitedTracker.Add(vertex);
 
+                //  For Each Vertex V, Run the Iteration as per the number of adjacent vertices
                 foreach (var adjacentVertex in GetAllAdjacentVertices(vertex))
                 {
                     if (!visitedTracker.Contains(adjacentVertex))
