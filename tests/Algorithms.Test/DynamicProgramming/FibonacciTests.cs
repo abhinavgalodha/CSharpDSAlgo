@@ -35,7 +35,7 @@ namespace Algorithms.Test.DynamicProgramming
         [MemberData(nameof(TestData))]
         public void CalculateFibonacciUsingDPMemoization(long numberToFind, long expectedResult)
         {
-            var actualResult = new FibonacciUsingDPTabulation().CalculateFibonacci(numberToFind);
+            var actualResult = new FibonacciUsingDPMemoization().CalculateFibonacci(numberToFind);
         }
     }
 }
