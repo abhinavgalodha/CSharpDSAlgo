@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Algorithms.Search
 {
@@ -9,17 +7,35 @@ namespace Algorithms.Search
         public static int Search(int[] arrayOfInts, int elementToSearch)
         {
             var searchIndex = -1;
+
             // Gaurd
-            if (arrayOfInts == null)
+            if (arrayOfInts == null || 
+                arrayOfInts.Length == 0)
+            {
                 return searchIndex;
+            }
+
+            if (arrayOfInts.Length == 1)
+            {
+                if (elementToSearch == arrayOfInts[0])
+                {
+                    return 0;
+                }
+                else
+                {
+                    return searchIndex;
+                }
+            }
 
             var startIndex = 0;
-            var endIndex = arrayOfInts.Length;
-            var middleIndex = 0;
+            var endIndex = arrayOfInts.Length - 1;
+            int middleIndex = 0;
+            var middleIndexHashSet = new HashSet<int>();
 
-            while (startIndex < endIndex)
+            while (!middleIndexHashSet.Contains(middleIndex))
             {
-                middleIndex = endIndex % 2 == 0 ? (endIndex / 2) : (endIndex / 2) + 1;
+                middleIndexHashSet.Add(middleIndex);
+                middleIndex = (endIndex + startIndex) % 2 == 0 ? ((endIndex + startIndex) / 2) : ((endIndex + startIndex) / 2) + 1;
                 var middleElement = arrayOfInts[middleIndex];
 
                 if (elementToSearch == middleElement)

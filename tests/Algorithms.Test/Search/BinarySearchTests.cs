@@ -16,7 +16,7 @@ namespace Algorithms.Test.Search
             new object[] { new int[]{ 1,2,3, 4 } , 2, 1},
             new object[] { new int[]{ 1,2,3, 4 } , 4, 3},
             new object[] { new int[]{ 1 } , 1, 0},
-            new object[] { new int[]{-2,-4, -5 } , -5, 2},
+            new object[] { new int[]{-5,-4, -2 } , -2, 2},
         };
 
         private static IEnumerable<object[]> NegativeTestData { get; } = new List<object[]>
