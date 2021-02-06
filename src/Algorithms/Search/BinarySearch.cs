@@ -30,9 +30,8 @@ namespace Algorithms.Search
             var startIndex = 0;
             var endIndex = arrayOfInts.Length - 1;
             int middleIndex = 0;
-            var middleIndexHashSet = new HashSet<int>();
 
-            while (!middleIndexHashSet.Contains(middleIndex))
+            while (startIndex)
             {
                 middleIndexHashSet.Add(middleIndex);
                 middleIndex = (endIndex + startIndex) % 2 == 0 ? ((endIndex + startIndex) / 2) : ((endIndex + startIndex) / 2) + 1;
