@@ -15,33 +15,17 @@ namespace Algorithms.Search
                 return searchIndex;
             }
 
-            if (arrayOfInts.Length == 1)
-            {
-                if (elementToSearch == arrayOfInts[0])
-                {
-                    return 0;
-                }
-                else
-                {
-                    return searchIndex;
-                }
-            }
-
             var startIndex = 0;
             var endIndex = arrayOfInts.Length - 1;
-            int middleIndex = 0;
-            var middleIndexHashSet = new HashSet<int>();
 
-            while (startIndex < endIndex &&
-                !middleIndexHashSet.Contains(middleIndex))
+            while (startIndex <= endIndex)
             {
-                middleIndexHashSet.Add(middleIndex);
-                middleIndex = (endIndex + startIndex) % 2 == 0 ? ((endIndex + startIndex) / 2) : ((endIndex + startIndex) / 2) + 1;
+                var middleIndex = (endIndex + startIndex)/2;
                 var middleElement = arrayOfInts[middleIndex];
 
                 if (elementToSearch == middleElement)
                 {
-                    searchIndex = middleIndex - 1;
+                    searchIndex = middleIndex;
                     break;
                 }
                 else if (elementToSearch > middleElement)
@@ -50,7 +34,7 @@ namespace Algorithms.Search
                 }
                 else
                 {
-                    endIndex = middleIndex;
+                    endIndex = middleIndex - 1;
                 }
             }
 
