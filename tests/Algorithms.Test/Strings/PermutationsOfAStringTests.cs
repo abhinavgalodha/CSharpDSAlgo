@@ -7,7 +7,7 @@ namespace Algorithms.Test.Strings
 {
     public class PermutationsOfAStringTests
     {
-        [Fact]
+        [Fact(Skip ="Not Complete")]
         public void PermutationsOf3Words()
         {
             //Act

@@ -29,7 +29,7 @@ namespace DataStructures.Test.Graph
             actualVertices.Should().BeEquivalentTo(expectedVertices, options => options.WithStrictOrdering());
         }
 
-        [Fact]
+        [Fact(Skip ="Not Complete")]
         public void Should_Have_Correct_Graph_DFS_Traversal_UsingStack_When_More_ThanOne_ConnectedVertices()
         {
             BaseGraph<int> graph = new GraphUsingAdjList<int>();
