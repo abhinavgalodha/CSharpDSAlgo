@@ -3,4 +3,6 @@ Data Structures and Algorithms implementation in C# 8.0 and using modern languag
 
 [![Build Status](https://dev.azure.com/abhinav-galodha/DataStructureAlgorithms/_apis/build/status/abhinavgalodha.CSharpDSAlgo?branchName=master)](https://dev.azure.com/abhinav-galodha/DataStructureAlgorithms/_build/latest?definitionId=1&branchName=master)
 
+![Build Status](https://github.com/actions/CSharpDSAlgo /workflows/CIdotnet.yml/badge.svg)
+
 Merge Sort
