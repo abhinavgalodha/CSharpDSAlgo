@@ -5,4 +5,3 @@ Data Structures and Algorithms implementation in C# 8.0 and using modern languag
 
 [![Actions Status](https://github.com/abhinavgalodha/CSharpDSAlgo/workflows/CIdotnet/badge.svg)](https://github.com/abhinavgalodha/CSharpDSAlgo/actions)
 
-Merge Sort
