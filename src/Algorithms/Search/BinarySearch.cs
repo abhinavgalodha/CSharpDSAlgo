@@ -20,7 +20,7 @@ namespace Algorithms.Search
 
             while (startIndex <= endIndex)
             {
-                var middleIndex = (endIndex + startIndex)/2;
+                var middleIndex = startIndex + (endIndex - startIndex)/2;
                 var middleElement = arrayOfInts[middleIndex];
 
                 if (elementToSearch == middleElement)
