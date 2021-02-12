@@ -25,4 +25,9 @@ jobs:
       run: dotnet test --no-build --verbosity normal
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@v1.5
+    - name: Fortify on Demand Scan
+      uses: fortify/gha-setup-fod-uploader@v1.0.1
+    - name: Git Version
+      uses: codacy/git-version@2.4.0
+  
     
