@@ -31,6 +31,7 @@ jobs:
           args: >
             -Dsonar.projectKey=CSharpDSAlgo
             -Dsonar.organization=abhinavgalodha
+            -Dsonar.log.level:DEBUG
       uses: SonarSource/sonarcloud-github-action@v1.5
     - name: Fortify on Demand Scan
       uses: fortify/gha-setup-fod-uploader@v1.0.1
