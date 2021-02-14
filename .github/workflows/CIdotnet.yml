@@ -24,15 +24,10 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Static Code Analysis using SonarCloud Scan
+      uses: sonarsource/sonarcloud-github-action@master
       env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      with:  
-          args: >
-            -Dsonar.projectKey=CSharpDSAlgo
-            -Dsonar.organization=abhinavgalodha
-            -Dsonar.log.level:DEBUG
-      uses: SonarSource/sonarcloud-github-action@v1.5
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     - name: Fortify on Demand Scan
       uses: fortify/gha-setup-fod-uploader@v1.0.1
     - name: Git Version
