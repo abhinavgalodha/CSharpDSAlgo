@@ -67,6 +67,6 @@ public partial class BinaryTreeTest
 * The test class file gets too long with all the tests.
 
 ### What to do?
-* Split the test into the multiple files using partial classes.
+* Split the test into the multiple files using partial classes. 
 
 
